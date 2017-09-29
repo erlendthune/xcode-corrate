@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hrt1536x2048.png" translatesAutoresizingMaskIntoConstraints="NO" id="0UZ-Ce-Spd">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="0UZ-Ce-Spd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="5z6-tF-y5R"/>
+                <constraint firstAttribute="trailing" secondItem="0UZ-Ce-Spd" secondAttribute="trailing" id="FHP-ra-jyy"/>
+                <constraint firstAttribute="bottom" secondItem="0UZ-Ce-Spd" secondAttribute="bottom" id="GIP-MT-DjC"/>
+                <constraint firstItem="0UZ-Ce-Spd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="nMn-ql-hPX"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="404" y="445"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="hrt1536x2048.png" width="1536" height="2048"/>
+    </resources>
+</document>

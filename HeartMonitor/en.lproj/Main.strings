@@ -1,0 +1,60 @@
+
+/* Class = "UILabel"; text = "Searching for device"; ObjectID = "13V-Gb-GFV"; */
+"13V-Gb-GFV.text" = "Searching for device";
+
+/* Class = "UILabel"; text = "HRreserve"; ObjectID = "3EB-TV-oSE"; */
+"3EB-TV-oSE.text" = "HRreserve";
+
+/* Class = "UILabel"; text = "..."; ObjectID = "3o7-0M-O4f"; */
+"3o7-0M-O4f.text" = "...";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "CQ7-FO-W9f"; */
+"CQ7-FO-W9f.normalTitle" = "Done";
+
+/* Class = "UITextField"; text = "120"; ObjectID = "Hzt-Lf-iyv"; */
+"Hzt-Lf-iyv.text" = "120";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "K3T-pA-apc"; */
+"K3T-pA-apc.normalTitle" = "-";
+
+/* Class = "UILabel"; text = "..."; ObjectID = "LqU-tU-NfB"; */
+"LqU-tU-NfB.text" = "...";
+
+/* Class = "UIButton"; normalTitle = "Heart rate training ?"; ObjectID = "O8A-aR-hcH"; */
+"O8A-aR-hcH.normalTitle" = "Heart rate training ?";
+
+/* Class = "UITextField"; text = "5"; ObjectID = "PjN-YI-bff"; */
+"PjN-YI-bff.text" = "5";
+
+/* Class = "UILabel"; text = "HRmax"; ObjectID = "VRf-Q4-K0o"; */
+"VRf-Q4-K0o.text" = "HRmax";
+
+/* Class = "UILabel"; text = "..."; ObjectID = "Vtf-Sw-4bD"; */
+"Vtf-Sw-4bD.text" = "...";
+
+/* Class = "UIButton"; normalTitle = "Start recovery"; ObjectID = "bKK-N2-j7N"; */
+"bKK-N2-j7N.normalTitle" = "Start recovery";
+
+/* Class = "UILabel"; text = "HRrest"; ObjectID = "eAx-Rt-b00"; */
+"eAx-Rt-b00.text" = "HRrest";
+
+/* Class = "UILabel"; text = "Voice speed"; ObjectID = "heh-NL-HRs"; */
+"heh-NL-HRs.text" = "Voice speed";
+
+/* Class = "UILabel"; text = "HRrecovery"; ObjectID = "od2-Fz-F4P"; */
+"od2-Fz-F4P.text" = "HRrecovery";
+
+/* Class = "UILabel"; text = "Time (s)"; ObjectID = "rIc-SE-EbS"; */
+"rIc-SE-EbS.text" = "Time (s)";
+
+/* Class = "UIButton"; normalTitle = "bpm"; ObjectID = "v7h-6d-jfn"; */
+"v7h-6d-jfn.normalTitle" = "bpm";
+
+/* Class = "UIButton"; normalTitle = "+"; ObjectID = "xZE-Wr-8L6"; */
+"xZE-Wr-8L6.normalTitle" = "+";
+
+/* Class = "UILabel"; text = "Interval between audio cues (s)"; ObjectID = "yW2-eZ-sKd"; */
+"yW2-eZ-sKd.text" = "Interval between audio cues (s)";
+
+/* Class = "UILabel"; text = "AAAAAAAA-BBBB-CCCC-DDDD-FFFFFFFFFFFF"; ObjectID = "z0k-6L-iYm"; */
+"z0k-6L-iYm.text" = "AAAAAAAA-BBBB-CCCC-DDDD-FFFFFFFFFFFF";
