@@ -162,6 +162,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
     for (CBService *service in peripheral.services) {
+        NSString *uuidString = [service.UUID UUIDString];
         NSLog(@"Discovered service: %@", service.UUID);
         [peripheral discoverCharacteristics:nil forService:service];
     }
@@ -172,6 +173,15 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 // Invoked when you discover the characteristics of a specified service.
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
+    NSString *uuidString = [service.UUID UUIDString];
+    NSLog(@"====================");
+    NSLog(@"Service UUID:%@", uuidString);
+    for (CBCharacteristic *aChar in service.characteristics)
+    {
+        NSString *uuidCharacteristicsString = [aChar.UUID UUIDString];
+        NSLog(@"Service characteristic UUID:%@", uuidCharacteristicsString);
+    }
+    NSLog(@"====================");
     if ([service.UUID isEqual:[CBUUID UUIDWithString:POLARH7_HRM_HEART_RATE_SERVICE_UUID]])  {  // 1
         for (CBCharacteristic *aChar in service.characteristics)
         {
@@ -292,7 +302,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
     // Determine the state of the peripheral
-    if ([central state] == CBCentralManagerStatePoweredOff) {
+    if ([central state] == CBManagerStatePoweredOff) {
         _deviceInformation.text = @"Please turn bluetooth on";
         _deleteDeviceButton.enabled = NO;
         _deleteDeviceButton.hidden = YES;
@@ -300,7 +310,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         [self connectionToStrapDisabled];
         NSLog(@"CoreBluetooth BLE hardware is powered off");
     }
-    else if ([central state] == CBCentralManagerStatePoweredOn)
+    else if ([central state] == CBManagerStatePoweredOn)
     {
         NSLog(@"CoreBluetooth BLE hardware is powered on and ready");
 
@@ -315,17 +325,17 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
             [self connectToNewDevice];
         }
     }
-    else if ([central state] == CBCentralManagerStateUnauthorized) {
+    else if ([central state] == CBManagerStateUnauthorized) {
         _deviceInformation.text = @"Not authorized to used bluetooth";
         [self connectionToStrapDisabled];
         NSLog(@"CoreBluetooth BLE state is unauthorized");
     }
-    else if ([central state] == CBCentralManagerStateUnknown) {
+    else if ([central state] == CBManagerStateUnknown) {
         _deviceInformation.text = @"Please check bluetooth settings";
         [self connectionToStrapDisabled];
         NSLog(@"CoreBluetooth BLE state is unknown");
     }
-    else if ([central state] == CBCentralManagerStateUnsupported) {
+    else if ([central state] == CBManagerStateUnsupported) {
         _deviceInformation.text = @"This platform does not support bluetooth";
         [self connectionToStrapDisabled];
         NSLog(@"CoreBluetooth BLE hardware is unsupported on this platform");
@@ -693,6 +703,8 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     _speedIndicator.minimumValue = AVSpeechUtteranceMinimumSpeechRate;
     _speedIndicator.maximumValue = AVSpeechUtteranceMaximumSpeechRate;
     
+    NSString* langCode = [AVSpeechSynthesisVoice currentLanguageCode];
+    NSLog(@"Language code:%@", langCode);
     _voice = [AVSpeechSynthesisVoice voiceWithLanguage:[AVSpeechSynthesisVoice currentLanguageCode]];
     
     _relativeTiming = -1.0; //Indicate first time read with negative number.
