@@ -51,8 +51,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "861"
             endingLineNumber = "861"
-            landmarkName = "HRMViewController"
-            landmarkType = "3">
+            landmarkName = "-audioButtonClicked:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -200,8 +200,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1197"
             endingLineNumber = "1197"
-            landmarkName = "-updateNextNagTime:"
-            landmarkType = "7">
+            landmarkName = "HRMViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -336,8 +336,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "843"
             endingLineNumber = "843"
-            landmarkName = "HRMViewController"
-            landmarkType = "3">
+            landmarkName = "-HRrestPadlockClicked:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -655,8 +655,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "908"
             endingLineNumber = "908"
-            landmarkName = "-talk:voice:passive:"
-            landmarkType = "7">
+            landmarkName = "HRMViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
