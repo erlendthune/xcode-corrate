@@ -17,7 +17,6 @@
 		35AFF6B8185B697000F1A64F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35AFF6B7185B697000F1A64F /* Media.xcassets */; };
 		870E97B71B5D0A3A0079BEEE /* greenheartipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 870E97B61B5D0A3A0079BEEE /* greenheartipad.png */; };
 		8712D68C1B40ADB700E843FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35AFF694185B691D00F1A64F /* Main.storyboard */; };
-		873839832A914A1600A3986B /* HeartMonitor-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 873839822A914A1600A3986B /* HeartMonitor-Info.plist */; };
 		873839852A9157EF00A3986B /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873839842A9157EF00A3986B /* CoreBluetooth.framework */; };
 		8777A3F51B41E45A006DC182 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8777A3F41B41E45A006DC182 /* IAPHelper.m */; };
 		8777A3F81B41E5D2006DC182 /* HRMAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8777A3F71B41E5D2006DC182 /* HRMAPHelper.m */; };
@@ -217,7 +216,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = HRM;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1520;
 				ORGANIZATIONNAME = "Razeware LLC";
 				TargetAttributes = {
 					35AFF67E185B691D00F1A64F = {
@@ -258,7 +257,6 @@
 			files = (
 				8712D68C1B40ADB700E843FC /* Main.storyboard in Resources */,
 				8799DA721B5F60EF00ED7C66 /* turtle.png in Resources */,
-				873839832A914A1600A3986B /* HeartMonitor-Info.plist in Resources */,
 				87CF69A71B73E08000C9E487 /* unlocked_transparent.png in Resources */,
 				87C8B1471B586B51000FF248 /* audioon.png in Resources */,
 				35AFF69B185B691D00F1A64F /* Images.xcassets in Resources */,
@@ -348,6 +346,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -403,6 +402,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -422,7 +422,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 3B9MVBS2CK;
@@ -442,7 +442,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 3B9MVBS2CK;

@@ -8,6 +8,7 @@
 //https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
 
 #import "HRMViewController.h"
+#import "ETHelpViewController.h"
 #import "HRMAPHelper.h"
 #import "ETAlertView.h"
 #import <StoreKit/StoreKit.h>
@@ -43,6 +44,19 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     {
         _identifier = nil;
         self.deviceUuidTextField.text = @"";
+        
+        //Initiate new scan
+        if (self.centralManager.state == CBManagerStatePoweredOn) {
+             NSArray *services = @[[CBUUID UUIDWithString:POLARH7_HRM_HEART_RATE_SERVICE_UUID]];
+             NSDictionary *scanOptions = @{CBCentralManagerScanOptionAllowDuplicatesKey : @NO}; // Prevent duplicates
+
+            [self.centralManager stopScan];
+
+             NSLog(@"🔍 Starting new scan...");
+             [self.centralManager scanForPeripheralsWithServices:services options:scanOptions];
+         } else {
+             NSLog(@"⚠️ Cannot start scan, Bluetooth is not powered on!");
+         }
         [self connectToNewDevice];
     }
     else
@@ -75,6 +89,8 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
 // method called whenever you have successfully connected to the BLE peripheral
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
+    NSLog(@"Connected to: %@", peripheral.name);
+    NSLog(@"Device UUID: %@", peripheral.identifier.UUIDString);
     _polarH7HRMPeripheral = peripheral;
     [peripheral setDelegate:self];
     [peripheral discoverServices:nil];
@@ -84,6 +100,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
 
     _identifier = peripheral.identifier.UUIDString;
     self.deviceUuidTextField.text = _identifier;
+    self.deviceName.text = peripheral.name;
     [self save];
 
     _deleteDeviceButton.enabled = YES;
@@ -96,25 +113,66 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     NSLog(@"%@", self.connected);
 }
 
+- (void)updateDeviceList {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!self.deviceListAlert) {
+            self.deviceListAlert = [UIAlertController alertControllerWithTitle:@"Searching for devices..."
+                                                                       message:@"Tap a device to connect"
+                                                                preferredStyle:UIAlertControllerStyleActionSheet];
+
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                                   style:UIAlertActionStyleCancel
+                                                                 handler:^(UIAlertAction * _Nonnull action) {
+                self.deviceListAlert = nil;
+            }];
+            [self.deviceListAlert addAction:cancelAction];
+
+            [self presentViewController:self.deviceListAlert animated:YES
+                             completion:nil];
+        }
+    });
+}
+
 // CBCentralManagerDelegate - This is called with the CBPeripheral class as its main input parameter. This contains most of the information there is to know about a BLE peripheral.
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
-    NSString *localName = [advertisementData objectForKey:CBAdvertisementDataLocalNameKey];
+    NSString *localName = advertisementData[CBAdvertisementDataLocalNameKey] ?: @"Unknown Device";
     NSArray* sids = [advertisementData objectForKey:CBAdvertisementDataServiceUUIDsKey];
-    
+
+    NSLog(@"Discovered Device: %@ (%@)", localName, peripheral.identifier.UUIDString);
+    NSLog(@"Advertisement Data: %@", advertisementData);
+
     if(sids)
     {
         for (CBUUID* s in sids)
         {
-//            CBUUID* u = [CBUUID UUIDWithData:s];
-            if([s isEqual:[CBUUID UUIDWithString:POLARH7_HRM_HEART_RATE_SERVICE_UUID]])    // 1
+            if([s isEqual:[CBUUID UUIDWithString:POLARH7_HRM_HEART_RATE_SERVICE_UUID]])
             {
-                if ([localName length] > 0)
-                {
-                    NSLog(@"Found the heart rate monitor: %@", localName);
+                NSLog(@"Found the heart rate monitor: %@", localName);
+                // Prevent duplicate entries
+                NSString *uuidString = peripheral.identifier.UUIDString;
+                
+                // Check if this UUID already exists in discoveredPeripherals
+                BOOL alreadyDiscovered = NO;
+                for (CBPeripheral *p in self.discoveredPeripherals) {
+                    NSString *newUuidString = p.identifier.UUIDString;
+                    if ([newUuidString isEqualToString:uuidString]) {
+                        alreadyDiscovered = YES;
+                        break;
+                    }
                 }
-                [self.centralManager stopScan];
-                [self connectToPeripheral:peripheral];
+
+                if (!alreadyDiscovered) {
+                    [self.discoveredPeripherals addObject:peripheral];
+                    NSString *localName = peripheral.name;
+                    UIAlertAction *deviceAction = [UIAlertAction actionWithTitle:localName
+                      style:UIAlertActionStyleDefault
+                      handler:^(UIAlertAction * _Nonnull action) {
+                        self.deviceListAlert = nil;
+                        [self connectToPeripheral:peripheral];
+                    }];
+                    [self.deviceListAlert addAction:deviceAction];
+                }
             }
             else
             {
@@ -146,6 +204,52 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     [self talk:@"Connected to device." voice:voice passive:false];
 }
 */
+- (IBAction)menuButtonClicked:(id)sender
+{
+    UIAlertController* alert = [
+                                UIAlertController alertControllerWithTitle:nil
+                                message:nil
+                                preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction* helpAction = [UIAlertAction actionWithTitle:@"Hjelp" style:UIAlertActionStyleDefault
+         handler:^(UIAlertAction * action) {
+             ETHelpViewController *helpController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpViewController"];
+             helpController.modalPresentationStyle = UIModalPresentationFullScreen;
+             [self presentViewController:helpController animated:YES completion:nil];
+         }];
+    
+    [alert addAction:helpAction];
+
+    UIAlertAction* deleteConnectionAction = [UIAlertAction actionWithTitle:@"Delete connection with device" style:UIAlertActionStyleDefault
+        handler:^(UIAlertAction * action) {
+           [self deleteDevice];
+        }];
+
+    [alert addAction:deleteConnectionAction];
+
+    
+    UIAlertAction* buyAction = [UIAlertAction actionWithTitle:@"Kjøp" style:UIAlertActionStyleDefault
+       handler:^(UIAlertAction * action) {
+           [self DisplayAlertView:self.usageCounter nag:false];
+       }];
+    if(self.purchased || self.nagscreenOnDisplay)
+    {
+        buyAction.enabled = NO;
+    }
+    [alert addAction:buyAction];
+
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Avbryt" style:UIAlertActionStyleCancel
+         handler:nil
+       ];
+    [alert addAction:cancelAction];
+
+    alert.popoverPresentationController.barButtonItem = _menuButton;
+    alert.popoverPresentationController.sourceView = self.view;
+    
+    [self presentViewController:alert animated:YES
+                     completion:nil];
+    
+}
 
 - (void)centralManager:(CBCentralManager *)central
 didFailToConnectPeripheral:(CBPeripheral *)peripheral
@@ -162,13 +266,12 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
     for (CBService *service in peripheral.services) {
-        NSString *uuidString = [service.UUID UUIDString];
         NSLog(@"Discovered service: %@", service.UUID);
-        [peripheral discoverCharacteristics:nil forService:service];
+        if ([service.UUID isEqual:[CBUUID UUIDWithString:@"180D"]]) { // Heart Rate Service
+            [peripheral discoverCharacteristics:nil forService:service];
+        }
     }
 }
-
-
 
 // Invoked when you discover the characteristics of a specified service.
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
@@ -268,17 +371,37 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 }
 
 // Scan for all available CoreBluetooth LE devices
-- (BOOL) connectToAlreadyConnectedDevice
+- (BOOL) displayConnectedDevices
 {
-//    NSArray *services = @[[CBUUID UUIDWithString:POLARH7_HRM_HEART_RATE_SERVICE_UUID], [CBUUID UUIDWithString:POLARH7_HRM_DEVICE_INFO_SERVICE_UUID]];
     NSArray *services = @[[CBUUID UUIDWithString:POLARH7_HRM_HEART_RATE_SERVICE_UUID]];
 
     NSArray *connper = [self.centralManager retrieveConnectedPeripheralsWithServices:services];
-    if([connper count])
-    {
-        [self connectToPeripheral:[connper objectAtIndex:0]];
-        return true;
+
+    for (CBPeripheral *peripheral in connper) {
+        NSString *uuidString = peripheral.identifier.UUIDString;
+        
+        BOOL alreadyDiscovered = NO;
+        for (CBPeripheral *p in self.discoveredPeripherals) {
+            NSString *newUuidString = p.identifier.UUIDString;
+            if ([newUuidString isEqualToString:uuidString]) {
+                alreadyDiscovered = YES;
+                break;
+            }
+        }
+
+        if (!alreadyDiscovered) {
+            [self.discoveredPeripherals addObject:peripheral];
+            NSString *localName = peripheral.name;
+            UIAlertAction *deviceAction = [UIAlertAction actionWithTitle:localName
+              style:UIAlertActionStyleDefault
+              handler:^(UIAlertAction * _Nonnull action) {
+                self.deviceListAlert = nil;
+                [self connectToPeripheral:peripheral];
+            }];
+            [self.deviceListAlert addAction:deviceAction];
+        }
     }
+
     return false;
 }
 
@@ -288,16 +411,18 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     self.deviceUuidTextField.text = @"";
     _deleteDeviceButton.enabled = NO;
     _deleteDeviceButton.hidden = YES;
-    bool connected = [self connectToAlreadyConnectedDevice];
+    [self.discoveredPeripherals removeAllObjects];
+    [self updateDeviceList];
+    [self displayConnectedDevices];
     
-    if(!connected)
-    {
- //       NSArray *services = @[[CBUUID UUIDWithString:POLARH7_HRM_HEART_RATE_SERVICE_UUID], [CBUUID UUIDWithString:POLARH7_HRM_DEVICE_INFO_SERVICE_UUID]];
-        NSArray *services = @[[CBUUID UUIDWithString:POLARH7_HRM_HEART_RATE_SERVICE_UUID]];
-        
-        [self.centralManager scanForPeripheralsWithServices:services options:nil];
-    }
+    NSArray *services = @[[CBUUID UUIDWithString:POLARH7_HRM_HEART_RATE_SERVICE_UUID]];
+    [self.centralManager scanForPeripheralsWithServices:services options:nil];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.centralManager stopScan];
+        NSLog(@"🛑 Stopped scanning after 5 seconds.");
+    });
 }
+
 // method called whenever the device state changes.
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
@@ -342,6 +467,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     }
 }
 
+/*
 -(void)alertMessage:(NSString*)t s:(NSString*)s
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:t
@@ -352,7 +478,19 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     alert.tag = 1;
     [alert show];
 }
+*/
+- (void)alertMessage:(NSString *)title s:(NSString *)message {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
 
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil]; // The handler is nil because no additional action is needed.
+    [alert addAction:okAction];
+
+    [self presentViewController:alert animated:YES completion:nil];
+}
 - (void)getPrice
 {
     _price = nil;
@@ -368,7 +506,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
                     [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
                     [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
                     [numberFormatter setLocale:p.priceLocale];
-                    _price = [numberFormatter stringFromNumber:p.price];
+                    self.price = [numberFormatter stringFromNumber:p.price];
                 }
                 else
                 {
@@ -407,19 +545,19 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
                 else
                 {
                     [self alertMessage:@"Purchase" s:@"Purchase failed."];
-                    [_activityIndicator stopAnimating];
+                    [self.activityIndicator stopAnimating];
                 }
             }
             else
             {
                 [self alertMessage:@"Purchase" s:@"Purchase failed."];
-                [_activityIndicator stopAnimating];
+                [self.activityIndicator stopAnimating];
             }
         }
         else
         {
             [self alertMessage:@"Purchase" s:@"Unable to connect to App store."];
-            [_activityIndicator stopAnimating];
+            [self.activityIndicator stopAnimating];
         }
     }];
 }
@@ -430,7 +568,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     [[HRMAPHelper sharedInstance] restoreCompletedTransactions];
 }
 
-- (IBAction)deleteDeviceClicked:(id)sender
+- (void)deleteDevice
 {
     [_centralManager cancelPeripheralConnection:(_polarH7HRMPeripheral)];
     _deletedDeviceOnPurpose = true;
@@ -468,8 +606,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 
 - (int)getFontSize
 {
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-    {
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         return 98; /* Device is iPad */
     }
     int maxWidth = [[UIScreen mainScreen ]bounds].size.width;
@@ -663,7 +800,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.discoveredPeripherals = [[NSMutableArray alloc] init];
     _hrmDisplay = HRM_BPM;
     _heartRateMax = UNSET_HR_MAX;
     _heartRateMin = UNSET_HR_REST;
@@ -680,6 +817,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     _recoveryStartHeartRate = -1;
     _recoveryStopHeartRate = -1;
     _counter = 120;
+    self.menuButton.title = @"\u2630";
 
 //    _synthArray = [[NSMutableArray alloc] init];
     _synth = [[AVSpeechSynthesizer alloc] init];
@@ -721,6 +859,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 
     _purchased = [[HRMAPHelper sharedInstance] productPurchased:@"com.erlendthune.Heart_Rate_Training"];
 
+    _purchased = true;
     if(!_purchased)
     {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DisplayNagScreen) name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -881,30 +1020,30 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     if(self.noOfTimesUsed > NAG_TIMES_USED)
     {
         dispatch_async(dispatch_get_main_queue(),^ {
-            [self DisplayAlertView:self.noOfTimesUsed];
+            bool nag = true;
+            [self DisplayAlertView:self.noOfTimesUsed nag:nag];
         } );
     }
     
 }
-- (void) DisplayAlertView:(int)noOfTimesUsed
+- (void) DisplayAlertView:(int)noOfTimesUsed  nag:(bool)nag
 {
-    // Create the view
-    
-    int maxWidth = [[UIScreen mainScreen ]applicationFrame].size.width;
-    int maxHeight = [[UIScreen mainScreen ]applicationFrame].size.height;
+    CGRect screenBounds = [UIScreen mainScreen].bounds;
+    CGFloat maxWidth = screenBounds.size.width;
+    CGFloat maxHeight = screenBounds.size.height;
     int imgWidth = maxWidth-20;
-    int imgHeight = maxHeight/1.5;
+    int imgHeight = maxHeight-maxHeight/6;
     
-    self.alertView = [[ETAlertView alloc] init:imgWidth imgHeight:imgHeight noOfTimesUsed:noOfTimesUsed mvc:self];
+    self.alertView = [[ETAlertView alloc] init:imgWidth imgHeight:imgHeight noOfTimesUsed:noOfTimesUsed mvc:self nag:nag];
     
     CGRect f = self.alertView.frame;
     f.origin.x = 10;
-    f.origin.y = 100;
+    f.origin.y = maxHeight/8;
     self.alertView.frame = f;
     
-    //    self.view.userInteractionEnabled=NO;
     [self.view addSubview:self.alertView];
 }
+
 #pragma mark - CBCharacteristic helpers
 - (void) talk:(NSString *)s voice:(AVSpeechSynthesisVoice*)voice passive:(bool)passive
 {
@@ -1352,7 +1491,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     // Get the stored data before the view loads
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    _identifier = [defaults objectForKey:@"identifier"];
+//    _identifier = [defaults objectForKey:@"identifier"];
     
     if ([defaults objectForKey:@"audioInterval"] != nil)
     {

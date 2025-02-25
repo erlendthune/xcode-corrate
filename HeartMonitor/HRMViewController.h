@@ -35,7 +35,6 @@
 #define AUDIO_OFF 2
 
 @interface HRMViewController : UIViewController <
-AVAudioSessionDelegate,
 UITextFieldDelegate, 
 AVSpeechSynthesizerDelegate,
 CBCentralManagerDelegate,
@@ -45,11 +44,19 @@ CBPeripheralDelegate>
 @property (atomic, strong) NSDictionary     *languages;
 @property (strong, atomic) AVAudioPlayer* avSilentSound;
 
-
+- (void) connectToNewDevice;
+- (BOOL)connectToTheDeviceWeUsedLastTime;
 - (void)purchase;
 - (void)restorePurchase;
+- (void) save;
+- (void)connectToPeripheral:(CBPeripheral *)peripheral;
+- (void) talk:(NSString *)s voice:(AVSpeechSynthesisVoice*)voice passive:(bool)passive;
+- (void) DisplayAlertView:(int)noOfTimesUsed nag:(bool)nag;
 
-// Properties for your Object controls
+@property (nonatomic, strong) NSMutableArray<CBPeripheral*> *discoveredPeripherals;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSDictionary *> *advertisedData;
+@property (nonatomic, strong) UIAlertController *deviceListAlert;
+
 @property (atomic, strong) IBOutlet UIImageView *heartImage;
 @property (weak, atomic) IBOutlet UITextField *audioCueInterval;
 @property (weak, atomic) IBOutlet UIButton *incAudioCueIntervalButton;
@@ -68,9 +75,11 @@ CBPeripheralDelegate>
 @property (weak, atomic) IBOutlet UIButton *audioButton;
 @property ushort hrmDisplay;
 @property (weak, atomic) IBOutlet UILabel *deviceInformation;
+@property (weak, nonatomic) IBOutlet UILabel *deviceName;
 @property (weak, atomic) IBOutlet UIButton *deleteDeviceButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UISlider *speedIndicator;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *menuButton;
 
 @property (strong, nonatomic) IBOutlet ETAlertView *alertView;
 
@@ -107,6 +116,7 @@ CBPeripheralDelegate>
 @property (assign) uint16_t noOfTimesUsed;
 @property (strong, atomic) NSMutableArray *synthArray;
 @property (strong, atomic) AVSpeechSynthesizer *synth;
+@property (nonatomic) int usageCounter;
 @property bool purchased;
 @property bool audioOn;
 @property bool deletedDeviceOnPurpose;

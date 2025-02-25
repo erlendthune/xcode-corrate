@@ -8,17 +8,64 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "9281763A-2D7D-469D-B3BD-ACD5B3B1CA4E"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HeartMonitor/HRMViewController.m"
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
             landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9281763A-2D7D-469D-B3BD-ACD5B3B1CA4E - 3eadc6162cb4aff0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDiscoverPeripheral:advertisementData:RSSI:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "102"
+                  endingLineNumber = "102"
+                  offsetFromSymbolStart = "190">
+               </Location>
+               <Location
+                  uuid = "9281763A-2D7D-469D-B3BD-ACD5B3B1CA4E - 3eadc6162cb4afd3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDiscoverPeripheral:advertisementData:RSSI:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "103"
+                  endingLineNumber = "103"
+                  offsetFromSymbolStart = "190">
+               </Location>
+               <Location
+                  uuid = "9281763A-2D7D-469D-B3BD-ACD5B3B1CA4E - 3eadc6162cb4afd3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDiscoverPeripheral:advertisementData:RSSI:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "103"
+                  endingLineNumber = "103"
+                  offsetFromSymbolStart = "132">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -32,8 +79,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
+            startingLineNumber = "429"
+            endingLineNumber = "429"
             landmarkName = "-centralManagerDidUpdateState:"
             landmarkType = "7">
          </BreakpointContent>
@@ -49,8 +96,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "861"
-            endingLineNumber = "861"
+            startingLineNumber = "1000"
+            endingLineNumber = "1000"
             landmarkName = "-audioButtonClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -66,8 +113,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1218"
-            endingLineNumber = "1218"
+            startingLineNumber = "1357"
+            endingLineNumber = "1357"
             landmarkName = "-getBodyLocation:"
             landmarkType = "7">
          </BreakpointContent>
@@ -83,8 +130,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1220"
-            endingLineNumber = "1220"
+            startingLineNumber = "1359"
+            endingLineNumber = "1359"
             landmarkName = "-getBodyLocation:"
             landmarkType = "7">
             <Locations>
@@ -147,8 +194,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "717"
-            endingLineNumber = "717"
+            startingLineNumber = "855"
+            endingLineNumber = "855"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -164,8 +211,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1184"
-            endingLineNumber = "1184"
+            startingLineNumber = "1323"
+            endingLineNumber = "1323"
             landmarkName = "-getHeartBPMData:"
             landmarkType = "7">
          </BreakpointContent>
@@ -181,8 +228,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1359"
-            endingLineNumber = "1359"
+            startingLineNumber = "1498"
+            endingLineNumber = "1498"
             landmarkName = "-load"
             landmarkType = "7">
          </BreakpointContent>
@@ -198,10 +245,10 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1197"
-            endingLineNumber = "1197"
-            landmarkName = "HRMViewController"
-            landmarkType = "3">
+            startingLineNumber = "1336"
+            endingLineNumber = "1336"
+            landmarkName = "-getHeartBPMData:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -218,7 +265,7 @@
             startingLineNumber = "43"
             endingLineNumber = "43"
             landmarkName = "-initWithProductIdentifiers:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -235,7 +282,7 @@
             startingLineNumber = "141"
             endingLineNumber = "141"
             landmarkName = "-buyProduct:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -252,7 +299,7 @@
             startingLineNumber = "136"
             endingLineNumber = "136"
             landmarkName = "-restoreCompletedTransactions"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -269,7 +316,7 @@
             startingLineNumber = "90"
             endingLineNumber = "90"
             landmarkName = "-completeTransaction:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -286,7 +333,7 @@
             startingLineNumber = "66"
             endingLineNumber = "66"
             landmarkName = "-paymentQueue:updatedTransactions:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -303,22 +350,22 @@
             startingLineNumber = "33"
             endingLineNumber = "33"
             landmarkName = "-provideContentForProductIdentifier:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "5825D2CF-9D32-49C0-817A-70A9AF44CD28"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HeartMonitor/HRMViewController.m"
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
             landmarkType = "7">
          </BreakpointContent>
@@ -334,8 +381,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "843"
-            endingLineNumber = "843"
+            startingLineNumber = "982"
+            endingLineNumber = "982"
             landmarkName = "-HRrestPadlockClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -351,8 +398,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "804"
-            endingLineNumber = "804"
+            startingLineNumber = "943"
+            endingLineNumber = "943"
             landmarkName = "-LockRestHeartRate:"
             landmarkType = "7">
          </BreakpointContent>
@@ -368,8 +415,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "975"
-            endingLineNumber = "975"
+            startingLineNumber = "1114"
+            endingLineNumber = "1114"
             landmarkName = "-calculateHrmPercent"
             landmarkType = "7">
          </BreakpointContent>
@@ -385,8 +432,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "982"
-            endingLineNumber = "982"
+            startingLineNumber = "1121"
+            endingLineNumber = "1121"
             landmarkName = "-calculateHrmPercent"
             landmarkType = "7">
          </BreakpointContent>
@@ -402,8 +449,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
             landmarkName = "-connectToPeripheral:"
             landmarkType = "7">
          </BreakpointContent>
@@ -419,8 +466,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
             landmarkName = "-connectToTheDeviceWeUsedLastTime"
             landmarkType = "7">
             <Locations>
@@ -468,10 +515,57 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
             landmarkName = "-centralManager:didDisconnectPeripheral:error:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D6D564D4-B723-4121-AFB2-F52AA4D5EB3C - 4d6701feaa919fa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDisconnectPeripheral:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  uuid = "D6D564D4-B723-4121-AFB2-F52AA4D5EB3C - 4d6701feaa919fa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDisconnectPeripheral:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "D6D564D4-B723-4121-AFB2-F52AA4D5EB3C - 4d6701feaa919fa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDisconnectPeripheral:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "104">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -488,7 +582,7 @@
             startingLineNumber = "95"
             endingLineNumber = "95"
             landmarkName = "-restoreTransaction:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -505,7 +599,7 @@
             startingLineNumber = "78"
             endingLineNumber = "78"
             landmarkName = "-paymentQueue:updatedTransactions:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -522,7 +616,7 @@
             startingLineNumber = "70"
             endingLineNumber = "70"
             landmarkName = "-paymentQueue:updatedTransactions:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -539,7 +633,7 @@
             startingLineNumber = "74"
             endingLineNumber = "74"
             landmarkName = "-paymentQueue:updatedTransactions:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -553,8 +647,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "258"
-            endingLineNumber = "258"
+            startingLineNumber = "361"
+            endingLineNumber = "361"
             landmarkName = "-connectToTheDeviceWeUsedLastTime"
             landmarkType = "7">
             <Locations>
@@ -602,8 +696,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1153"
-            endingLineNumber = "1153"
+            startingLineNumber = "1292"
+            endingLineNumber = "1292"
             landmarkName = "-getHeartBPMData:"
             landmarkType = "7">
          </BreakpointContent>
@@ -619,9 +713,9 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "434"
-            endingLineNumber = "434"
-            landmarkName = "-deleteDeviceClicked:"
+            startingLineNumber = "572"
+            endingLineNumber = "572"
+            landmarkName = "-deleteDevice"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -636,27 +730,10 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "912"
-            endingLineNumber = "912"
+            startingLineNumber = "1051"
+            endingLineNumber = "1051"
             landmarkName = "-talk:voice:passive:"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7CE6CC49-0988-4C4C-AB41-2C4BC559D446"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HeartMonitor/HRMViewController.m"
-            timestampString = "528369119.746144"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "908"
-            endingLineNumber = "908"
-            landmarkName = "HRMViewController"
-            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -670,10 +747,10 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1231"
-            endingLineNumber = "1231"
-            landmarkName = "-doHeartBeat"
-            landmarkType = "7">
+            startingLineNumber = "1370"
+            endingLineNumber = "1370"
+            landmarkName = "HRMViewController"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "C31CA1F4-16E5-49D4-BDA8-6A91510AFBFB - 9801dce227905717"
@@ -734,8 +811,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "873"
-            endingLineNumber = "873"
+            startingLineNumber = "1012"
+            endingLineNumber = "1012"
             landmarkName = "-DisplayNagScreen"
             landmarkType = "7">
          </BreakpointContent>
@@ -751,8 +828,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "664"
-            endingLineNumber = "664"
+            startingLineNumber = "801"
+            endingLineNumber = "801"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -768,8 +845,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "424"
-            endingLineNumber = "424"
+            startingLineNumber = "562"
+            endingLineNumber = "562"
             landmarkName = "-purchase"
             landmarkType = "7">
          </BreakpointContent>
@@ -788,7 +865,7 @@
             startingLineNumber = "56"
             endingLineNumber = "56"
             landmarkName = "-initWithProductIdentifiers:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -805,7 +882,7 @@
             startingLineNumber = "168"
             endingLineNumber = "168"
             landmarkName = "-productsRequest:didReceiveResponse:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -819,8 +896,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "399"
-            endingLineNumber = "399"
+            startingLineNumber = "537"
+            endingLineNumber = "537"
             landmarkName = "-purchase"
             landmarkType = "7">
          </BreakpointContent>
@@ -836,8 +913,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1175"
-            endingLineNumber = "1175"
+            startingLineNumber = "1314"
+            endingLineNumber = "1314"
             landmarkName = "-getHeartBPMData:"
             landmarkType = "7">
          </BreakpointContent>
@@ -853,13 +930,13 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "-speechSynthesizer:didPauseSpeechUtterance:"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "DE71B311-5658-43D8-BDD2-0E82EA57CC00 - a23ce5b6758878a6"
+                  uuid = "DE71B311-5658-43D8-BDD2-0E82EA57CC00 - a23ce5b675887eb7"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -869,12 +946,12 @@
                   urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58"
-                  offsetFromSymbolStart = "69">
+                  startingLineNumber = "73"
+                  endingLineNumber = "73"
+                  offsetFromSymbolStart = "120">
                </Location>
                <Location
-                  uuid = "DE71B311-5658-43D8-BDD2-0E82EA57CC00 - a23ce5b6758878a6"
+                  uuid = "DE71B311-5658-43D8-BDD2-0E82EA57CC00 - a23ce5b675887f58"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -884,8 +961,8 @@
                   urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58"
+                  startingLineNumber = "72"
+                  endingLineNumber = "72"
                   offsetFromSymbolStart = "84">
                </Location>
             </Locations>
@@ -902,10 +979,42 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "-audioSessionInterrupted:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D02F881B-A7C1-40F3-8C47-3898B2565390 - 203a3cd608a1401d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController audioSessionInterrupted:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "D02F881B-A7C1-40F3-8C47-3898B2565390 - 203a3cd608a1401d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController audioSessionInterrupted:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "44">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -919,8 +1028,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "521"
-            endingLineNumber = "521"
+            startingLineNumber = "658"
+            endingLineNumber = "658"
             landmarkName = "-textField:shouldChangeCharactersInRange:replacementString:"
             landmarkType = "7">
          </BreakpointContent>
@@ -936,8 +1045,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "516"
-            endingLineNumber = "516"
+            startingLineNumber = "653"
+            endingLineNumber = "653"
             landmarkName = "-textField:shouldChangeCharactersInRange:replacementString:"
             landmarkType = "7">
          </BreakpointContent>
@@ -953,10 +1062,57 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "287"
-            endingLineNumber = "287"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
             landmarkName = "-connectToNewDevice"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "17397C1A-524B-4A1D-9E01-E80705318B12 - aa7b1170c2533d59"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController connectToNewDevice]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "400"
+                  endingLineNumber = "400"
+                  offsetFromSymbolStart = "376">
+               </Location>
+               <Location
+                  uuid = "17397C1A-524B-4A1D-9E01-E80705318B12 - aa7b1170c2533d59"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController connectToNewDevice]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "400"
+                  endingLineNumber = "400"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "17397C1A-524B-4A1D-9E01-E80705318B12 - aa7b1170c25332cd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController connectToNewDevice]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "412"
+                  endingLineNumber = "412"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -970,8 +1126,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
+            startingLineNumber = "442"
+            endingLineNumber = "442"
             landmarkName = "-centralManagerDidUpdateState:"
             landmarkType = "7">
          </BreakpointContent>
@@ -987,8 +1143,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "669"
-            endingLineNumber = "669"
+            startingLineNumber = "806"
+            endingLineNumber = "806"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -1004,8 +1160,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "520"
-            endingLineNumber = "520"
+            startingLineNumber = "657"
+            endingLineNumber = "657"
             landmarkName = "-textField:shouldChangeCharactersInRange:replacementString:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1021,8 +1177,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "507"
-            endingLineNumber = "507"
+            startingLineNumber = "644"
+            endingLineNumber = "644"
             landmarkName = "-updateHeartRateReserveTextField"
             landmarkType = "7">
          </BreakpointContent>
@@ -1038,8 +1194,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1375"
-            endingLineNumber = "1375"
+            startingLineNumber = "1514"
+            endingLineNumber = "1514"
             landmarkName = "-load"
             landmarkType = "7">
          </BreakpointContent>
@@ -1055,8 +1211,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1166"
-            endingLineNumber = "1166"
+            startingLineNumber = "1305"
+            endingLineNumber = "1305"
             landmarkName = "-getHeartBPMData:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1072,10 +1228,10 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1012"
-            endingLineNumber = "1012"
-            landmarkName = "-LogDeviceConnectionStatus:"
-            landmarkType = "7">
+            startingLineNumber = "1151"
+            endingLineNumber = "1151"
+            landmarkName = "HRMViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1089,8 +1245,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "639"
-            endingLineNumber = "639"
+            startingLineNumber = "776"
+            endingLineNumber = "776"
             landmarkName = "-restorePurchaseFailed:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1109,7 +1265,7 @@
             startingLineNumber = "183"
             endingLineNumber = "183"
             landmarkName = "-paymentQueue:restoreCompletedTransactionsFailedWithError:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1126,7 +1282,7 @@
             startingLineNumber = "119"
             endingLineNumber = "119"
             landmarkName = "-requestProductsWithCompletionHandler:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1140,8 +1296,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
+            startingLineNumber = "535"
+            endingLineNumber = "535"
             landmarkName = "-purchase"
             landmarkType = "7">
          </BreakpointContent>
@@ -1157,8 +1313,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "849"
-            endingLineNumber = "849"
+            startingLineNumber = "988"
+            endingLineNumber = "988"
             landmarkName = "-audioButtonClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1174,8 +1330,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1357"
-            endingLineNumber = "1357"
+            startingLineNumber = "1496"
+            endingLineNumber = "1496"
             landmarkName = "-load"
             landmarkType = "7">
          </BreakpointContent>
@@ -1191,26 +1347,9 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1338"
-            endingLineNumber = "1338"
+            startingLineNumber = "1477"
+            endingLineNumber = "1477"
             landmarkName = "-save"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3AC92FFD-E3C0-498E-8EF3-1D8BC40A489A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HeartMonitor/HRMViewController.m"
-            timestampString = "528369119.746144"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "298"
-            endingLineNumber = "298"
-            landmarkName = "-connectToNewDevice"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1225,8 +1364,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "793"
-            endingLineNumber = "793"
+            startingLineNumber = "932"
+            endingLineNumber = "932"
             landmarkName = "-LockRestHeartRate:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1242,10 +1381,10 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "606"
-            endingLineNumber = "606"
-            landmarkName = "-textFieldShouldEndEditing:"
-            landmarkType = "7">
+            startingLineNumber = "743"
+            endingLineNumber = "743"
+            landmarkName = "HRMViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1259,8 +1398,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "829"
-            endingLineNumber = "829"
+            startingLineNumber = "968"
+            endingLineNumber = "968"
             landmarkName = "-HRmaxPadlockClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1276,8 +1415,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "840"
-            endingLineNumber = "840"
+            startingLineNumber = "979"
+            endingLineNumber = "979"
             landmarkName = "-HRrestPadlockClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1293,8 +1432,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1431"
-            endingLineNumber = "1431"
+            startingLineNumber = "1570"
+            endingLineNumber = "1570"
             landmarkName = "-load"
             landmarkType = "7">
          </BreakpointContent>
@@ -1310,8 +1449,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1340"
-            endingLineNumber = "1340"
+            startingLineNumber = "1479"
+            endingLineNumber = "1479"
             landmarkName = "-save"
             landmarkType = "7">
          </BreakpointContent>
@@ -1327,8 +1466,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "769"
-            endingLineNumber = "769"
+            startingLineNumber = "908"
+            endingLineNumber = "908"
             landmarkName = "-bpmButtonClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1344,10 +1483,10 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "748"
-            endingLineNumber = "748"
-            landmarkName = "-UpdateHeartRateMode"
-            landmarkType = "7">
+            startingLineNumber = "887"
+            endingLineNumber = "887"
+            landmarkName = "HRMViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1361,8 +1500,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "741"
-            endingLineNumber = "741"
+            startingLineNumber = "880"
+            endingLineNumber = "880"
             landmarkName = "-emulate"
             landmarkType = "7">
          </BreakpointContent>
@@ -1378,8 +1517,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "548"
-            endingLineNumber = "548"
+            startingLineNumber = "685"
+            endingLineNumber = "685"
             landmarkName = "-textFieldDidEndEditing:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1395,10 +1534,10 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1083"
-            endingLineNumber = "1083"
-            landmarkName = "-SpeakHeartRate"
-            landmarkType = "7">
+            startingLineNumber = "1222"
+            endingLineNumber = "1222"
+            landmarkName = "HRMViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1412,8 +1551,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "582"
-            endingLineNumber = "582"
+            startingLineNumber = "719"
+            endingLineNumber = "719"
             landmarkName = "-textFieldDidEndEditing:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1429,8 +1568,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1097"
-            endingLineNumber = "1097"
+            startingLineNumber = "1236"
+            endingLineNumber = "1236"
             landmarkName = "-SpeakHeartRate"
             landmarkType = "7">
          </BreakpointContent>
@@ -1466,7 +1605,7 @@
             startingLineNumber = "156"
             endingLineNumber = "156"
             landmarkName = "-productsRequest:didReceiveResponse:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1480,8 +1619,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "721"
-            endingLineNumber = "721"
+            startingLineNumber = "859"
+            endingLineNumber = "859"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -1497,8 +1636,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
+            startingLineNumber = "508"
+            endingLineNumber = "508"
             landmarkName = "-getPrice"
             landmarkType = "7">
          </BreakpointContent>
@@ -1514,8 +1653,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "358"
-            endingLineNumber = "358"
+            startingLineNumber = "496"
+            endingLineNumber = "496"
             landmarkName = "-getPrice"
             landmarkType = "7">
          </BreakpointContent>
@@ -1531,8 +1670,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "724"
-            endingLineNumber = "724"
+            startingLineNumber = "863"
+            endingLineNumber = "863"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -1548,26 +1687,9 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362"
+            startingLineNumber = "500"
+            endingLineNumber = "500"
             landmarkName = "-getPrice"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "363DC343-4D1C-46E9-BB01-9E78B71F2A31"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HeartMonitor/HRMViewController.m"
-            timestampString = "528369119.746144"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "277"
-            endingLineNumber = "277"
-            landmarkName = "-connectToAlreadyConnectedDevice"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1582,10 +1704,57 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "214"
-            endingLineNumber = "214"
+            startingLineNumber = "317"
+            endingLineNumber = "317"
             landmarkName = "-peripheral:didUpdateValueForCharacteristic:error:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9581649A-BCA8-4BB5-AE7D-027529A21641 - 6eef3354cf22bdbc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didUpdateValueForCharacteristic:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "262"
+                  endingLineNumber = "262"
+                  offsetFromSymbolStart = "284">
+               </Location>
+               <Location
+                  uuid = "9581649A-BCA8-4BB5-AE7D-027529A21641 - 6eef3354cf22bd9d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didUpdateValueForCharacteristic:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "261"
+                  endingLineNumber = "261"
+                  offsetFromSymbolStart = "80">
+               </Location>
+               <Location
+                  uuid = "9581649A-BCA8-4BB5-AE7D-027529A21641 - 6eef3354cf22b34c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didUpdateValueForCharacteristic:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "310"
+                  endingLineNumber = "310"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1599,8 +1768,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "-centralManager:didDisconnectPeripheral:error:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1616,8 +1785,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "282"
+            endingLineNumber = "282"
             landmarkName = "-peripheral:didDiscoverCharacteristicsForService:error:"
             landmarkType = "7">
             <Locations>
@@ -1710,8 +1879,8 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
             landmarkName = "-peripheral:didDiscoverServices:"
             landmarkType = "7">
             <Locations>
@@ -1777,6 +1946,36 @@
                   endingLineNumber = "164"
                   offsetFromSymbolStart = "104">
                </Location>
+               <Location
+                  uuid = "2F89551D-27F8-4268-9269-8D98B1FB733C - d60e1578cabe51ee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverServices:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "211"
+                  endingLineNumber = "211"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  uuid = "2F89551D-27F8-4268-9269-8D98B1FB733C - d60e1578cabe51ee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverServices:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "211"
+                  endingLineNumber = "211"
+                  offsetFromSymbolStart = "104">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -1791,13 +1990,13 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
             landmarkName = "-centralManager:didFailToConnectPeripheral:error:"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "F70A9CBB-5EFA-4EF9-B307-B38B541B1D39 - 3de2034ab00c9784"
+                  uuid = "F70A9CBB-5EFA-4EF9-B307-B38B541B1D39 - 3de2034ab00ca57b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1807,12 +2006,12 @@
                   urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "154"
-                  endingLineNumber = "154"
-                  offsetFromSymbolStart = "94">
+                  startingLineNumber = "263"
+                  endingLineNumber = "263"
+                  offsetFromSymbolStart = "104">
                </Location>
                <Location
-                  uuid = "F70A9CBB-5EFA-4EF9-B307-B38B541B1D39 - 3de2034ab00c9784"
+                  uuid = "F70A9CBB-5EFA-4EF9-B307-B38B541B1D39 - 3de2034ab00ca598"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1822,8 +2021,38 @@
                   urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "154"
-                  endingLineNumber = "154"
+                  startingLineNumber = "262"
+                  endingLineNumber = "262"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "F70A9CBB-5EFA-4EF9-B307-B38B541B1D39 - 3de2034ab00ca43d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didFailToConnectPeripheral:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "257"
+                  endingLineNumber = "257"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "F70A9CBB-5EFA-4EF9-B307-B38B541B1D39 - 3de2034ab00ca41c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didFailToConnectPeripheral:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "258"
+                  endingLineNumber = "258"
                   offsetFromSymbolStart = "104">
                </Location>
             </Locations>
@@ -1840,26 +2069,9 @@
             timestampString = "528369119.746144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "-centralManager:didConnectPeripheral:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7AB888A9-213E-4DCD-A531-A4E6FB92EEF7"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HeartMonitor/HRMViewController.m"
-            timestampString = "528369119.746144"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1873,8 +2085,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1213"
-            endingLineNumber = "1213"
+            startingLineNumber = "1352"
+            endingLineNumber = "1352"
             landmarkName = "-getManufacturerName:"
             landmarkType = "7">
             <Locations>
@@ -1936,8 +2148,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1233"
-            endingLineNumber = "1233"
+            startingLineNumber = "1372"
+            endingLineNumber = "1372"
             landmarkName = "-doHeartBeat"
             landmarkType = "7">
             <Locations>
@@ -1999,8 +2211,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
             landmarkName = "-peripheral:didUpdateValueForCharacteristic:error:"
             landmarkType = "7">
             <Locations>
@@ -2049,6 +2261,21 @@
                   endingLineNumber = "221"
                   offsetFromSymbolStart = "168">
                </Location>
+               <Location
+                  uuid = "4AD6D3B1-B9CE-4398-9076-320B49150963 - 6eef3354cf22b59b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didUpdateValueForCharacteristic:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "323"
+                  endingLineNumber = "323"
+                  offsetFromSymbolStart = "168">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -2062,10 +2289,42 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
             landmarkName = "-peripheral:didUpdateValueForCharacteristic:error:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D48B24B1-9773-4465-88D7-A1C3A0E6AADB - 6eef3354cf22bfea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didUpdateValueForCharacteristic:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "276"
+                  endingLineNumber = "276"
+                  offsetFromSymbolStart = "312">
+               </Location>
+               <Location
+                  uuid = "D48B24B1-9773-4465-88D7-A1C3A0E6AADB - 6eef3354cf22bfea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didUpdateValueForCharacteristic:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "276"
+                  endingLineNumber = "276"
+                  offsetFromSymbolStart = "284">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2078,8 +2337,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
             landmarkName = "-peripheral:didDiscoverServices:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2094,10 +2353,42 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
+            startingLineNumber = "293"
+            endingLineNumber = "293"
             landmarkName = "-peripheral:didDiscoverCharacteristicsForService:error:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5EFB7A7C-C7E1-4CA4-924D-5E1150FFF58C - 3c5d32268c19bf83"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "243"
+                  endingLineNumber = "243"
+                  offsetFromSymbolStart = "1088">
+               </Location>
+               <Location
+                  uuid = "5EFB7A7C-C7E1-4CA4-924D-5E1150FFF58C - 3c5d32268c19bf83"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "243"
+                  endingLineNumber = "243"
+                  offsetFromSymbolStart = "1020">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2110,8 +2401,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1178"
-            endingLineNumber = "1178"
+            startingLineNumber = "1317"
+            endingLineNumber = "1317"
             landmarkName = "-getHeartBPMData:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2126,8 +2417,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "-peripheral:didDiscoverServices:"
             landmarkType = "7">
             <Locations>
@@ -2161,6 +2452,36 @@
                   endingLineNumber = "164"
                   offsetFromSymbolStart = "104">
                </Location>
+               <Location
+                  uuid = "834BA9FD-8334-4CFF-8B3A-9FCB380AC20B - d60e1578cabe51ee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverServices:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "211"
+                  endingLineNumber = "211"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  uuid = "834BA9FD-8334-4CFF-8B3A-9FCB380AC20B - d60e1578cabe51ee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverServices:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "211"
+                  endingLineNumber = "211"
+                  offsetFromSymbolStart = "104">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -2174,8 +2495,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1167"
-            endingLineNumber = "1167"
+            startingLineNumber = "1306"
+            endingLineNumber = "1306"
             landmarkName = "-getHeartBPMData:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2190,8 +2511,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
             landmarkName = "-peripheral:didDiscoverServices:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2206,8 +2527,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "237"
-            endingLineNumber = "237"
+            startingLineNumber = "340"
+            endingLineNumber = "340"
             landmarkName = "-peripheral:didUpdateValueForCharacteristic:error:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2222,8 +2543,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
             landmarkName = "-peripheral:didDiscoverCharacteristicsForService:error:"
             landmarkType = "7">
             <Locations>
@@ -2285,8 +2606,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
+            startingLineNumber = "309"
+            endingLineNumber = "309"
             landmarkName = "-peripheral:didDiscoverCharacteristicsForService:error:"
             landmarkType = "7">
             <Locations>
@@ -2342,19 +2663,19 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "EB65A7C8-E39F-4CE6-9D29-606DEC776388"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "-peripheral:didUpdateValueForCharacteristic:error:"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "EB65A7C8-E39F-4CE6-9D29-606DEC776388 - 6eef3354cf228703"
+                  uuid = "EB65A7C8-E39F-4CE6-9D29-606DEC776388 - 6eef3354cf22b78b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2364,12 +2685,27 @@
                   urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "219"
-                  endingLineNumber = "219"
+                  startingLineNumber = "339"
+                  endingLineNumber = "339"
+                  offsetFromSymbolStart = "428">
+               </Location>
+               <Location
+                  uuid = "EB65A7C8-E39F-4CE6-9D29-606DEC776388 - 6eef3354cf22b78b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didUpdateValueForCharacteristic:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "339"
+                  endingLineNumber = "339"
                   offsetFromSymbolStart = "436">
                </Location>
                <Location
-                  uuid = "EB65A7C8-E39F-4CE6-9D29-606DEC776388 - 6eef3354cf22b9da"
+                  uuid = "EB65A7C8-E39F-4CE6-9D29-606DEC776388 - 6eef3354cf22b674"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2379,12 +2715,12 @@
                   urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "228"
-                  endingLineNumber = "228"
+                  startingLineNumber = "334"
+                  endingLineNumber = "334"
                   offsetFromSymbolStart = "436">
                </Location>
                <Location
-                  uuid = "EB65A7C8-E39F-4CE6-9D29-606DEC776388 - 6eef3354cf22b9fd"
+                  uuid = "EB65A7C8-E39F-4CE6-9D29-606DEC776388 - 6eef3354cf22b617"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2394,8 +2730,8 @@
                   urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "229"
-                  endingLineNumber = "229"
+                  startingLineNumber = "335"
+                  endingLineNumber = "335"
                   offsetFromSymbolStart = "436">
                </Location>
             </Locations>
@@ -2411,8 +2747,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
             landmarkName = "-centralManager:didConnectPeripheral:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2421,79 +2757,64 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "4625E2C0-DEC0-4BC2-B4ED-D5E2FE7E6DC4"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4625E2C0-DEC0-4BC2-B4ED-D5E2FE7E6DC4 - 3eadc6162cb4a545"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDiscoverPeripheral:advertisementData:RSSI:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "177"
+                  endingLineNumber = "177"
+                  offsetFromSymbolStart = "972">
+               </Location>
+               <Location
+                  uuid = "4625E2C0-DEC0-4BC2-B4ED-D5E2FE7E6DC4 - 3eadc6162cb4a545"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDiscoverPeripheral:advertisementData:RSSI:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "177"
+                  endingLineNumber = "177"
+                  offsetFromSymbolStart = "944">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "D7BD6265-F02B-484F-82F7-FADB80BA2072"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "370"
+            endingLineNumber = "370"
             landmarkName = "-connectToTheDeviceWeUsedLastTime"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "D7BD6265-F02B-484F-82F7-FADB80BA2072 - 286a2a98b746f0a1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[HRMViewController connectToTheDeviceWeUsedLastTime]"
-                  moduleName = "Heart Rate Training"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "257"
-                  endingLineNumber = "257"
-                  offsetFromSymbolStart = "536">
-               </Location>
-               <Location
-                  uuid = "D7BD6265-F02B-484F-82F7-FADB80BA2072 - 286a2a98b746f188"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[HRMViewController connectToTheDeviceWeUsedLastTime]"
-                  moduleName = "Heart Rate Training"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "266"
-                  endingLineNumber = "266"
-                  offsetFromSymbolStart = "536">
-               </Location>
-               <Location
-                  uuid = "D7BD6265-F02B-484F-82F7-FADB80BA2072 - 286a2a98b746f26b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[HRMViewController connectToTheDeviceWeUsedLastTime]"
-                  moduleName = "Heart Rate Training"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "267"
-                  endingLineNumber = "267"
-                  offsetFromSymbolStart = "536">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2506,8 +2827,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1014"
-            endingLineNumber = "1014"
+            startingLineNumber = "1153"
+            endingLineNumber = "1153"
             landmarkName = "-LogDeviceConnectionStatus:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2522,73 +2843,10 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "347"
-            endingLineNumber = "347"
-            landmarkName = "-alertMessage:s:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "97CA292A-BB61-4D43-8003-A5F5EC7F250D - a73c3ee68653fadc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[HRMViewController alertMessage:s:]"
-                  moduleName = "Heart Rate Training"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "337"
-                  endingLineNumber = "337"
-                  offsetFromSymbolStart = "80">
-               </Location>
-               <Location
-                  uuid = "97CA292A-BB61-4D43-8003-A5F5EC7F250D - a73c3ee68653e5f5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[HRMViewController alertMessage:s:]"
-                  moduleName = "Heart Rate Training"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "346"
-                  endingLineNumber = "346"
-                  offsetFromSymbolStart = "80">
-               </Location>
-               <Location
-                  uuid = "97CA292A-BB61-4D43-8003-A5F5EC7F250D - a73c3ee68653e596"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[HRMViewController alertMessage:s:]"
-                  moduleName = "Heart Rate Training"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "347"
-                  endingLineNumber = "347"
-                  offsetFromSymbolStart = "80">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2A0F3D5F-7D9D-4F12-92E4-476F3E76531C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HeartMonitor/HRMViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
-            landmarkName = "-peripheral:didDiscoverServices:"
-            landmarkType = "7">
+            startingLineNumber = "473"
+            endingLineNumber = "473"
+            landmarkName = "HRMViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2601,8 +2859,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
             landmarkName = "-peripheral:didDiscoverCharacteristicsForService:error:"
             landmarkType = "7">
             <Locations>
@@ -2643,19 +2901,19 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
             landmarkName = "-peripheral:didDiscoverCharacteristicsForService:error:"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3 - 3c5d32268c1980d8"
+                  uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3 - 3c5d32268c19b6a6"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2665,12 +2923,27 @@
                   urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "202"
-                  endingLineNumber = "202"
+                  startingLineNumber = "312"
+                  endingLineNumber = "312"
+                  offsetFromSymbolStart = "1372">
+               </Location>
+               <Location
+                  uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3 - 3c5d32268c19b6a6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "312"
+                  endingLineNumber = "312"
                   offsetFromSymbolStart = "1496">
                </Location>
                <Location
-                  uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3 - 3c5d32268c1980d8"
+                  uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3 - 3c5d32268c19b6a6"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2680,8 +2953,68 @@
                   urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "202"
-                  endingLineNumber = "202"
+                  startingLineNumber = "312"
+                  endingLineNumber = "312"
+                  offsetFromSymbolStart = "1504">
+               </Location>
+               <Location
+                  uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3 - 3c5d32268c19b643"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "307"
+                  endingLineNumber = "307"
+                  offsetFromSymbolStart = "1496">
+               </Location>
+               <Location
+                  uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3 - 3c5d32268c19b643"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "307"
+                  endingLineNumber = "307"
+                  offsetFromSymbolStart = "1504">
+               </Location>
+               <Location
+                  uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3 - 3c5d32268c19b622"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "308"
+                  endingLineNumber = "308"
+                  offsetFromSymbolStart = "1496">
+               </Location>
+               <Location
+                  uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3 - 3c5d32268c19b622"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "308"
+                  endingLineNumber = "308"
                   offsetFromSymbolStart = "1504">
                </Location>
             </Locations>
@@ -2697,8 +3030,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
             landmarkName = "-peripheral:didDiscoverCharacteristicsForService:error:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2713,24 +3046,86 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "-nag"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "94D00A7F-8DB9-40AB-B1B0-29C67642DBC1 - cd4365c46146b776"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController nag]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "193"
+                  endingLineNumber = "193"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "94D00A7F-8DB9-40AB-B1B0-29C67642DBC1 - cd4365c46146b7a9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController nag]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "192"
+                  endingLineNumber = "192"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "94D00A7F-8DB9-40AB-B1B0-29C67642DBC1 - cd4365c46146b04c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController nag]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "187"
+                  endingLineNumber = "187"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "94D00A7F-8DB9-40AB-B1B0-29C67642DBC1 - cd4365c46146b02d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController nag]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "188"
+                  endingLineNumber = "188"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "64510327-1997-45D5-9AAE-440E306C35AB"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "708"
-            endingLineNumber = "708"
+            startingLineNumber = "846"
+            endingLineNumber = "846"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
             <Locations>
@@ -2764,6 +3159,21 @@
                   endingLineNumber = "708"
                   offsetFromSymbolStart = "1080">
                </Location>
+               <Location
+                  uuid = "64510327-1997-45D5-9AAE-440E306C35AB - eb7881e49c7350c2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController viewDidLoad]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "708"
+                  endingLineNumber = "708"
+                  offsetFromSymbolStart = "1054">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -2777,8 +3187,8 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "665"
-            endingLineNumber = "665"
+            startingLineNumber = "802"
+            endingLineNumber = "802"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -2793,10 +3203,891 @@
             filePath = "HeartMonitor/HRMViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "911"
-            endingLineNumber = "911"
+            startingLineNumber = "1050"
+            endingLineNumber = "1050"
             landmarkName = "-talk:voice:passive:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A8C047A8-8F0F-416D-AE2F-6D28EA6E33F4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
+            landmarkName = "-peripheral:didDiscoverCharacteristicsForService:error:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A8C047A8-8F0F-416D-AE2F-6D28EA6E33F4 - 3c5d32268c19bc17"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "231"
+                  endingLineNumber = "231"
+                  offsetFromSymbolStart = "452">
+               </Location>
+               <Location
+                  uuid = "A8C047A8-8F0F-416D-AE2F-6D28EA6E33F4 - 3c5d32268c19bc17"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "231"
+                  endingLineNumber = "231"
+                  offsetFromSymbolStart = "168">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4AB1E0AC-3057-4273-A65D-C47DB452FB56"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "444"
+            endingLineNumber = "444"
+            landmarkName = "-centralManagerDidUpdateState:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "415C0815-D9FD-4E48-83B6-826067D1C7DF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
+            landmarkName = "-peripheral:didDiscoverCharacteristicsForService:error:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "415C0815-D9FD-4E48-83B6-826067D1C7DF - 3c5d32268c19bf3c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "238"
+                  endingLineNumber = "238"
+                  offsetFromSymbolStart = "908">
+               </Location>
+               <Location
+                  uuid = "415C0815-D9FD-4E48-83B6-826067D1C7DF - 3c5d32268c19bf3c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "238"
+                  endingLineNumber = "238"
+                  offsetFromSymbolStart = "608">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4A75FEEE-0685-4BDF-94E2-A2B541DB23A2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
+            landmarkName = "-peripheral:didDiscoverServices:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1AB9438F-6ECB-4F2E-9706-4F53943480E1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "319"
+            endingLineNumber = "319"
+            landmarkName = "-peripheral:didUpdateValueForCharacteristic:error:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1AB9438F-6ECB-4F2E-9706-4F53943480E1 - 6eef3354cf22b51f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didUpdateValueForCharacteristic:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "327"
+                  endingLineNumber = "327"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "1AB9438F-6ECB-4F2E-9706-4F53943480E1 - 6eef3354cf22b57c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didUpdateValueForCharacteristic:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "326"
+                  endingLineNumber = "326"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "1AB9438F-6ECB-4F2E-9706-4F53943480E1 - 6eef3354cf22b5d9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didUpdateValueForCharacteristic:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "321"
+                  endingLineNumber = "321"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "1AB9438F-6ECB-4F2E-9706-4F53943480E1 - 6eef3354cf22b5f8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController peripheral:didUpdateValueForCharacteristic:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "322"
+                  endingLineNumber = "322"
+                  offsetFromSymbolStart = "104">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B106882E-A908-4C12-9049-20D6FB354567"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1294"
+            endingLineNumber = "1294"
+            landmarkName = "-getHeartBPMData:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B106882E-A908-4C12-9049-20D6FB354567 - 560f7d6d55ba8e7c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController getHeartBPMData:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1221"
+                  endingLineNumber = "1221"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "B106882E-A908-4C12-9049-20D6FB354567 - 560f7d6d55ba8e7c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController getHeartBPMData:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1221"
+                  endingLineNumber = "1221"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "B106882E-A908-4C12-9049-20D6FB354567 - 560f7d6d55ba844b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController getHeartBPMData:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1300"
+                  endingLineNumber = "1300"
+                  offsetFromSymbolStart = "44">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ABDB1A7E-DB0E-49E7-85B0-C0603C873043"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "-centralManager:didDisconnectPeripheral:error:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "ABDB1A7E-DB0E-49E7-85B0-C0603C873043 - 4d6701feaa9188f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDisconnectPeripheral:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "340">
+               </Location>
+               <Location
+                  uuid = "ABDB1A7E-DB0E-49E7-85B0-C0603C873043 - 4d6701feaa9188f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDisconnectPeripheral:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "336">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "979588EC-80D2-4611-B39A-C4BB91266110"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
+            landmarkName = "-connectToNewDevice"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "979588EC-80D2-4611-B39A-C4BB91266110 - 939019d01f1b2f67"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManagerDidUpdateState:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "409"
+                  endingLineNumber = "409"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "979588EC-80D2-4611-B39A-C4BB91266110 - aa7b1170c253322e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController connectToNewDevice]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "409"
+                  endingLineNumber = "409"
+                  offsetFromSymbolStart = "376">
+               </Location>
+               <Location
+                  uuid = "979588EC-80D2-4611-B39A-C4BB91266110 - aa7b1170c2533392"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController connectToNewDevice]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "421"
+                  endingLineNumber = "421"
+                  offsetFromSymbolStart = "376">
+               </Location>
+               <Location
+                  uuid = "979588EC-80D2-4611-B39A-C4BB91266110 - aa7b1170c2533073"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController connectToNewDevice]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "422"
+                  endingLineNumber = "422"
+                  offsetFromSymbolStart = "376">
+               </Location>
+               <Location
+                  uuid = "979588EC-80D2-4611-B39A-C4BB91266110 - aa7b1170c2533073"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController connectToNewDevice]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "422"
+                  endingLineNumber = "422"
+                  offsetFromSymbolStart = "364">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "55A84851-5ECC-4054-87F5-F09882E91C4A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "-centralManager:didDisconnectPeripheral:error:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "55A84851-5ECC-4054-87F5-F09882E91C4A - 4d6701feaa91d5e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDisconnectPeripheral:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "828">
+               </Location>
+               <Location
+                  uuid = "55A84851-5ECC-4054-87F5-F09882E91C4A - 4d6701feaa91d5e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDisconnectPeripheral:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "844">
+               </Location>
+               <Location
+                  uuid = "55A84851-5ECC-4054-87F5-F09882E91C4A - 4d6701feaa91d5e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController centralManager:didDisconnectPeripheral:error:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "856">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9F5A1BA7-3A3B-4B59-98A9-2B28AD48EF87"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "-updateDeviceList"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9F5A1BA7-3A3B-4B59-98A9-2B28AD48EF87 - e22e5bd7f638fc51"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__37-[HRMViewController updateDeviceList]_block_invoke"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "116"
+                  endingLineNumber = "116"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  uuid = "9F5A1BA7-3A3B-4B59-98A9-2B28AD48EF87 - 23bc6381f50f1383"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController updateDeviceList]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "116"
+                  endingLineNumber = "116"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  uuid = "9F5A1BA7-3A3B-4B59-98A9-2B28AD48EF87 - e22e5bd7f638fc76"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__37-[HRMViewController updateDeviceList]_block_invoke"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "117"
+                  endingLineNumber = "117"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  uuid = "9F5A1BA7-3A3B-4B59-98A9-2B28AD48EF87 - 23bc6381f50f13a4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController updateDeviceList]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "117"
+                  endingLineNumber = "117"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  uuid = "9F5A1BA7-3A3B-4B59-98A9-2B28AD48EF87 - e22e5bd7f638fc17"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__37-[HRMViewController updateDeviceList]_block_invoke"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "118"
+                  endingLineNumber = "118"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "003AB9D6-16EC-4F21-86E1-4358201B6531"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "356"
+            endingLineNumber = "356"
+            landmarkName = "-connectToTheDeviceWeUsedLastTime"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BE4D9EA1-A6CC-4325-A58D-65EB1565BEF2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "-updateDeviceList"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2A81E510-E78F-4680-81FD-1322D15443A5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "299737E4-40A4-4EEA-8CDD-0555C62E3735"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "-centralManager:didConnectPeripheral:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4C3020CD-C675-406B-AF12-18CE091331F0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1353"
+            endingLineNumber = "1353"
+            landmarkName = "-getManufacturerName:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4C3020CD-C675-406B-AF12-18CE091331F0 - b9d15c3d87b466ab"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController getManufacturerName:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1369"
+                  endingLineNumber = "1369"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  uuid = "4C3020CD-C675-406B-AF12-18CE091331F0 - b9d15c3d87b46144"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController getManufacturerName:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1368"
+                  endingLineNumber = "1368"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  uuid = "4C3020CD-C675-406B-AF12-18CE091331F0 - b9d15c3d87b466ab"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController getManufacturerName:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1369"
+                  endingLineNumber = "1369"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  uuid = "4C3020CD-C675-406B-AF12-18CE091331F0 - b9d15c3d87b4668a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController getManufacturerName:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1370"
+                  endingLineNumber = "1370"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  uuid = "4C3020CD-C675-406B-AF12-18CE091331F0 - b9d15c3d87b466c8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController getManufacturerName:]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1372"
+                  endingLineNumber = "1372"
+                  offsetFromSymbolStart = "148">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4B709BC4-3216-440D-9D0B-1443F75D508A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6B736472-0589-4292-A82C-A53911057413"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
+            landmarkName = "-connectToAlreadyConnectedDevice"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6B736472-0589-4292-A82C-A53911057413 - 5f838ce34bb3348d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController connectToAlreadyConnectedDevice]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "404"
+                  endingLineNumber = "404"
+                  offsetFromSymbolStart = "664">
+               </Location>
+               <Location
+                  uuid = "6B736472-0589-4292-A82C-A53911057413 - 5f838ce34bb3348d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController connectToAlreadyConnectedDevice]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "404"
+                  endingLineNumber = "404"
+                  offsetFromSymbolStart = "720">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "72F4EAEA-EEA2-4071-B01E-617C1C5D5391"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "393"
+            endingLineNumber = "393"
+            landmarkName = "-connectToAlreadyConnectedDevice"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7FCF6AD3-05C9-4CDB-B253-2F71B9252115"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HeartMonitor/HRMViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "420"
+            endingLineNumber = "420"
+            landmarkName = "-connectToNewDevice"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7FCF6AD3-05C9-4CDB-B253-2F71B9252115 - aa7b1170c2533106"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController connectToNewDevice]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "433"
+                  endingLineNumber = "433"
+                  offsetFromSymbolStart = "428">
+               </Location>
+               <Location
+                  uuid = "7FCF6AD3-05C9-4CDB-B253-2F71B9252115 - 38099b6020222017"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__39-[HRMViewController connectToNewDevice]_block_invoke"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "434"
+                  endingLineNumber = "434"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  uuid = "7FCF6AD3-05C9-4CDB-B253-2F71B9252115 - aa7b1170c25331c4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HRMViewController connectToNewDevice]"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "435"
+                  endingLineNumber = "435"
+                  offsetFromSymbolStart = "468">
+               </Location>
+               <Location
+                  uuid = "7FCF6AD3-05C9-4CDB-B253-2F71B9252115 - 38099b6020222055"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__39-[HRMViewController connectToNewDevice]_block_invoke"
+                  moduleName = "Heart Rate Training"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erlendthune/git/xcode-corrate/HeartMonitor/HRMViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "436"
+                  endingLineNumber = "436"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

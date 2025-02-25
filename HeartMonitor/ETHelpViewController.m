@@ -22,20 +22,7 @@
     }
     return self;
 }
--(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
-    if ( inType == UIWebViewNavigationTypeLinkClicked ) {
-        NSURL *facebookURL = [NSURL URLWithString:@"fb://profile/108347542847958"];
-        if ([[UIApplication sharedApplication] canOpenURL:facebookURL]) {
-            [[UIApplication sharedApplication] openURL:facebookURL];
-        } else {
-            [[UIApplication sharedApplication] openURL:[inRequest URL]];
-        }
 
-        return NO;
-    }
-    
-    return YES;
-}
 - (IBAction)helpDone:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -44,7 +31,17 @@
 {
     [super viewDidLoad];
     NSString *thePath = [[NSBundle mainBundle] pathForResource:@"HeartRateTrainingUserGuide" ofType:@"html"];
-    self.helpView.delegate = self;
+
+    // Replace the UIView (helpView) with a WKWebView
+     WKWebView *webView = [[WKWebView alloc] initWithFrame:self.helpView.bounds];
+     webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+
+     // Add the WKWebView to the helpView
+     [self.helpView addSubview:webView];
+
+     // Retain a reference to the WKWebView if needed
+     self.helpView = webView;
+
     if (thePath) {
         
         [self.helpView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:thePath isDirectory:NO]]];
