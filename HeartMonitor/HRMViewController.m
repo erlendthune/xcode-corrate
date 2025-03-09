@@ -8,6 +8,7 @@
 //https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
 
 #import "HRMViewController.h"
+#import "HRMFartlekViewController.h"
 #import "ETHelpViewController.h"
 #import "HRMAPHelper.h"
 #import "ETAlertView.h"
@@ -29,6 +30,7 @@
     _firstHeartBeat=true;
     [_pulseTimer invalidate];
 }
+
 
 - (void)centralManager:(CBCentralManager *)central
 didDisconnectPeripheral:(CBPeripheral *)peripheral
@@ -127,6 +129,15 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
             }];
             [self.deviceListAlert addAction:cancelAction];
 
+            [self displayConnectedDevices];
+            
+            NSArray *services = @[[CBUUID UUIDWithString:POLARH7_HRM_HEART_RATE_SERVICE_UUID]];
+            [self.centralManager scanForPeripheralsWithServices:services options:nil];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.centralManager stopScan];
+                NSLog(@"🛑 Stopped scanning after 5 seconds.");
+            });
+
             [self presentViewController:self.deviceListAlert animated:YES
                              completion:nil];
         }
@@ -211,7 +222,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
                                 message:nil
                                 preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction* helpAction = [UIAlertAction actionWithTitle:@"Hjelp" style:UIAlertActionStyleDefault
+    UIAlertAction* helpAction = [UIAlertAction actionWithTitle:@"Help" style:UIAlertActionStyleDefault
          handler:^(UIAlertAction * action) {
              ETHelpViewController *helpController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpViewController"];
              helpController.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -225,9 +236,21 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
            [self deleteDevice];
         }];
 
+    if(!self.connected)
+    {
+        deleteConnectionAction.enabled = NO;
+    }
+
     [alert addAction:deleteConnectionAction];
 
-    
+    UIAlertAction* disclaimerAction = [UIAlertAction actionWithTitle:@"Disclaimer" style:UIAlertActionStyleDefault
+        handler:^(UIAlertAction * action) {
+            [self alertMessage:@"Disclaimer" s:@"Please use common sense. Always consult with your primary care physician before engaging in any new type of physical activity such as Fartlek - especially if you have not participated in any high-intensity physical activity recently."];
+            self.disclaimerPresented = YES;
+        }];
+
+    [alert addAction:disclaimerAction];
+
     UIAlertAction* buyAction = [UIAlertAction actionWithTitle:@"Kjøp" style:UIAlertActionStyleDefault
        handler:^(UIAlertAction * action) {
            [self DisplayAlertView:self.usageCounter nag:false];
@@ -248,7 +271,6 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     
     [self presentViewController:alert animated:YES
                      completion:nil];
-    
 }
 
 - (void)centralManager:(CBCentralManager *)central
@@ -413,14 +435,6 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     _deleteDeviceButton.hidden = YES;
     [self.discoveredPeripherals removeAllObjects];
     [self updateDeviceList];
-    [self displayConnectedDevices];
-    
-    NSArray *services = @[[CBUUID UUIDWithString:POLARH7_HRM_HEART_RATE_SERVICE_UUID]];
-    [self.centralManager scanForPeripheralsWithServices:services options:nil];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.centralManager stopScan];
-        NSLog(@"🛑 Stopped scanning after 5 seconds.");
-    });
 }
 
 // method called whenever the device state changes.
@@ -799,11 +813,16 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 }
 - (void)viewDidLoad
 {
+    self.disclaimerPresented = NO;
     [super viewDidLoad];
     self.discoveredPeripherals = [[NSMutableArray alloc] init];
     _hrmDisplay = HRM_BPM;
     _heartRateMax = UNSET_HR_MAX;
     _heartRateMin = UNSET_HR_REST;
+    _fartlekWarmupMinutes = 10;
+    _fartlekRepetitions = 10;
+    _fartlekLowHeartRate = 100;
+    _fartlekHighHeartRate = 110;
     _audioOn = true;
     _heartRate = 0;
     _identifier = nil;
@@ -1175,38 +1194,38 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     return (b & 0x06)>>1;
 }
 
--(void)TimedSpeaking
+-(void)TimedSpeaking:(double) currentTime
 {
     if(!_audioOn)
     {
         return;
     }
     bool timeToSpeak = true;
-    double newTime = CACurrentMediaTime();
+    
     if(_relativeTiming < 0.0)
     {
-        _relativeTiming = newTime;
+        _relativeTiming = currentTime;
     }
     else
     {
-        if((newTime - _relativeTiming) < _audioInterval)
+        if((currentTime - _relativeTiming) < _audioInterval)
         {
             timeToSpeak = false;
         }
         else
         {
-            _relativeTiming = newTime;
+            _relativeTiming = currentTime;
         }
     }
     if(_nextNagTime < 0.0)
     {
-        [self updateNextNagTime:newTime];
+        [self updateNextNagTime:currentTime];
     }
     
-    if((!_purchased) && (newTime > _nextNagTime) && (_noOfTimesUsed > NAG_TIMES_USED))
+    if((!_purchased) && (currentTime > _nextNagTime) && (_noOfTimesUsed > NAG_TIMES_USED))
     {
         [self nag];
-        [self updateNextNagTime:newTime];
+        [self updateNextNagTime:currentTime];
     }
     else if(timeToSpeak) //Don't nag and give the heart rate at the same time.
     {
@@ -1272,7 +1291,113 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 
     [self calculateHrmPercent];
     [self updateHeartRateTextField];
-    [self TimedSpeaking];
+    double currentTime = CACurrentMediaTime();
+    [self TimedSpeaking:currentTime];
+    
+    if(self.fartlek == YES)
+    {
+        [self processFartlek:currentTime];
+    }
+}
+
+- (void)processFartlek:(double)currentTime
+{
+    NSString *message = @"";
+    
+    if (self.fartlekState == HRMFartlekStateWarmup) {
+        CFTimeInterval elapsedTime = currentTime - self.warmupStartedTime;
+        CFTimeInterval remainingTime = (self.fartlekWarmupMinutes * 60) - elapsedTime;
+        
+        if (elapsedTime >= self.fartlekWarmupMinutes * 60) {
+            self.fartlekState = HRMFartlekStateWarmupFinished;
+        } else {
+            int remainingMinutes = (int)(remainingTime / 60);
+            
+            // Only speak if the remaining minutes have changed
+            if (remainingMinutes != self.lastSpokenMinute) {
+                self.lastSpokenMinute = remainingMinutes; // Update last spoken minute
+                message = [NSString stringWithFormat:@"%d minutes left of warmup", remainingMinutes];
+            }
+        }
+    }
+    else if(self.fartlekState == HRMFartlekStateWarmupFinished)
+    {
+        if(self.heartRate > self.fartlekLowHeartRate)
+        {
+            self.fartlekState = HRMFartlekStateSlowdown;
+            message = [NSString stringWithFormat:@"Heart rate to high. Slow down to start first iteration of fartlek."];
+        }
+        else
+        {
+            self.fartlekState = HRMFartlekStateSpeedup;
+            message = [NSString stringWithFormat:@"Iteration 1 of %d. Speed up.", self.fartlekRepetitions];
+        }
+    }
+    else if(self.fartlekState == HRMFartlekStateSlowdown)
+    {
+        if(self.heartRate < self.fartlekLowHeartRate)
+        {
+            if(self.fartlekCurrentIteration > self.fartlekRepetitions)
+            {
+                self.fartlekState = HRMFartlekStateFinished;
+                [self stopFartlek];
+                message = [NSString stringWithFormat:@"Good job. Fartlek completed."];
+            }
+            else
+            {
+                self.fartlekState = HRMFartlekStateSpeedup;
+                message = [NSString stringWithFormat:@"Speed up."];
+            }
+        }
+        else
+        {
+            message = [NSString stringWithFormat:@"Slow down."];
+        }
+    }
+    if(self.fartlekState == HRMFartlekStateSpeedup)
+    {
+        if(self.heartRate > self.fartlekHighHeartRate)
+        {
+            message = [NSString stringWithFormat:@"Iteration %d of %d completed. Slow down.", self.fartlekCurrentIteration, self.fartlekRepetitions];
+            self.fartlekState = HRMFartlekStateSlowdown;
+            self.fartlekCurrentIteration++;
+        }
+        else
+        {
+            message = [NSString stringWithFormat:@"Speed up."];
+        }
+    }
+    
+    [self talk:message voice:[AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"] passive:false];
+    self.hrmFartlekViewController.feedback.text = message;
+}
+
+- (void)startFartlek:(HRMFartlekViewController*)hrmFartlekViewController
+                        warmupMinutes:(uint16_t)warmupMinutes
+                        repetitions:(uint16_t)repetitions
+                        lowHeartRate:(uint16_t)lowHeartRate
+                       highHeartRate:(uint16_t)highHeartRate;
+{
+    self.fartlek = YES;
+    self.fartlekCurrentIteration = 1;
+    self.warmupStartedTime = CACurrentMediaTime();
+    self.fartlekState = HRMFartlekStateWarmup;
+    self.hrmFartlekViewController = hrmFartlekViewController;
+    self.fartlekWarmupMinutes = warmupMinutes;
+    self.fartlekRepetitions = repetitions;
+    self.fartlekLowHeartRate = lowHeartRate;
+    self.fartlekHighHeartRate = highHeartRate;
+
+    AVSpeechSynthesisVoice* voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"];
+
+    NSString *message = [NSString stringWithFormat:@"Warm up %d minutes", self.hrmFartlekViewController.warmupTimeValue];
+    [self talk:message voice:voice passive:false];
+    self.hrmFartlekViewController.feedback.text = message;
+}
+
+- (void)stopFartlek
+{
+    self.fartlek = NO;
 }
 
 -(BOOL)IsPolarDevice
@@ -1447,9 +1572,11 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     else
     {
         [defaults removeObjectForKey:@"identifier"];
-        
-
     }
+    [defaults setInteger:_fartlekWarmupMinutes forKey:@"fartlekWarmupMinutes"];
+    [defaults setInteger:_fartlekRepetitions forKey:@"fartlekRepetitions"];
+    [defaults setInteger:_fartlekLowHeartRate forKey:@"fartlekLowHeartRate"];
+    [defaults setInteger:_fartlekHighHeartRate forKey:@"fartlekHighHeartRate"];
     [defaults setInteger:_audioInterval forKey:@"audioInterval"];
     [defaults setInteger:_noOfTimesUsed forKey:@"noOfTimesUsed"];
     [defaults setInteger:_heartRateMin forKey:@"heartRateMin"];
@@ -1466,7 +1593,6 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     
     [defaults setObject:[NSNumber numberWithFloat:_speedIndicator.value] forKey:@"speedIndicator"];
     
-    
     if(_audioOn)
     {
         [defaults setInteger:AUDIO_ON forKey:@"audioOn"];
@@ -1480,6 +1606,9 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 
     locked = !_maxHeartRateTextField.enabled;
     [defaults setInteger:locked forKey:@"maxLocked"];
+    
+    NSInteger disclaimerPresented = self.disclaimerPresented;
+    [defaults setInteger:disclaimerPresented forKey:@"disclaimerPresented"];
 
     [defaults synchronize];
     
@@ -1512,6 +1641,27 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     else
     {
         _noOfTimesUsed = 1;
+    }
+    
+    if ([defaults objectForKey:@"fartlekWarmupMinutes"] != nil)
+    {
+        NSInteger tempInt = [defaults integerForKey:@"fartlekWarmupMinutes"];
+        _fartlekWarmupMinutes = tempInt;
+    }
+    if ([defaults objectForKey:@"fartlekRepetitions"] != nil)
+    {
+        NSInteger tempInt = [defaults integerForKey:@"fartlekRepetitions"];
+        _fartlekRepetitions = tempInt;
+    }
+    if ([defaults objectForKey:@"fartlekLowHeartRate"] != nil)
+    {
+        NSInteger tempInt = [defaults integerForKey:@"fartlekLowHeartRate"];
+        _fartlekLowHeartRate = tempInt;
+    }
+    if ([defaults objectForKey:@"fartlekHighHeartRate"] != nil)
+    {
+        NSInteger tempInt = [defaults integerForKey:@"fartlekHighHeartRate"];
+        _fartlekHighHeartRate = tempInt;
     }
     
     if ([defaults objectForKey:@"heartRateMin"] != nil)
@@ -1574,8 +1724,9 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         NSInteger locked = [defaults integerForKey:@"maxLocked"];
         [self LockMaxHeartRate:locked];
     }
-    
+    if ([defaults objectForKey:@"disclaimerPresented"] != nil) {
+        NSInteger disclaimerPresented = [defaults integerForKey:@"disclaimerPresented"];
+        self.disclaimerPresented = (disclaimerPresented != 0); // Convert to BOOL
+    }
 }
-
-
 @end

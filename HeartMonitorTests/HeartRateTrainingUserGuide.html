@@ -1,65 +1,112 @@
-<html>
-    <body>
-        <h1>Corrate - Heart Rate Training</h1>
-        <p>You can discuss Heart Rate Training with fellow people at <a href="http://www.facebook.com/HeartRateTraining">facebook.com/HeartRateTraining</a>.
-        <p>
-        To use the Corrate Heart Rate Training app, abbreviated HRT, you need a heart rate device. The app has been tested with the Polar H7 and the Wahoo BLUE HR, but should normally work with any bluetooth smart heart rate device.
-        </p>
-        <p>
-        The HRT app communicates with your heart rate device through the bluetooth smart protocol. You should therefore make sure bluetooth is enabled on your iphone, ipod or ipad. To enable or disable bluetooth, Open the Control Center, by swiping your finger up from the bottom of the screen. If the blutooth button is coloured gray, push it so the colour changes to white - this means bluetooth is enabled.  To close the Control Center, swipe down.
-        </p>
-        <h2>First row</h2>
-        <p>
-        Displays your heart rate in beats per minute (bpm). The heart icon beats in the same rate as your heart. If no heart rate has been received from the heart rate device, the heart icon stops beating and the heart rate is displayed as &#34;...&#34;. You can click on the bpm button to switch to % view. Your heart rate will then be displayed as a percent of your maximum heart rate (see next row).
-        </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrate - Heart Rate Training</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 10px;
+            padding: 10px;
+        }
         
-        <h2>Second row</h2>
-        <p>
-        Displays your resting heart rate (HRrest), your heart rate reserve (HRreserve) and your maximum heart rate (HRmax). You can enter the HRrest and HRmax manually. If the app registers a lower/larger value than you have entered, your values will be overwritten unless you have locked the fields with the padlocks. To do a fresh measurement of your HRrest, manually specify a high HRrest To do a fresh measurement of your HRmax, manually specify a low HRmax. Then let the app do the rest while you relax or race at maximum effort! HRreserve is the difference between HRmax and HRrest. An increasing HRreserve is normally a sign that your physical condition is improving.
-        </p>
-        
-        <h2>Third row</h2>
-        <p>
-        Measures your recovery heart rate (HRrecovery). Press the &#34;Start recovery&#34; button to start measuring how many beats your heart rate drops in the specified number of seconds. An increasing HRrecovery is normally a sign that your physical condition is improving.
+        h1 {
+            font-size: 24px;
+        }
 
-        </p>
-        
-        
-        <h2>Fourth row</h2>
-        <p>
-        Controls the audio.
-        Decrease or increase the interval between each audio cue in seconds by touching the + and - signs. You can also enter a value manually. Press the speaker icon to turn the sound on or off. Use the speed indicator slider to specify how fast the voice should talk.
-        </p>
-        <p>Note that the audio cue interval will be limited by how often a heart rate is received from the heart rate device. For example, specifying an audio cue interval of 0 seconds will give you any new heart rate measurement from the device as soon as it is available.
-        </p>
-        <h2>Fifth row</h2>
-        <p>
-        Displays information about the heart rate device connection. If the app loses the connection to your heart rate device, the heart rate information will stop while the app tries to reconnect.
-        <p/>
+        h2 {
+            font-size: 22px;
+            margin-top: 20px;
+        }
 
-        <h3>Initial connection with device</h3>
-        <p>
-        The app will automatically search and connect to the heart rate device the first time. The next time you start the app, it will try to reconnect to the same device. This is to make sure you are not connecting to another persons heart rate device when exercising together with other people. The id of the connected heart rate device is displayed when connected.
-        </p>
-        <h3>Connection with a different device</h3>
-        <p>
-        To connect to another device, make sure the current one is not available by putting it at a large physical distance. Also wait for a while to make your iphone/ipad/ipod give up on the connection. Make sure that other apps are not using it for example. Then press the delete icon. The app will then automatically try to connect, first to any other heart rate devices already connected, then it will search for a new heart rate device.</p>
-        <p>
-        <h3>Notes on heart rate devices</h3>
-        <p>
-        Note that heart rate devices can continue to send heart rate information for a substantial amount of time, even when it is removed from your body or is disconnected from its strap.
-        </p>
-        <p>Also note that to avoid battery drainage, it is best to stop the app completely when you are not using it. Do this by double tapping the home button to bring up the multi-tasking view, then swipe up on the screenshot of the app you want to exit.
-        </p>
-        
-        <h2>What does Corrate mean?</h2>
-        Finding a good name for anything is always difficult! I chose the name Corrate because Cor is latin for heart.
-  
-        <h2>Clipart</h2>
-        <p>
-        Heart icon by Maria J.T.<br/>
-        Rabbit, turtle and padlock clip art images by Cliparts.co
-        </p>
+        h3 {
+            font-size: 20px;
+        }
 
-    </body>
+        p {
+            font-size: 16px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            h3 {
+                font-size: 16px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Corrate - Heart Rate Training</h1>
+    <p>You can discuss Heart Rate Training with fellow people at <a href="http://www.facebook.com/HeartRateTraining">facebook.com/HeartRateTraining</a>.</p>
+    
+    <p>To use the Corrate Heart Rate Training app, abbreviated HRT, you need a heart rate device. The app has been tested with the Polar H7 and H9, the Wahoo BLUE HR, Garmin Forerunner 255 but should normally work with any Bluetooth smart heart rate device.</p>
+    
+    <p>The HRT app communicates with your heart rate device through the Bluetooth smart protocol. Ensure Bluetooth is enabled on your iPhone, iPod, or iPad. To enable or disable Bluetooth, open the Control Center by swiping up from the bottom of the screen. If the Bluetooth button is gray, tap it to turn it white, which means Bluetooth is enabled. To close the Control Center, swipe down.</p>
+
+    <h2>Different views</h2>
+    You can see different views by swiping left and right.
+    
+    The first view is where you can specify how often the heart rate is read out to you. See the details below.
+    
+    The second view lets you train using Fartlek.
+    
+    The third view shows you information about the different heart rate zones. You can click on a zone to get information about it.
+    
+    <h2>First Row</h2>
+    <p>Displays your heart rate in beats per minute (bpm). The heart icon beats at the same rate as your heart. If no heart rate is received from the heart rate device, the heart icon stops beating, and the heart rate is displayed as "…". You can click on the bpm button to switch to percentage view.</p>
+
+    <h2>Second Row</h2>
+    <p>Displays your resting heart rate (HRrest), heart rate reserve (HRreserve), and maximum heart rate (HRmax). You can manually enter HRrest and HRmax. If the app detects a lower or higher value, it will overwrite your entries unless you lock them with the padlocks.</p>
+
+    <h2>Third Row</h2>
+    <p>Measures your recovery heart rate (HRrecovery). Press the "Start recovery" button to measure how many beats your heart rate drops in a specified number of seconds. An increasing HRrecovery is usually a sign of improved physical condition.</p>
+
+    <h2>Fourth Row</h2>
+    <p>Controls the audio. Adjust the interval between audio cues using the + and - buttons or by entering a value manually. Press the speaker icon to toggle sound. The speed slider controls the voice speed.</p>
+
+    <h2>Fifth Row</h2>
+    <p>Displays heart rate device connection status. If the connection is lost, the app will attempt to reconnect.</p>
+
+    <h3>Initial Connection with Device</h3>
+    <p>The app automatically searches and connects to the heart rate device. On subsequent launches, it will try reconnecting to the same device.</p>
+
+    <h3>Connecting to a Different Device</h3>
+    <p>To connect to another device, ensure the current one is unavailable. Move it far away or disable Bluetooth. Then, tap the delete icon to search for a new device.</p>
+
+    <h3>Notes on Heart Rate Devices</h3>
+    <p>Heart rate devices may continue transmitting data even when removed. To prevent battery drain, close the app completely when not in use.</p>
+
+    <h2>What Does Corrate Mean?</h2>
+    <p>"Cor" is Latin for heart, inspiring the name Corrate.</p>
+
+    <h2>Clipart</h2>
+    <p>Heart icon by Maria J.T.<br> Rabbit, turtle, and padlock clip art images by Cliparts.co</p>
+</body>
 </html>

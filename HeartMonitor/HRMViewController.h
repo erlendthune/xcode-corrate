@@ -34,6 +34,15 @@
 #define AUDIO_ON 1
 #define AUDIO_OFF 2
 
+typedef NS_ENUM(NSUInteger, HRMFartlekState) {
+    HRMFartlekStateWarmup,
+    HRMFartlekStateWarmupFinished,
+    HRMFartlekStateSlowdown,
+    HRMFartlekStateSpeedup,
+    HRMFartlekStateFinished
+};
+
+@class HRMFartlekViewController;
 @interface HRMViewController : UIViewController <
 UITextFieldDelegate, 
 AVSpeechSynthesizerDelegate,
@@ -48,6 +57,11 @@ CBPeripheralDelegate>
 - (BOOL)connectToTheDeviceWeUsedLastTime;
 - (void)purchase;
 - (void)restorePurchase;
+- (void)startFartlek:(HRMFartlekViewController*)hrmFartlekViewController
+                        warmupMinutes:(uint16_t)warmupMinutes
+                        repetitions:(uint16_t)repetitions
+                        lowHeartRate:(uint16_t)lowHeartRate
+                       highHeartRate:(uint16_t)highHeartRate;- (void)stopFartlek;
 - (void) save;
 - (void)connectToPeripheral:(CBPeripheral *)peripheral;
 - (void) talk:(NSString *)s voice:(AVSpeechSynthesisVoice*)voice passive:(bool)passive;
@@ -98,11 +112,21 @@ CBPeripheralDelegate>
 @property (strong, atomic) UIImage *audioOnImage;
 @property (strong, atomic) UIImage *audioOffImage;
 
+@property (nonatomic, assign) uint16_t fartlekRepetitions;
+@property (nonatomic, assign) uint16_t fartlekWarmupMinutes;
+@property (nonatomic, assign) uint16_t fartlekLowHeartRate;
+@property (nonatomic, assign) uint16_t fartlekHighHeartRate;
+@property (nonatomic, assign) uint16_t fartlekCurrentIteration;
+@property (assign) int lastSpokenMinute;
+@property (assign) double warmupStartedTime;
+@property (assign) HRMFartlekState fartlekState;
 
 @property (assign) uint16_t heartRate;
 @property (assign) uint16_t previousHeartRate;
 @property (assign) uint16_t heartRateMin;
 @property (assign) uint16_t heartRateMax;
+@property (assign) BOOL disclaimerPresented;
+
 @property (assign) int recoveryStartHeartRate;
 @property (assign) int recoveryStopHeartRate;
 @property (assign) uint16_t recoveryHeartRate;
@@ -119,6 +143,8 @@ CBPeripheralDelegate>
 @property (nonatomic) int usageCounter;
 @property bool purchased;
 @property bool audioOn;
+@property (nonatomic, strong) HRMFartlekViewController *hrmFartlekViewController;
+@property (nonatomic, assign) BOOL fartlek;
 @property bool deletedDeviceOnPurpose;
 @property bool deviceConnected;
 @property bool recoveryStarted;

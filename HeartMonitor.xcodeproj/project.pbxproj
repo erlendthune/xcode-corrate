@@ -23,6 +23,9 @@
 		8799DA661B5D313100ED7C66 /* ETAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8799DA641B5D313100ED7C66 /* ETAlertView.m */; };
 		8799DA711B5F60EF00ED7C66 /* rabbit.png in Resources */ = {isa = PBXBuildFile; fileRef = 8799DA6F1B5F60EF00ED7C66 /* rabbit.png */; };
 		8799DA721B5F60EF00ED7C66 /* turtle.png in Resources */ = {isa = PBXBuildFile; fileRef = 8799DA701B5F60EF00ED7C66 /* turtle.png */; };
+		87A8C1012D7E41FD0070641B /* HRZonesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A8C1002D7E41FD0070641B /* HRZonesController.m */; };
+		87AEC5802D6E567F00755E50 /* HRMPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AEC57F2D6E567F00755E50 /* HRMPageViewController.m */; };
+		87AEC5822D6E67DA00755E50 /* HRMFartlekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AEC5812D6E67DA00755E50 /* HRMFartlekViewController.m */; };
 		87C8B1471B586B51000FF248 /* audioon.png in Resources */ = {isa = PBXBuildFile; fileRef = 87C8B1461B586B51000FF248 /* audioon.png */; };
 		87C8B14A1B586B86000FF248 /* audiomute.png in Resources */ = {isa = PBXBuildFile; fileRef = 87C8B1481B586B86000FF248 /* audiomute.png */; };
 		87C8B14B1B586B86000FF248 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 87C8B1491B586B86000FF248 /* delete.png */; };
@@ -65,6 +68,12 @@
 		8799DA651B5D313100ED7C66 /* ETAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETAlertView.h; sourceTree = "<group>"; };
 		8799DA6F1B5F60EF00ED7C66 /* rabbit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rabbit.png; path = HeartMonitorTests/rabbit.png; sourceTree = SOURCE_ROOT; };
 		8799DA701B5F60EF00ED7C66 /* turtle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = turtle.png; path = HeartMonitorTests/turtle.png; sourceTree = SOURCE_ROOT; };
+		87A8C0FF2D7E41E10070641B /* HRZonesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HRZonesController.h; sourceTree = "<group>"; };
+		87A8C1002D7E41FD0070641B /* HRZonesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HRZonesController.m; sourceTree = "<group>"; };
+		87AEC57E2D6E565600755E50 /* HRMPageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HRMPageViewController.h; sourceTree = "<group>"; };
+		87AEC57F2D6E567F00755E50 /* HRMPageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HRMPageViewController.m; sourceTree = "<group>"; };
+		87AEC5812D6E67DA00755E50 /* HRMFartlekViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HRMFartlekViewController.m; sourceTree = "<group>"; };
+		87AEC5832D6E681D00755E50 /* HRMFartlekViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HRMFartlekViewController.h; sourceTree = "<group>"; };
 		87C8B1461B586B51000FF248 /* audioon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = audioon.png; path = HeartMonitorTests/audioon.png; sourceTree = SOURCE_ROOT; };
 		87C8B1481B586B86000FF248 /* audiomute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = audiomute.png; path = HeartMonitorTests/audiomute.png; sourceTree = SOURCE_ROOT; };
 		87C8B1491B586B86000FF248 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = HeartMonitorTests/delete.png; sourceTree = SOURCE_ROOT; };
@@ -145,6 +154,12 @@
 				35AFF689185B691D00F1A64F /* Supporting Files */,
 				35AFF6B7185B697000F1A64F /* Media.xcassets */,
 				87FD155E1B70008B00AFCEC6 /* Launch Screen.xib */,
+				87AEC57E2D6E565600755E50 /* HRMPageViewController.h */,
+				87AEC57F2D6E567F00755E50 /* HRMPageViewController.m */,
+				87AEC5812D6E67DA00755E50 /* HRMFartlekViewController.m */,
+				87AEC5832D6E681D00755E50 /* HRMFartlekViewController.h */,
+				87A8C0FF2D7E41E10070641B /* HRZonesController.h */,
+				87A8C1002D7E41FD0070641B /* HRZonesController.m */,
 			);
 			path = HeartMonitor;
 			sourceTree = "<group>";
@@ -285,8 +300,11 @@
 				8777A3F51B41E45A006DC182 /* IAPHelper.m in Sources */,
 				8777A3F81B41E5D2006DC182 /* HRMAPHelper.m in Sources */,
 				35AFF693185B691D00F1A64F /* HRMAppDelegate.m in Sources */,
+				87AEC5802D6E567F00755E50 /* HRMPageViewController.m in Sources */,
 				35AFF68F185B691D00F1A64F /* main.m in Sources */,
+				87AEC5822D6E67DA00755E50 /* HRMFartlekViewController.m in Sources */,
 				35AFF699185B691D00F1A64F /* HRMViewController.m in Sources */,
+				87A8C1012D7E41FD0070641B /* HRZonesController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +446,10 @@
 				DEVELOPMENT_TEAM = 3B9MVBS2CK;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HeartMonitor/HeartMonitor-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "HeartMonitor/HeartMonitor-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.erlendthune.$(PRODUCT_NAME:rfc1034identifier)";
