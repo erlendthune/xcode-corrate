@@ -9,17 +9,24 @@
 #import <Foundation/Foundation.h>
 #import "HRMPageViewController.h"
 #import "HRMFartlekViewController.h"
+#import "HRZonesController.h"
 @implementation HRMPageViewController
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.dataSource = self;
-    self.delegate = self; // Add this to update dots
+    self.delegate = self;
     
     self.pageContents = @[@"Page1", @"Page2", @"Page3"]; // Storyboard IDs
-    
+    self.viewControllerCache = [[NSMutableArray alloc] initWithCapacity:self.pageContents.count];
+
+    // Pre-fill with placeholders (NSNull)
+    for (NSInteger i = 0; i < self.pageContents.count; i++) {
+        [self.viewControllerCache addObject:[NSNull null]];
+    }
+
     UIViewController *firstVC = [self viewControllerAtIndex:0];
     if (firstVC) {
         [self setViewControllers:@[firstVC]
@@ -42,14 +49,21 @@
     return currentVC.view.tag;
 }
 
-// Helper method to get a view controller
 - (UIViewController *)viewControllerAtIndex:(NSInteger)index {
     if (index < 0 || index >= self.pageContents.count) {
         return nil;
     }
 
+    // Check if the view controller already exists in the cache
+    if (![self.viewControllerCache[index] isKindOfClass:[NSNull class]]) {
+        return self.viewControllerCache[index];
+    }
+
+    // Create a new view controller and store it in the cache
     UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:self.pageContents[index]];
     vc.view.tag = index;
+    self.viewControllerCache[index] = vc;
+
     return vc;
 }
 
@@ -75,10 +89,16 @@
         
         // Set hrmController to the first view controller
         fartlekVC.hrmController = hrmVC;
+    } else if ([nextVC isKindOfClass:[HRZonesController class]]) {
+        HRZonesController *zonesVC = (HRZonesController *)nextVC;
+        
+        // Get the first view controller (HRMViewController) from the navigation stack
+        HRMFartlekViewController *fartlekVC = (HRMFartlekViewController *)self.viewControllers[0];
+        
+        // Set hrmController to the first view controller
+        zonesVC.hrmController = fartlekVC.hrmController;
     }
     
     return nextVC;
 }
-
-
 @end

@@ -1,11 +1,3 @@
-//
-//  HRMFartlekController.m
-//  Heart Rate Training
-//
-//  Created by Erlend Thune on 25/02/2025.
-//  Copyright © 2025 Razeware LLC. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import "HRMFartlekViewController.h"
 #import "HRMViewController.h"
@@ -16,18 +8,30 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor]; // Set background color
     self.stopFartlekButton.enabled = NO;
+    self.initialized = NO;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-    if (self.hrmController) {
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (self.hrmController && !self.initialized) {
+        self.initialized = YES;
         self.warmupTime.text = [NSString stringWithFormat:@"%d", self.hrmController.fartlekWarmupMinutes];
         self.repetitions.text = [NSString stringWithFormat:@"%d", self.hrmController.fartlekRepetitions];
         self.lowerHrtLimit.text = [NSString stringWithFormat:@"%d", self.hrmController.fartlekLowHeartRate];
         self.upperHrtLimit.text = [NSString stringWithFormat:@"%d", self.hrmController.fartlekHighHeartRate];
+        if(!self.hrmController.disclaimerPresented)
+        {
+            [self.hrmController showDisclaimer];
+        }
     }
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.view endEditing:YES];
+ }
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
@@ -35,10 +39,6 @@
 
 - (IBAction)startFartlek:(id)sender {
     self.warmupTimeValue = [self getIntValueFromString:self.warmupTime.text];
-    if (self.warmupTimeValue == 0) {
-        [self alertMessage:@"Invalid warmup time" s:@"Warmup time must be greater than 0 minutes."];
-        return;
-    }
     self.repetitionsValue = [self getIntValueFromString:self.repetitions.text];
     if (self.repetitionsValue == 0) {
         [self alertMessage:@"Invalid repetitions" s:@"Repetitions must be greater than 0 minutes."];
@@ -61,9 +61,14 @@
     [self.hrmController startFartlek:self warmupMinutes:self.warmupTimeValue repetitions:self.repetitionsValue lowHeartRate:self.lowerHrtLimitValue highHeartRate:self.upperHrtLimitValue];
 }
 - (IBAction)stopFartLek:(id)sender {
+    [self.hrmController stopFartlek:true];
+}
+
+- (void)stopFartlek
+{
     self.startFartlekButton.enabled = YES;
     self.stopFartlekButton.enabled = NO;
-    [self.hrmController stopFartlek];
+    self.feedback.text = @"Fill in the variables above and press start.";
 }
 
 - (void)alertMessage:(NSString *)title s:(NSString *)message {

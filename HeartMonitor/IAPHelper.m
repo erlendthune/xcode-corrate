@@ -14,20 +14,16 @@ NSString *const IAPHelperProductPurchasedError = @"IAPHelperProductPurchasedErro
 NSString *const IAPHelperProductRestorePurchaseError = @"IAPHelperProductRestorePurchaseError";
 NSString *const IAPHelperTransactionFinished = @"IAPHelperTransactionFinished";
 
-// 2
 @interface IAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 @end
 
 @implementation IAPHelper {
-    // 3
     SKProductsRequest * _productsRequest;
-    // 4
     RequestProductsCompletionHandler _completionHandler;
     NSSet * _productIdentifiers;
     NSMutableSet * _purchasedProductIdentifiers;
 }
 
-// Add new method
 - (void)provideContentForProductIdentifier:(NSString *)productIdentifier {
     
     [_purchasedProductIdentifiers addObject:productIdentifier];
@@ -35,6 +31,7 @@ NSString *const IAPHelperTransactionFinished = @"IAPHelperTransactionFinished";
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductPurchasedNotification object:productIdentifier userInfo:nil];
 }
+
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers {
     
     if ((self = [super init])) {
@@ -57,8 +54,6 @@ NSString *const IAPHelperTransactionFinished = @"IAPHelperTransactionFinished";
     }
     return self;
 }
-
-
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
 {
@@ -109,17 +104,15 @@ NSString *const IAPHelperTransactionFinished = @"IAPHelperTransactionFinished";
     
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
 }
+
 - (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler {
     NSLog(@"requestProductsWithCompletionHandler");
 
-    // 1
     _completionHandler = [completionHandler copy];
     
-    // 2
     _productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:_productIdentifiers];
     _productsRequest.delegate = self;
     [_productsRequest start];
-    
 }
 
 - (BOOL)productPurchased:(NSString *)productIdentifier {
@@ -132,21 +125,18 @@ NSString *const IAPHelperTransactionFinished = @"IAPHelperTransactionFinished";
 {
     NSLog(@"removedTransactions");
 }
+
 - (void)restoreCompletedTransactions {
     NSLog(@"restoreCompletedTransactions");
     [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
 }
+
 - (void)buyProduct:(SKProduct *)product {
     
     NSLog(@"Buying %@...", product.productIdentifier);
     
     SKPayment * payment = [SKPayment paymentWithProduct:product];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
-    
-    //When product is purchased it should be stored:
-    //[defaults setBool:_purchased forKey:@"com.erlendthune.Heart_Rate_Training"];
-    //[defaults synchronize];
-
 }
 
 #pragma mark - SKProductsRequestDelegate
@@ -164,10 +154,8 @@ NSString *const IAPHelperTransactionFinished = @"IAPHelperTransactionFinished";
               skProduct.price.floatValue);
     }
     
-    
     _completionHandler(YES, skProducts);
     _completionHandler = nil;
-    
 }
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue

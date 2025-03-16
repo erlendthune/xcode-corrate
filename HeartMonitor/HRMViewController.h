@@ -1,11 +1,3 @@
-//
-//  HRMViewController.h
-//  HeartMonitor
-//
-//  Created by Main Account on 12/13/13.
-//  Copyright (c) 2013 Razeware LLC. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 @import CoreBluetooth;
 @import QuartzCore;
@@ -35,6 +27,7 @@
 #define AUDIO_OFF 2
 
 typedef NS_ENUM(NSUInteger, HRMFartlekState) {
+    HRMFartlekStateStarted,
     HRMFartlekStateWarmup,
     HRMFartlekStateWarmupFinished,
     HRMFartlekStateSlowdown,
@@ -54,6 +47,7 @@ CBPeripheralDelegate>
 @property (strong, atomic) AVAudioPlayer* avSilentSound;
 
 - (void) connectToNewDevice;
+- (void) showDisclaimer;
 - (BOOL)connectToTheDeviceWeUsedLastTime;
 - (void)purchase;
 - (void)restorePurchase;
@@ -61,7 +55,8 @@ CBPeripheralDelegate>
                         warmupMinutes:(uint16_t)warmupMinutes
                         repetitions:(uint16_t)repetitions
                         lowHeartRate:(uint16_t)lowHeartRate
-                       highHeartRate:(uint16_t)highHeartRate;- (void)stopFartlek;
+                       highHeartRate:(uint16_t)highHeartRate;
+- (void)stopFartlek:(BOOL)forced;
 - (void) save;
 - (void)connectToPeripheral:(CBPeripheral *)peripheral;
 - (void) talk:(NSString *)s voice:(AVSpeechSynthesisVoice*)voice passive:(bool)passive;
@@ -117,6 +112,7 @@ CBPeripheralDelegate>
 @property (nonatomic, assign) uint16_t fartlekLowHeartRate;
 @property (nonatomic, assign) uint16_t fartlekHighHeartRate;
 @property (nonatomic, assign) uint16_t fartlekCurrentIteration;
+@property (assign) BOOL newFartlekMessage;
 @property (assign) int lastSpokenMinute;
 @property (assign) double warmupStartedTime;
 @property (assign) HRMFartlekState fartlekState;

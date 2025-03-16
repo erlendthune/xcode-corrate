@@ -97,7 +97,7 @@
     button2.titleLabel.font = [UIFont fontWithName: @"Helvetica" size: fontSize];
     
     [button2 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buyMethod:)]];
-    [button2 setTitle:@"Kjøp" forState:UIControlStateNormal];
+    [button2 setTitle:@"Buy" forState:UIControlStateNormal];
     UIButtonConfiguration *config = [UIButtonConfiguration plainButtonConfiguration];
     config.contentInsets = NSDirectionalEdgeInsetsMake(0, 10, 0, 0);
 
@@ -121,7 +121,7 @@
     [button3 setConfiguration:config];
 
     [button3 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(restorePurchaseMethod:)]];
-    [button3 setTitle:@"Gjenopprett kjøp" forState:UIControlStateNormal];
+    [button3 setTitle:@"Restore purchase" forState:UIControlStateNormal];
     float x3 = fontSize;
     float y3 = self.label.frame.size.height+fontSize*(BUTTON_Y_POS+3);
     button3.frame = CGRectMake(x3,y3 , fontSize*9, fontSize*1.5);
@@ -137,7 +137,7 @@
     
     [[_okButton layer] setBorderWidth:2.0f];
     _okButton.layer.borderColor = [UIColor blackColor].CGColor;
-    [_okButton setTitle:@"Senere" forState:UIControlStateNormal];
+    [_okButton setTitle:@"Dismiss" forState:UIControlStateNormal];
     float x = self.frame.size.width-fontSize*6;
     float y = self.label.frame.size.height+fontSize*BUTTON_Y_POS;
     _okButton.frame = CGRectMake(x,y , fontSize*5, fontSize*1.5);
@@ -211,12 +211,12 @@
     if(self.mvc.price)
     {
 
-        s = [NSString stringWithFormat:@"\n\nYou have used the app for free %d ganger.\n\nYou can buy it for %@.\n\nThis message is displayed automatically when you have used the app more than 10 times.", self.counter, self.mvc.price];
+        s = [NSString stringWithFormat:@"\n\nYou have used the app for free %d times.\n\nYou can buy it for %@.\n\nThis message is displayed automatically when you have used the app more than 10 times.", self.counter, self.mvc.price];
         
     }
     else
     {
-        s = [NSString stringWithFormat:@"\n\nYou have used the app for free %d ganger.\n\nThis message is displayed automatically when you have used the app more than 10 times.", self.counter];
+        s = [NSString stringWithFormat:@"\n\nYou have used the app for free %d times.\n\nThis message is displayed automatically when you have used the app more than 10 times.", self.counter];
     }
     
     NSMutableAttributedString *sBody = [[NSMutableAttributedString alloc] initWithString:s];

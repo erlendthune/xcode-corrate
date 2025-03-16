@@ -11,11 +11,14 @@
 #import "HRMViewController.h"
 
 @interface HRMFartlekViewController : UIViewController
+- (void)stopFartlek;
+
 @property (weak, nonatomic) IBOutlet UITextField *lowerHrtLimit;
 @property (nonatomic, assign) int lowerHrtLimitValue;
 @property (weak, nonatomic) IBOutlet UITextField *repetitions;
 @property (nonatomic, assign) int repetitionsValue;
 @property (nonatomic, strong) HRMViewController *hrmController;
+@property (nonatomic, assign) BOOL initialized;
 
 @property (weak, nonatomic) IBOutlet UIButton *startFartlekButton;
 @property (weak, nonatomic) IBOutlet UIButton *stopFartlekButton;

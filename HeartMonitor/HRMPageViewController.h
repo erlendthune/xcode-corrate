@@ -12,6 +12,7 @@
 @interface HRMPageViewController : UIPageViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
 
 @property (strong, nonatomic) NSArray *pageContents;
+@property (nonatomic, strong) NSMutableArray *viewControllerCache;
 
 @end
 
