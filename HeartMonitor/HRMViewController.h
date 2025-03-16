@@ -1,11 +1,3 @@
-//
-//  HRMViewController.h
-//  HeartMonitor
-//
-//  Created by Main Account on 12/13/13.
-//  Copyright (c) 2013 Razeware LLC. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 @import CoreBluetooth;
 @import QuartzCore;
@@ -34,8 +26,17 @@
 #define AUDIO_ON 1
 #define AUDIO_OFF 2
 
+typedef NS_ENUM(NSUInteger, HRMFartlekState) {
+    HRMFartlekStateStarted,
+    HRMFartlekStateWarmup,
+    HRMFartlekStateWarmupFinished,
+    HRMFartlekStateSlowdown,
+    HRMFartlekStateSpeedup,
+    HRMFartlekStateFinished
+};
+
+@class HRMFartlekViewController;
 @interface HRMViewController : UIViewController <
-AVAudioSessionDelegate,
 UITextFieldDelegate, 
 AVSpeechSynthesizerDelegate,
 CBCentralManagerDelegate,
@@ -45,11 +46,26 @@ CBPeripheralDelegate>
 @property (atomic, strong) NSDictionary     *languages;
 @property (strong, atomic) AVAudioPlayer* avSilentSound;
 
-
+- (void) connectToNewDevice;
+- (void) showDisclaimer;
+- (BOOL)connectToTheDeviceWeUsedLastTime;
 - (void)purchase;
 - (void)restorePurchase;
+- (void)startFartlek:(HRMFartlekViewController*)hrmFartlekViewController
+                        warmupMinutes:(uint16_t)warmupMinutes
+                        repetitions:(uint16_t)repetitions
+                        lowHeartRate:(uint16_t)lowHeartRate
+                       highHeartRate:(uint16_t)highHeartRate;
+- (void)stopFartlek:(BOOL)forced;
+- (void) save;
+- (void)connectToPeripheral:(CBPeripheral *)peripheral;
+- (void) talk:(NSString *)s voice:(AVSpeechSynthesisVoice*)voice passive:(bool)passive;
+- (void) DisplayAlertView:(int)noOfTimesUsed nag:(bool)nag;
 
-// Properties for your Object controls
+@property (nonatomic, strong) NSMutableArray<CBPeripheral*> *discoveredPeripherals;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSDictionary *> *advertisedData;
+@property (nonatomic, strong) UIAlertController *deviceListAlert;
+
 @property (atomic, strong) IBOutlet UIImageView *heartImage;
 @property (weak, atomic) IBOutlet UITextField *audioCueInterval;
 @property (weak, atomic) IBOutlet UIButton *incAudioCueIntervalButton;
@@ -68,9 +84,11 @@ CBPeripheralDelegate>
 @property (weak, atomic) IBOutlet UIButton *audioButton;
 @property ushort hrmDisplay;
 @property (weak, atomic) IBOutlet UILabel *deviceInformation;
+@property (weak, nonatomic) IBOutlet UILabel *deviceName;
 @property (weak, atomic) IBOutlet UIButton *deleteDeviceButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UISlider *speedIndicator;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *menuButton;
 
 @property (strong, nonatomic) IBOutlet ETAlertView *alertView;
 
@@ -89,11 +107,22 @@ CBPeripheralDelegate>
 @property (strong, atomic) UIImage *audioOnImage;
 @property (strong, atomic) UIImage *audioOffImage;
 
+@property (nonatomic, assign) uint16_t fartlekRepetitions;
+@property (nonatomic, assign) uint16_t fartlekWarmupMinutes;
+@property (nonatomic, assign) uint16_t fartlekLowHeartRate;
+@property (nonatomic, assign) uint16_t fartlekHighHeartRate;
+@property (nonatomic, assign) uint16_t fartlekCurrentIteration;
+@property (assign) BOOL newFartlekMessage;
+@property (assign) int lastSpokenMinute;
+@property (assign) double warmupStartedTime;
+@property (assign) HRMFartlekState fartlekState;
 
 @property (assign) uint16_t heartRate;
 @property (assign) uint16_t previousHeartRate;
 @property (assign) uint16_t heartRateMin;
 @property (assign) uint16_t heartRateMax;
+@property (assign) BOOL disclaimerPresented;
+
 @property (assign) int recoveryStartHeartRate;
 @property (assign) int recoveryStopHeartRate;
 @property (assign) uint16_t recoveryHeartRate;
@@ -107,8 +136,11 @@ CBPeripheralDelegate>
 @property (assign) uint16_t noOfTimesUsed;
 @property (strong, atomic) NSMutableArray *synthArray;
 @property (strong, atomic) AVSpeechSynthesizer *synth;
+@property (nonatomic) int usageCounter;
 @property bool purchased;
 @property bool audioOn;
+@property (nonatomic, strong) HRMFartlekViewController *hrmFartlekViewController;
+@property (nonatomic, assign) BOOL fartlek;
 @property bool deletedDeviceOnPurpose;
 @property bool deviceConnected;
 @property bool recoveryStarted;
