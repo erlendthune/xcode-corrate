@@ -41,6 +41,7 @@
     _newFartlekMessage = NO;
     _audioOn = true;
     _heartRate = 0;
+    _heartRatePercent = 0;
     _identifier = nil;
     _purchased = false;
     _recoveryStarted = false;
@@ -64,6 +65,7 @@
     
     _recoveryTimeTextField.text = [NSString stringWithFormat:@"%d", _counter];
 
+    self.timeSinceLastBeat.text = @"-";
     [self updateHeartRateReserveTextField];
     
     [self updateAudioButton];
@@ -79,6 +81,7 @@
     _voice = [AVSpeechSynthesisVoice voiceWithLanguage:[AVSpeechSynthesisVoice currentLanguageCode]];
     
     _relativeTiming = -1.0; //Indicate first time read with negative number.
+    _lastBeatTime = -1.0;
     
     _nextNagTime = -1.0; //Indicate first time with negative number.
     
@@ -838,6 +841,11 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     [self.view endEditing:YES];
 }
 
+- (IBAction)sixtRowPushed:(id)sender {
+    [self.view endEditing:YES];
+}
+
+
 - (BOOL)textFieldShouldReturn:(UITextField*)aTextField
 {
     [aTextField resignFirstResponder];
@@ -1119,10 +1127,9 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         }
         else
         {
-            int hrmPercent = [self calculateHrmPercent];
-            if(hrmPercent > 0)
+            if(self.heartRatePercent > 0)
             {
-                _heartRateTextField.text = [NSString stringWithFormat:@"%d", hrmPercent];
+                _heartRateTextField.text = [NSString stringWithFormat:@"%d", self.heartRatePercent];
             }
             else
             {
@@ -1132,22 +1139,20 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     }
 }
 
-- (int) calculateHrmPercent
+- (void) calculateHrmPercent
 {
-    int hrmPercent = -1;
     if(_heartRateMax && (_heartRateMax != UNSET_HR_MAX))
     {
         float dom = _heartRate;
         float denom = _heartRateMax;
         float value = dom*100.0/denom;
-        hrmPercent = (int)roundf(value);
-        NSLog(@"HR percent %d/%d = %f = %d", _heartRate, _heartRateMax, value, hrmPercent);
+        self.heartRatePercent = (int)roundf(value);
+        NSLog(@"HR percent %d/%d = %f = %d", _heartRate, _heartRateMax, value, self.heartRatePercent);
     }
     else
     {
         NSLog(@"Cannot calculate hrmpercent");
     }
-    return hrmPercent;
 }
 
 -(void)byteAsBinary:(uint8_t)theNumber
@@ -1254,10 +1259,9 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     }
     else
     {
-        int hrmPercent = [self calculateHrmPercent];
-        if(hrmPercent > -1)
+        if(self.heartRatePercent > 0)
         {
-            hr = [NSString stringWithFormat:@"%d",hrmPercent];
+            hr = [NSString stringWithFormat:@"%d",self.heartRatePercent];
         }
     }
     NSLog(@"HR:%@", hr);
@@ -1290,21 +1294,58 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         }
     }
     
+    [self calculateHrmPercent];
+
+    double currentTime = CACurrentMediaTime();
+    if (_lastBeatTime > 0)
+    {
+        NSTimeInterval timeSinceLastBeat = currentTime - _lastBeatTime;
+        self.timeSinceLastBeat.text = [NSString stringWithFormat:@"%.1f s", timeSinceLastBeat];
+    }
+    _lastBeatTime = currentTime;
+
     if(_firstHeartBeat)
     {
         _firstHeartBeat = false;
         [self doHeartBeat];
     }
 
-    [self calculateHrmPercent];
+    [self updateColors];
     [self updateHeartRateTextField];
-    double currentTime = CACurrentMediaTime();
+
     [self TimedSpeaking:currentTime];
     
     if(self.fartlek == YES)
     {
         [self processFartlek:currentTime];
     }
+}
+
+- (void)updateColors {
+    UIColor *color = [UIColor systemGrayColor]; // Default color
+
+    if (self.heartRatePercent < 60) {
+        color = [UIColor systemGrayColor];
+    } else if (self.heartRatePercent < 70) {
+        color = [UIColor systemBlueColor];
+    } else if (self.heartRatePercent < 80) {
+        color = [UIColor systemGreenColor];
+    } else if (self.heartRatePercent < 90) {
+        color = [UIColor systemOrangeColor];
+    } else {
+        color = [UIColor systemRedColor];
+    }
+
+    [self setBackgroundColor:color];
+}
+
+- (void)setBackgroundColor:(UIColor *)color {
+    self.firstRow.backgroundColor = color;
+    self.secondRow.backgroundColor = color;
+    self.thirdRow.backgroundColor = color;
+    self.fourthRow.backgroundColor = color;
+    self.fifthRow.backgroundColor = color;
+    self.sixthRow.backgroundColor = color;
 }
 
 - (void)processFartlek:(double)currentTime
@@ -1521,6 +1562,9 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     pulseAnimation.autoreverses = YES;
     pulseAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     [layer addAnimation:pulseAnimation forKey:@"scale"];
+
+    NSTimeInterval timeSinceLastBeat = CACurrentMediaTime() - _lastBeatTime;
+    self.timeSinceLastBeat.text = [NSString stringWithFormat:@"%.1f s", timeSinceLastBeat];
 
     if(_heartRate != _previousHeartRate)
     {
