@@ -73,6 +73,12 @@ CBPeripheralDelegate>
 @property (weak, atomic) IBOutlet UIButton *startRecoveryButton;
 @property (weak, atomic) IBOutlet UILabel *recoveryHeartRateTextfield;
 @property (weak, atomic) IBOutlet UILabel *reserveHeartRateTextField;
+@property (weak, nonatomic) IBOutlet UIButton *firstRow;
+@property (weak, nonatomic) IBOutlet UIButton *secondRow;
+@property (weak, nonatomic) IBOutlet UIButton *thirdRow;
+@property (weak, nonatomic) IBOutlet UIButton *fourthRow;
+@property (weak, nonatomic) IBOutlet UIButton *fifthRow;
+@property (weak, nonatomic) IBOutlet UIButton *sixthRow;
 
 - (IBAction)decAudioIntervalButtonPushed:(id)sender;
 @property (weak, atomic) IBOutlet UITextField *recoveryTimeTextField;
@@ -116,8 +122,11 @@ CBPeripheralDelegate>
 @property (assign) int lastSpokenMinute;
 @property (assign) double warmupStartedTime;
 @property (assign) HRMFartlekState fartlekState;
+@property (assign) double lastBeatTime;
+@property (weak, nonatomic) IBOutlet UILabel *timeSinceLastBeat;
 
 @property (assign) uint16_t heartRate;
+@property (assign) uint16_t heartRatePercent;
 @property (assign) uint16_t previousHeartRate;
 @property (assign) uint16_t heartRateMin;
 @property (assign) uint16_t heartRateMax;
