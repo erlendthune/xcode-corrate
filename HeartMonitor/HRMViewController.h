@@ -123,6 +123,7 @@ CBPeripheralDelegate>
 @property (assign) double warmupStartedTime;
 @property (assign) HRMFartlekState fartlekState;
 @property (assign) double lastBeatTime;
+@property (assign) NSTimeInterval lastWarningTime;
 @property (weak, nonatomic) IBOutlet UILabel *timeSinceLastBeat;
 
 @property (assign) uint16_t heartRate;

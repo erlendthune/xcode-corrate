@@ -9,6 +9,7 @@
 #import "HRMAPHelper.h"
 #import "ETAlertView.h"
 #import <StoreKit/StoreKit.h>
+//#import "HeartMonitor-Swift.h"
 
 //#define EMULATOR
 
@@ -65,7 +66,7 @@
     
     _recoveryTimeTextField.text = [NSString stringWithFormat:@"%d", _counter];
 
-    self.timeSinceLastBeat.text = @"-";
+    self.timeSinceLastBeat.text = @"";
     [self updateHeartRateReserveTextField];
     
     [self updateAudioButton];
@@ -82,6 +83,7 @@
     
     _relativeTiming = -1.0; //Indicate first time read with negative number.
     _lastBeatTime = -1.0;
+    _lastWarningTime = 0;
     
     _nextNagTime = -1.0; //Indicate first time with negative number.
     
@@ -292,21 +294,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
 
     [self talk:@"If you enjoy using the app; please buy it so my wife can buy herself new shoes." voice:voice passive:false];
 }
-/*
-- (void)informAboutDisconnect
-{
-    AVSpeechSynthesisVoice* voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"];
-    
-    [self talk:@"Lost connection to device. Trying to reconnect." voice:voice passive:false];
-}
 
-- (void)informAboutConnect
-{
-    AVSpeechSynthesisVoice* voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"];
-    
-    [self talk:@"Connected to device." voice:voice passive:false];
-}
-*/
 - (IBAction)menuButtonClicked:(id)sender
 {
     UIAlertController* alert = [
@@ -574,9 +562,11 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         NSLog(@"CoreBluetooth BLE state is unknown");
     }
     else if ([central state] == CBManagerStateUnsupported) {
+#ifndef EMULATOR
         _deviceInformation.text = @"This platform does not support bluetooth";
         [self connectionToStrapDisabled];
         NSLog(@"CoreBluetooth BLE hardware is unsupported on this platform");
+#endif
     }
 }
 
@@ -917,6 +907,9 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     _heartRateMax = 195;
     _reserveHeartRateTextField.text = @"150";
     _recoveryHeartRateTextfield.text = @"20";
+    _deviceInformation.text = @"Connected";
+    _deviceName.text = @"Forerunner";
+    _deviceUuidTextField.text = @"56a98be7-9a29-41e0-97d5-0c3408d4a2cb";
     [self updateHeartRateTextField];
 }
 #endif
@@ -1297,13 +1290,10 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     [self calculateHrmPercent];
 
     double currentTime = CACurrentMediaTime();
-    if (_lastBeatTime > 0)
-    {
-        NSTimeInterval timeSinceLastBeat = currentTime - _lastBeatTime;
-        self.timeSinceLastBeat.text = [NSString stringWithFormat:@"%.1f s", timeSinceLastBeat];
-    }
     _lastBeatTime = currentTime;
-
+    self.timeSinceLastBeat.text = @"";
+    self.lastWarningTime = 0;
+    
     if(_firstHeartBeat)
     {
         _firstHeartBeat = false;
@@ -1564,7 +1554,16 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     [layer addAnimation:pulseAnimation forKey:@"scale"];
 
     NSTimeInterval timeSinceLastBeat = CACurrentMediaTime() - _lastBeatTime;
-    self.timeSinceLastBeat.text = [NSString stringWithFormat:@"%.1f s", timeSinceLastBeat];
+    
+    if (timeSinceLastBeat - self.lastWarningTime > 9.5) {
+        self.timeSinceLastBeat.text = [NSString stringWithFormat:@"%.0f s", timeSinceLastBeat];
+        AVSpeechSynthesisVoice* voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"];
+
+        NSString *s = [NSString stringWithFormat:@"Warning: No heart rate received for %.0f seconds!", timeSinceLastBeat];
+        [self talk:s voice:voice passive:false];
+
+        self.lastWarningTime = timeSinceLastBeat;
+    }
 
     if(_heartRate != _previousHeartRate)
     {
