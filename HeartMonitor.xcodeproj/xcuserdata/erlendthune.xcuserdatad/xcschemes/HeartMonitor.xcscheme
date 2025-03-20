@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "35AFF67E185B691D00F1A64F"
-               BuildableName = "Heart Rate Training.app"
-               BlueprintName = "Heart Rate Training"
+               BuildableName = "Corrate.app"
+               BlueprintName = "Corrate"
                ReferencedContainer = "container:HeartMonitor.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "35AFF67E185B691D00F1A64F"
-            BuildableName = "Heart Rate Training.app"
-            BlueprintName = "Heart Rate Training"
+            BuildableName = "Corrate.app"
+            BlueprintName = "Corrate"
             ReferencedContainer = "container:HeartMonitor.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -78,8 +78,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "35AFF67E185B691D00F1A64F"
-            BuildableName = "Heart Rate Training.app"
-            BlueprintName = "Heart Rate Training"
+            BuildableName = "Corrate.app"
+            BlueprintName = "Corrate"
             ReferencedContainer = "container:HeartMonitor.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -95,8 +95,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "35AFF67E185B691D00F1A64F"
-            BuildableName = "Heart Rate Training.app"
-            BlueprintName = "Heart Rate Training"
+            BuildableName = "Corrate.app"
+            BlueprintName = "Corrate"
             ReferencedContainer = "container:HeartMonitor.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

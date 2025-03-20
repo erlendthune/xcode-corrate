@@ -41,7 +41,7 @@
     self.warmupTimeValue = [self getIntValueFromString:self.warmupTime.text];
     self.repetitionsValue = [self getIntValueFromString:self.repetitions.text];
     if (self.repetitionsValue == 0) {
-        [self alertMessage:@"Invalid repetitions" s:@"Repetitions must be greater than 0 minutes."];
+        [self alertMessage:@"Invalid repetitions" s:@"Repetitions must be greater than 0."];
         return;
     }
     self.lowerHrtLimitValue = [self getIntValueFromString:self.lowerHrtLimit.text];
