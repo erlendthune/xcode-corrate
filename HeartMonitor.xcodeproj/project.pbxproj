@@ -18,6 +18,7 @@
 		870E97B71B5D0A3A0079BEEE /* greenheartipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 870E97B61B5D0A3A0079BEEE /* greenheartipad.png */; };
 		8712D68C1B40ADB700E843FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35AFF694185B691D00F1A64F /* Main.storyboard */; };
 		873839852A9157EF00A3986B /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873839842A9157EF00A3986B /* CoreBluetooth.framework */; };
+		87388BF12D8CA5670054CE75 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87388BF02D8CA5670054CE75 /* StoreKit.framework */; };
 		8777A3F51B41E45A006DC182 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8777A3F41B41E45A006DC182 /* IAPHelper.m */; };
 		8777A3F81B41E5D2006DC182 /* HRMAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8777A3F71B41E5D2006DC182 /* HRMAPHelper.m */; };
 		8799DA661B5D313100ED7C66 /* ETAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8799DA641B5D313100ED7C66 /* ETAlertView.m */; };
@@ -39,7 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		35AFF67F185B691D00F1A64F /* Heart Rate Training.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Heart Rate Training.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		35AFF67F185B691D00F1A64F /* Corrate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Corrate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35AFF682185B691D00F1A64F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		35AFF684185B691D00F1A64F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		35AFF686185B691D00F1A64F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -60,6 +61,7 @@
 		870E97B61B5D0A3A0079BEEE /* greenheartipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenheartipad.png; sourceTree = "<group>"; };
 		873839822A914A1600A3986B /* HeartMonitor-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HeartMonitor-Info.plist"; sourceTree = "<group>"; };
 		873839842A9157EF00A3986B /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		87388BF02D8CA5670054CE75 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		8777A3F31B41E45A006DC182 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAPHelper.h; path = HeartMonitor/IAPHelper.h; sourceTree = "<group>"; };
 		8777A3F41B41E45A006DC182 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
 		8777A3F61B41E5D2006DC182 /* HRMAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HRMAPHelper.h; path = HeartMonitor/HRMAPHelper.h; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			files = (
 				873839852A9157EF00A3986B /* CoreBluetooth.framework in Frameworks */,
 				35AFF685185B691D00F1A64F /* CoreGraphics.framework in Frameworks */,
+				87388BF12D8CA5670054CE75 /* StoreKit.framework in Frameworks */,
 				35AFF687185B691D00F1A64F /* UIKit.framework in Frameworks */,
 				35AFF683185B691D00F1A64F /* Foundation.framework in Frameworks */,
 			);
@@ -119,7 +122,7 @@
 		35AFF680185B691D00F1A64F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				35AFF67F185B691D00F1A64F /* Heart Rate Training.app */,
+				35AFF67F185B691D00F1A64F /* Corrate.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,6 +130,7 @@
 		35AFF681185B691D00F1A64F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				87388BF02D8CA5670054CE75 /* StoreKit.framework */,
 				873839842A9157EF00A3986B /* CoreBluetooth.framework */,
 				35AFF682185B691D00F1A64F /* Foundation.framework */,
 				35AFF684185B691D00F1A64F /* CoreGraphics.framework */,
@@ -206,9 +210,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		35AFF67E185B691D00F1A64F /* Heart Rate Training */ = {
+		35AFF67E185B691D00F1A64F /* Corrate */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 35AFF6B1185B691D00F1A64F /* Build configuration list for PBXNativeTarget "Heart Rate Training" */;
+			buildConfigurationList = 35AFF6B1185B691D00F1A64F /* Build configuration list for PBXNativeTarget "Corrate" */;
 			buildPhases = (
 				35AFF67B185B691D00F1A64F /* Sources */,
 				35AFF67C185B691D00F1A64F /* Frameworks */,
@@ -218,9 +222,9 @@
 			);
 			dependencies = (
 			);
-			name = "Heart Rate Training";
+			name = Corrate;
 			productName = HeartMonitor;
-			productReference = 35AFF67F185B691D00F1A64F /* Heart Rate Training.app */;
+			productReference = 35AFF67F185B691D00F1A64F /* Corrate.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -260,7 +264,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				35AFF67E185B691D00F1A64F /* Heart Rate Training */,
+				35AFF67E185B691D00F1A64F /* Corrate */,
 			);
 		};
 /* End PBXProject section */
@@ -443,7 +447,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 3B9MVBS2CK;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HeartMonitor/HeartMonitor-Prefix.pch";
@@ -456,7 +460,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.7;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.erlendthune.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.erlendthune.Heart-Rate-Training";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -471,7 +475,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 3B9MVBS2CK;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HeartMonitor/HeartMonitor-Prefix.pch";
@@ -480,7 +484,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.7;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.erlendthune.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.erlendthune.Heart-Rate-Training";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -500,7 +504,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		35AFF6B1185B691D00F1A64F /* Build configuration list for PBXNativeTarget "Heart Rate Training" */ = {
+		35AFF6B1185B691D00F1A64F /* Build configuration list for PBXNativeTarget "Corrate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				35AFF6B2185B691D00F1A64F /* Debug */,

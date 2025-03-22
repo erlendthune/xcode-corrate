@@ -32,13 +32,14 @@
     [super viewDidLoad];
     NSString *thePath = [[NSBundle mainBundle] pathForResource:@"HeartRateTrainingUserGuide" ofType:@"html"];
 
-    // Replace the UIView (helpView) with a WKWebView
      WKWebView *webView = [[WKWebView alloc] initWithFrame:self.helpView.bounds];
      webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-
+     webView.allowsLinkPreview = true;
+    
      // Add the WKWebView to the helpView
      [self.helpView addSubview:webView];
 
+    
      // Retain a reference to the WKWebView if needed
      self.helpView = webView;
 

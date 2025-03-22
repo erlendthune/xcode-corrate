@@ -571,16 +571,18 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 }
 
 - (void)alertMessage:(NSString *)title s:(NSString *)message {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-                                                                   message:message
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
-                                                       style:UIAlertActionStyleDefault
-                                                     handler:nil]; // The handler is nil because no additional action is needed.
-    [alert addAction:okAction];
-
-    [self presentViewController:alert animated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                       message:message
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil]; // The handler is nil because no additional action is needed.
+        [alert addAction:okAction];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    });
 }
 
 - (void)getPrice
@@ -636,19 +638,25 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
                 else
                 {
                     [self alertMessage:@"Purchase" s:@"Purchase failed."];
-                    [self.activityIndicator stopAnimating];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.activityIndicator stopAnimating];
+                    });
                 }
             }
             else
             {
                 [self alertMessage:@"Purchase" s:@"Purchase failed."];
-                [self.activityIndicator stopAnimating];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.activityIndicator stopAnimating];
+                });
             }
         }
         else
         {
             [self alertMessage:@"Purchase" s:@"Unable to connect to App store."];
-            [self.activityIndicator stopAnimating];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.activityIndicator stopAnimating];
+            });
         }
     }];
 }
@@ -1060,7 +1068,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     CGFloat maxWidth = screenBounds.size.width;
     CGFloat maxHeight = screenBounds.size.height;
     int imgWidth = maxWidth-20;
-    int imgHeight = maxHeight-maxHeight/6;
+    int imgHeight = maxHeight-maxHeight/4;
     
     self.alertView = [[ETAlertView alloc] init:imgWidth imgHeight:imgHeight noOfTimesUsed:noOfTimesUsed mvc:self nag:nag];
     
