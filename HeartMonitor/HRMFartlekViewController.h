@@ -19,7 +19,9 @@
 @property (nonatomic, assign) int repetitionsValue;
 @property (nonatomic, strong) HRMViewController *hrmController;
 @property (nonatomic, assign) BOOL initialized;
+@property (weak, nonatomic) IBOutlet UILabel *lowerHeartRateUnitLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *upperHeartRateUnitLabel;
 @property (weak, nonatomic) IBOutlet UIButton *startFartlekButton;
 @property (weak, nonatomic) IBOutlet UIButton *stopFartlekButton;
 @property (weak, nonatomic) IBOutlet UITextView *feedback;

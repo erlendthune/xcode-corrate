@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, HRMFartlekState) {
     HRMFartlekStateStarted,
     HRMFartlekStateWarmup,
     HRMFartlekStateWarmupFinished,
+    HRMFartlekStateSlowdownToStart,
     HRMFartlekStateSlowdown,
     HRMFartlekStateSpeedup,
     HRMFartlekStateFinished
@@ -46,16 +47,13 @@ CBPeripheralDelegate>
 @property (atomic, strong) NSDictionary     *languages;
 @property (strong, atomic) AVAudioPlayer* avSilentSound;
 
+- (int) calculateHrmPercent:(uint16_t) heartRate;
 - (void) connectToNewDevice;
 - (void) showDisclaimer;
 - (BOOL)connectToTheDeviceWeUsedLastTime;
 - (void)purchase;
 - (void)restorePurchase;
-- (void)startFartlek:(HRMFartlekViewController*)hrmFartlekViewController
-                        warmupMinutes:(uint16_t)warmupMinutes
-                        repetitions:(uint16_t)repetitions
-                        lowHeartRate:(uint16_t)lowHeartRate
-                       highHeartRate:(uint16_t)highHeartRate;
+- (void)startFartlek:(HRMFartlekViewController*)hrmFartlekViewController;
 - (void)stopFartlek:(BOOL)forced;
 - (void) save;
 - (void)connectToPeripheral:(CBPeripheral *)peripheral;

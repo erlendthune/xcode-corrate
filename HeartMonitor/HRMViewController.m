@@ -939,12 +939,18 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     NSLog(@"bpmButtonClicked");
     if(_hrmDisplay == HRM_BPM)
     {
+        self.fartlekLowHeartRate = [self calculateHrmPercent:self.fartlekLowHeartRate];
+        self.fartlekHighHeartRate = [self calculateHrmPercent:self.fartlekHighHeartRate];
         _hrmDisplay = HRM_PERCENT;
     }
     else
     {
+        self.fartlekLowHeartRate = [self calculateHeartRateFromPercent:self.fartlekLowHeartRate];
+        self.fartlekHighHeartRate = [self calculateHeartRateFromPercent:self.fartlekHighHeartRate];
+
         _hrmDisplay = HRM_BPM;
     }
+    [self updateFartlekMessage];
     [self UpdateHeartRateMode];
     [self save];
 }
@@ -1140,20 +1146,39 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     }
 }
 
-- (void) calculateHrmPercent
+- (int)calculateHeartRateFromPercent:(uint16_t)heartRatePercent {
+    int calculatedHeartRate = 0;
+    
+    if (self.heartRateMax && (self.heartRateMax != UNSET_HR_MAX)) {
+        float percent = heartRatePercent / 100.0;
+        calculatedHeartRate = (int)roundf(percent * self.heartRateMax);
+        
+        NSLog(@"HR BPM for %d%% of %d max: %d BPM", heartRatePercent, self.heartRateMax, calculatedHeartRate);
+    } else {
+        NSLog(@"Cannot calculate heart rate from percent: HR max not set");
+    }
+    
+    return calculatedHeartRate;
+}
+
+
+- (int) calculateHrmPercent:(uint16_t) heartRate
 {
+    int calculatedHeartRatePercent = 0;
     if(_heartRateMax && (_heartRateMax != UNSET_HR_MAX))
     {
-        float dom = _heartRate;
+        float dom = heartRate;
         float denom = _heartRateMax;
         float value = dom*100.0/denom;
-        self.heartRatePercent = (int)roundf(value);
-        NSLog(@"HR percent %d/%d = %f = %d", _heartRate, _heartRateMax, value, self.heartRatePercent);
+        self.heartRatePercent = (uint16_t)roundf(value);
+        calculatedHeartRatePercent = self.heartRatePercent;
+        NSLog(@"HR percent %d/%d = %f = %d", heartRate, _heartRateMax, value, self.heartRatePercent);
     }
     else
     {
         NSLog(@"Cannot calculate hrmpercent");
     }
+    return calculatedHeartRatePercent;
 }
 
 -(void)byteAsBinary:(uint8_t)theNumber
@@ -1295,7 +1320,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         }
     }
     
-    [self calculateHrmPercent];
+    [self calculateHrmPercent:_heartRate];
 
     double currentTime = CACurrentMediaTime();
     _lastBeatTime = currentTime;
@@ -1381,9 +1406,9 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     }
     else if(self.fartlekState == HRMFartlekStateWarmupFinished)
     {
-        if(self.heartRate > self.fartlekLowHeartRate)
+        if((_hrmDisplay == HRM_BPM ? self.heartRate : self.heartRatePercent)  > self.fartlekLowHeartRate)
         {
-            self.fartlekState = HRMFartlekStateSlowdown;
+            self.fartlekState = HRMFartlekStateSlowdownToStart;
             self.newFartlekMessage = YES;
             message = [NSString stringWithFormat:@"Heart rate to high. Slow down to %d to start first iteration of fartlek.", self.fartlekLowHeartRate];
         }
@@ -1391,12 +1416,12 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         {
             self.fartlekState = HRMFartlekStateSpeedup;
             self.newFartlekMessage = YES;
-            message = [NSString stringWithFormat:@"Iteration 1 of %d. Speed up to %d.", self.fartlekRepetitions, self.fartlekHighHeartRate];
+            message = [NSString stringWithFormat:@"First iteration started. Speed up to %d.", self.fartlekHighHeartRate];
         }
     }
-    else if(self.fartlekState == HRMFartlekStateSlowdown)
+    else if(self.fartlekState == HRMFartlekStateSlowdown || self.fartlekState == HRMFartlekStateSlowdownToStart)
     {
-        if(self.heartRate < self.fartlekLowHeartRate)
+        if((_hrmDisplay == HRM_BPM ? self.heartRate : self.heartRatePercent) < self.fartlekLowHeartRate)
         {
             if(self.fartlekCurrentIteration > self.fartlekRepetitions)
             {
@@ -1415,7 +1440,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     }
     else if(self.fartlekState == HRMFartlekStateSpeedup)
     {
-        if(self.heartRate > self.fartlekHighHeartRate)
+        if((_hrmDisplay == HRM_BPM ? self.heartRate : self.heartRatePercent) > self.fartlekHighHeartRate)
         {
             self.newFartlekMessage = YES;
             message = [NSString stringWithFormat:@"Iteration %d of %d completed. Slow down to %d.", self.fartlekCurrentIteration, self.fartlekRepetitions, self.fartlekLowHeartRate];
@@ -1432,22 +1457,34 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     }
 }
 
-- (void)startFartlek:(HRMFartlekViewController*)hrmFartlekViewController
-                        warmupMinutes:(uint16_t)warmupMinutes
-                        repetitions:(uint16_t)repetitions
-                        lowHeartRate:(uint16_t)lowHeartRate
-                       highHeartRate:(uint16_t)highHeartRate;
+- (void)updateFartlekMessage
 {
+    if(self.fartlekState == HRMFartlekStateSlowdownToStart)
+    {
+        NSString *message = [NSString stringWithFormat:@"Heart rate to high. Slow down to %d to start first iteration of fartlek.", self.fartlekLowHeartRate];
+        [self talk:message voice:[AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"] passive:false];
+        self.hrmFartlekViewController.feedback.text = message;
+    }
+    else if(self.fartlekState == HRMFartlekStateSlowdown)
+    {
+        NSString *message = [NSString stringWithFormat:@"Slow down to %d.",  self.fartlekLowHeartRate];
+        [self talk:message voice:[AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"] passive:false];
+        self.hrmFartlekViewController.feedback.text = message;
+    }
+    else if(self.fartlekState == HRMFartlekStateSpeedup)
+    {
+        NSString *message = [NSString stringWithFormat:@"Speed up to %d.", self.fartlekHighHeartRate];
+        [self talk:message voice:[AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"] passive:false];
+        self.hrmFartlekViewController.feedback.text = message;
+    }
+}
+
+- (void)startFartlek:(HRMFartlekViewController*)hrmFartlekViewController{
     self.fartlek = YES;
     self.fartlekCurrentIteration = 1;
     self.warmupStartedTime = CACurrentMediaTime();
     self.fartlekState = HRMFartlekStateStarted;
     self.hrmFartlekViewController = hrmFartlekViewController;
-    self.fartlekWarmupMinutes = warmupMinutes;
-    self.fartlekRepetitions = repetitions;
-    self.fartlekLowHeartRate = lowHeartRate;
-    self.fartlekHighHeartRate = highHeartRate;
-    [self save];
 }
 
 - (void)stopFartlek:(BOOL)forced
