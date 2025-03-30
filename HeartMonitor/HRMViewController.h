@@ -88,7 +88,7 @@ CBPeripheralDelegate>
 @property (weak, atomic) IBOutlet UIButton *audioButton;
 @property ushort hrmDisplay;
 @property (weak, atomic) IBOutlet UILabel *deviceInformation;
-@property (weak, nonatomic) IBOutlet UILabel *deviceName;
+@property (weak, nonatomic) IBOutlet UILabel *deviceNameLabel;
 @property (weak, atomic) IBOutlet UIButton *deleteDeviceButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UISlider *speedIndicator;
@@ -106,6 +106,7 @@ CBPeripheralDelegate>
 @property (nonatomic, strong) NSString   *price;
 @property (nonatomic, strong) NSString   *polarH7DeviceData;
 @property (strong, atomic) NSString *identifier;
+@property (strong, atomic) NSString *deviceName;
 
 @property (strong, atomic) UIImage *deleteImage;
 @property (strong, atomic) UIImage *audioOnImage;

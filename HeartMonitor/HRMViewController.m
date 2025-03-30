@@ -44,6 +44,7 @@
     _heartRate = 0;
     _heartRatePercent = 0;
     _identifier = nil;
+    _deviceName = nil;
     _purchased = false;
     _recoveryStarted = false;
     _firstHeartBeat = true;
@@ -72,6 +73,7 @@
     [self updateAudioButton];
     
     _deviceUuidTextField.text = @"";
+    _deviceNameLabel.text = @"";
     
     //Voice speed
     _speedIndicator.minimumValue = AVSpeechUtteranceMinimumSpeechRate;
@@ -108,9 +110,6 @@
 
 -(void) connectionToStrapDisabled
 {
-//    _deleteDeviceButton.enabled = NO;
-//    _deleteDeviceButton.hidden = YES;
-//    _deviceUuidTextField.text = @"";
     _heartRateTextField.text = @"...";
     _firstHeartBeat=true;
     [_pulseTimer invalidate];
@@ -130,7 +129,8 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     if(_deletedDeviceOnPurpose)
     {
         _identifier = nil;
-        self.deviceName.text = @"";
+        _deviceName = nil;
+        self.deviceNameLabel.text = @"";
         self.deviceUuidTextField.text = @"";
         
         [self initiateNewScan];
@@ -139,6 +139,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     {
         self.deviceInformation.text = @"Reconnecting to the following device:";
         self.deviceUuidTextField.text = _identifier;
+        self.deviceNameLabel.text = _deviceName;
         [self connectToTheDeviceWeUsedLastTime];
     }
 }
@@ -154,10 +155,11 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
 
          NSLog(@"🔍 Starting new scan...");
          [self.centralManager scanForPeripheralsWithServices:services options:scanOptions];
+        [self connectToNewDevice];
      } else {
+         _deviceInformation.text = @"Please turn bluetooth on";
          NSLog(@"⚠️ Cannot start scan, Bluetooth is not powered on!");
      }
-    [self connectToNewDevice];
 }
 
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer
@@ -193,9 +195,10 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     _deletedDeviceOnPurpose = false;
 
     _identifier = peripheral.identifier.UUIDString;
+    _deviceName = peripheral.name;
     self.deviceUuidTextField.text = _identifier;
     self.deviceInformation.text = @"Connected";
-    self.deviceName.text = peripheral.name;
+    self.deviceNameLabel.text = peripheral.name;
     [self save];
 
     _deleteDeviceButton.enabled = YES;
@@ -213,7 +216,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
         if (!self.deviceListAlert) {
             self.deviceListAlert = [UIAlertController alertControllerWithTitle:@"Searching for devices..."
                                                                        message:@"Tap a device to connect"
-                                                                preferredStyle:UIAlertControllerStyleActionSheet];
+                                                                preferredStyle:UIAlertControllerStyleAlert];
 
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                                    style:UIAlertActionStyleCancel
@@ -229,8 +232,27 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
             [self.centralManager scanForPeripheralsWithServices:services options:nil];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.centralManager stopScan];
-                NSLog(@"🛑 Stopped scanning after 5 seconds.");
+                if(self.discoveredPeripherals.count == 0)
+                {
+                    if (self.deviceListAlert) {
+                        [self.deviceListAlert dismissViewControllerAnimated:YES completion:nil];
+                    }
+                    self.deviceListAlert = nil;
+                    self.deviceInformation.text = @"";
+
+                    [self alertMessage:@"Device not found" s:@"Could not find any heart rate devices. Please make sure that it is on and discoverable. Refer to the user manual for help."];
+                }
+                NSLog(@"Stopped scanning after 5 seconds.");
             });
+
+            UIPopoverPresentationController *popover = self.deviceListAlert.popoverPresentationController;
+            if (popover) {
+                popover.sourceView = self.view;  // Set the view where the alert is anchored
+                popover.sourceRect = CGRectMake(self.view.bounds.size.width / 2,
+                                                self.view.bounds.size.height / 2,
+                                                1.0, 1.0);
+                popover.permittedArrowDirections = 0;  // No arrow
+            }
 
             [self presentViewController:self.deviceListAlert animated:YES
                              completion:nil];
@@ -515,7 +537,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 - (void) connectToNewDevice
 {
     self.deviceInformation.text = @"Searching for available device...";
-    self.deviceName.text = @"";
+    self.deviceNameLabel.text = @"";
     self.deviceUuidTextField.text = @"";
     self.deleteDeviceButton.enabled = NO;
     self.deleteDeviceButton.hidden = YES;
@@ -531,7 +553,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         _deviceInformation.text = @"Please turn bluetooth on";
         _deleteDeviceButton.enabled = NO;
         _deleteDeviceButton.hidden = YES;
-        _deviceName.text = @"";
+        _deviceNameLabel.text = @"";
         _deviceUuidTextField.text = @"";
         [self connectionToStrapDisabled];
         NSLog(@"CoreBluetooth BLE hardware is powered off");
@@ -543,6 +565,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         if(_identifier)
         {
             self.deviceInformation.text = @"Connecting to the following device:";
+            self.deviceNameLabel.text = _deviceName;
             self.deviceUuidTextField.text = _identifier;
             [self connectToTheDeviceWeUsedLastTime];
         }
@@ -916,7 +939,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     _reserveHeartRateTextField.text = @"150";
     _recoveryHeartRateTextfield.text = @"20";
     _deviceInformation.text = @"Connected";
-    _deviceName.text = @"Forerunner";
+    _deviceNameLabel.text = @"Forerunner";
     _deviceUuidTextField.text = @"56a98be7-9a29-41e0-97d5-0c3408d4a2cb";
     [self updateHeartRateTextField];
 }
@@ -1676,6 +1699,15 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     {
         [defaults removeObjectForKey:@"identifier"];
     }
+    if(self.deviceName)
+    {
+        [defaults setObject:self.deviceName forKey:@"deviceName"];
+    }
+    else
+    {
+        [defaults removeObjectForKey:@"deviceName"];
+    }
+
     [defaults setInteger:_fartlekWarmupMinutes forKey:@"fartlekWarmupMinutes"];
     [defaults setInteger:_fartlekRepetitions forKey:@"fartlekRepetitions"];
     [defaults setInteger:_fartlekLowHeartRate forKey:@"fartlekLowHeartRate"];
@@ -1724,7 +1756,8 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     _identifier = [defaults objectForKey:@"identifier"];
-    
+    self.deviceName = [defaults objectForKey:@"deviceName"];
+
     if ([defaults objectForKey:@"audioInterval"] != nil)
     {
         NSInteger tempInt = [defaults integerForKey:@"audioInterval"];

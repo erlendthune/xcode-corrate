@@ -39,7 +39,9 @@
     <ul>
         <li><a href="#setup">Setup and Requirements</a></li>
         <li><a href="#views">Different Views</a></li>
-        <li><a href="#rows">Understanding the Display</a></li>
+        <li><a href="#views">First View: Heart Rate Readout Configuration</a></li>
+        <li><a href="#views">Second View: Fartlek Training</a></li>
+        <li><a href="#views">Third View: Heart Rate Zones</a></li>
         <li><a href="#connection">Device Connection</a></li>
         <li><a href="#corrate">What Does Corrate Mean?</a></li>
         <li><a href="#clipart">Clipart Credits</a></li>
@@ -51,34 +53,50 @@
     
     <h2 id="views">Different Views</h2>
     <p>Swipe left and right to switch between different views:</p>
-    <ul>
-        <li>First View: Configure heart rate readout frequency.</li>
-        <li>Second View: Train using Fartlek.</li>
-        <li>Third View: Learn about heart rate zones and click on a zone for details.</li>
-    </ul>
     
-    <h2 id="rows">Understanding the Display</h2>
-    <h3>First Row</h3>
-    <p>Displays heart rate (bpm or %) and a beating heart icon. A button let you switch between displaying the heart rate in beats per minute and a percentage of your maximum heart rate. The time since the last heart rate has been received is displayed under the heart rate.</p>
+    <h3 id="readout">First View: Heart Rate Readout Configuration</h3>
+    <p>In this view, you can configure how frequently the app reads your heart rate and select between beats per minute (BPM) or a percentage of your maximum heart rate.</p>
+
+    <h4>First Row</h4>
+    <p>Displays heart rate (bpm or %) and a beating heart icon. A button lets you switch between displaying the heart rate in beats per minute and a percentage of your maximum heart rate.</p>
     
-    <h3>Second Row</h3>
+    <h4>Second Row</h4>
     <p>Shows resting heart rate (HRrest), heart rate reserve (HRreserve), and maximum heart rate (HRmax). Values can be locked.</p>
     
-    <h3>Third Row</h3>
+    <h4>Third Row</h4>
     <p>Measures recovery heart rate (HRrecovery) with the "Start recovery" button.</p>
     
-    <h3>Fourth Row</h3>
+    <h4>Fourth Row</h4>
     <p>Controls audio readouts and interval.</p>
     
-    <h3>Fifth Row</h3>
+    <h4>Fifth Row</h4>
     <p>Controls voice speed.</p>
 
-    <h3>Sixth Row</h3>
+    <h4>Sixth Row</h4>
     <p>Displays heart rate device connection status.</p>
+    
+    <h3 id="fartlek">Second View: Fartlek Training</h3>
+    <p>Fartlek training lets you alternate between high and low heart rate intensities:</p>
+    <ul>
+        <li>Specify a <b>warmup time</b>.</li>
+        <li>Set the <b>number of repetitions</b> for speed intervals.</li>
+        <li>Define an <b>upper heart rate</b> to reach during high-intensity phases.</li>
+        <li>Set a <b>lower heart rate</b> for recovery phases.</li>
+    </ul>
+    <p>Once you start, the app guides you:</p>
+    <ol>
+        <li>Complete the warmup phase.</li>
+        <li>Increase speed until you reach the upper heart rate.</li>
+        <li>Slow down until you reach the lower heart rate.</li>
+        <li>Repeat for the specified number of repetitions.</li>
+    </ol>
+    
+    <h3 id="zones">Third View: Heart Rate Zones</h3>
+    <p>This view displays different heart rate zones. Clicking on a zone provides a detailed explanation of its benefits and training effects.</p>
     
     <h2 id="connection">Device Connection</h2>
     <h3>Initial Connection</h3>
-    <p>The app searches for your heart rate device automatically.</p>
+    <p>The app automatically searches for your heart rate device. If your device does not appear in the list and it is a chest strap, please check that the battery is working. If you want to use your watch to broadcast its heart rate, ensure that broadcasting is enabled. Refer to the user manual for instructions on how to do this.</p>
     
     <h3>Connecting to a Different Device</h3>
     <p>Select <b>Delete connection with device</b> in the menu in the main view. The app will automatically search for devices once you delete the current connection. You can also start a new search by selecting <b>Connect to device</b> in the menu.</p>

@@ -337,8 +337,8 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1" verticalCompressionResistancePriority="1" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htW-rO-CXv" userLabel="Device name">
-                                <rect key="frame" x="6" y="770" width="0.0" height="0.0"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1" verticalCompressionResistancePriority="1" text="Device name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htW-rO-CXv" userLabel="Device name">
+                                <rect key="frame" x="6" y="761.66666666666663" width="83.333333333333329" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -509,6 +509,7 @@
                         <outlet property="bpmButton" destination="v7h-6d-jfn" id="ZxD-27-Yd0"/>
                         <outlet property="deviceInformation" destination="13V-Gb-GFV" id="fZs-2w-uXR"/>
                         <outlet property="deviceName" destination="htW-rO-CXv" id="Fdy-JA-jba"/>
+                        <outlet property="deviceNameLabel" destination="htW-rO-CXv" id="c0h-uc-BZi"/>
                         <outlet property="deviceUuidTextField" destination="z0k-6L-iYm" id="DMa-iT-V0S"/>
                         <outlet property="fifthRow" destination="ggr-fo-zFx" id="3kc-gH-hjG"/>
                         <outlet property="firstRow" destination="9fZ-wf-ZpD" id="LpH-RB-hON"/>
