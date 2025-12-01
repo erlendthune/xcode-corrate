@@ -22,14 +22,11 @@
     return self;
 }
 
-- (id)init:(int)imgWidth imgHeight:(int)imgHeight noOfTimesUsed:(int)noOfTimesUsed mvc:(HRMViewController*)mvc nag:(bool)nag {
+- (id)init:(int)imgWidth imgHeight:(int)imgHeight mvc:(HRMViewController*)mvc {
     CGRect rect = CGRectMake(0, 0, imgWidth, imgHeight);
     self = [super initWithFrame:rect];
     if (self) {
         self.mvc = mvc;
-        self.nag = nag;
-        self.noOfTimesUsed = noOfTimesUsed;
-        self.counter = 0;
         self.mvc.nagscreenOnDisplay = true;
 
         self.backgroundColor = [UIColor clearColor];
@@ -66,15 +63,8 @@
 
         // Add buttons after label height is finalized
         [self addBuyButtons];
-
-        // Handle timer logic
-        if (nag) {
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateCountdown) userInfo:nil repeats:YES];
-        } else {
-            _counter = _noOfTimesUsed;
-            [self enableOkButton];
-            [self UpdateLabelText];
-        }
+        [self enableOkButton];
+        [self UpdateLabelText];
     }
     return self;
 }
@@ -210,13 +200,14 @@
     NSString *s = nil;
     if(self.mvc.price)
     {
-
-        s = [NSString stringWithFormat:@"\n\nYou have used the app for free %d times.\n\nYou can buy it for %@.\n\nThis message is displayed automatically when you have used the app more than 10 times.", self.counter, self.mvc.price];
+        s = [NSString stringWithFormat:
+             @"\n\nI hope you’re enjoying the app!\n\nYou can buy it for %@.\n\nThis will remove the periodic audio reminder — and it might even help my wife get those new shoes.",
+             self.mvc.price];
         
     }
     else
     {
-        s = [NSString stringWithFormat:@"\n\nYou have used the app for free %d times.\n\nThis message is displayed automatically when you have used the app more than 10 times.", self.counter];
+        s = @"\n\nI hope you’re enjoying the app!\n\nIf you choose to buy it, the periodic audio reminder will be removed — and it might even help my wife get those new shoes.";
     }
     
     NSMutableAttributedString *sBody = [[NSMutableAttributedString alloc] initWithString:s];
@@ -225,22 +216,6 @@
     [sCombined appendAttributedString:sBody];
     self.label.attributedText = sCombined;
 }
-
--(void) updateCountdown
-{
-    self.counter++;
-    [self UpdateLabelText];
-    
-    if(self.noOfTimesUsed == self.counter)
-    {
-        [self.timer invalidate];
-        self.timer = nil;
-        [self enableOkButton];
-    }
-}
-
-
-
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
