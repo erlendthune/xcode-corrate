@@ -29,10 +29,10 @@
     }
     if(self.hrmController.hrmDisplay == HRM_BPM && [self.lowerHeartRateUnitLabel.text isEqualToString:@"%"])
     {
-        self.lowerHeartRateUnitLabel.text = @"bmp";
-        self.upperHeartRateUnitLabel.text = @"bmp";
+        self.lowerHeartRateUnitLabel.text = @"bpm";
+        self.upperHeartRateUnitLabel.text = @"bpm";
     }
-    else if(self.hrmController.hrmDisplay == HRM_PERCENT && [self.lowerHeartRateUnitLabel.text isEqualToString:@"bmp"])
+    else if(self.hrmController.hrmDisplay == HRM_PERCENT && [self.lowerHeartRateUnitLabel.text isEqualToString:@"bpm"])
     {
         self.lowerHeartRateUnitLabel.text = @"%";
         self.upperHeartRateUnitLabel.text = @"%";

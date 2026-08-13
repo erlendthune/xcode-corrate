@@ -72,6 +72,7 @@ NSString *const IAPHelperTransactionFinished = @"IAPHelperTransactionFinished";
             case SKPaymentTransactionStateRestored:
                 NSLog(@"paymentQueue:SKPaymentTransactionStateRestored");
                 [self restoreTransaction:transaction];
+                break;
             default:
                 NSLog(@"paymentQueue:default");
                 break;
