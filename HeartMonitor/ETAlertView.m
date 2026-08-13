@@ -7,6 +7,7 @@
 //
 
 #import "ETAlertView.h"
+#import "HRMViewController.h"
 #import <CoreText/CoreText.h>
 #define NAG_SCALE_HEADLINE_FACTOR 25
 #define NAG_SCALE_TEXT_FACTOR 30
@@ -159,12 +160,6 @@
     NSLog(@"Button  clicked.");
     self.mvc.nagscreenOnDisplay = false;
     [self removeFromSuperview];
-}
-
-#pragma mark - Gesture recognizer handlers
-- (void)isTapped:(UITapGestureRecognizer *)recognizer
-{
-    //    [self.mvc answerQuestion:self];
 }
 
 -(void)setFont:(NSMutableAttributedString*)s fontSize:(int)fontSize

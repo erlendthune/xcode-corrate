@@ -16,7 +16,6 @@
 //The second time it will appear each half  hour.
 //The third time each 15 minutes and so on. A minimum of NAG_MINIMUM seconds will be kept.
 #define NAG_CONSTANT 600
-#define NAG_TIMES_USED 10
 //#define MAX_AUDIO_INTERVAL 999
 #define HRM_BPM      1
 #define HRM_PERCENT  2
@@ -44,7 +43,6 @@ CBCentralManagerDelegate,
 CBPeripheralDelegate>
 @property (atomic, strong) CBCentralManager *centralManager;
 @property (atomic, strong) CBPeripheral     *polarH7HRMPeripheral;
-@property (atomic, strong) NSDictionary     *languages;
 @property (strong, atomic) AVAudioPlayer* avSilentSound;
 
 - (int) calculateHrmPercent:(uint16_t) heartRate;
@@ -143,9 +141,7 @@ CBPeripheralDelegate>
 @property (assign) double nextNagTime;
 @property CGFloat startRecoveryButtonPreviousFont;
 @property (assign) uint16_t noOfTimesUsed;
-@property (strong, atomic) NSMutableArray *synthArray;
 @property (strong, atomic) AVSpeechSynthesizer *synth;
-@property (nonatomic) int usageCounter;
 @property bool purchased;
 @property bool audioOn;
 @property (nonatomic, strong) HRMFartlekViewController *hrmFartlekViewController;

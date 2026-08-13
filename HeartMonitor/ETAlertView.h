@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HRMViewController.h"
+
+@class HRMViewController;
 
 @interface ETAlertView : UIView
 - (id)init:(int)imgWidth imgHeight:(int)imgHeight mvc:(HRMViewController*) mvc;
 
-@property (weak, nonatomic) NSTimer * timer;
 @property (strong, nonatomic) UIButton *okButton;
 @property (strong, nonatomic) UILabel *label;
 @property (strong, nonatomic) UILabel *headLine;
