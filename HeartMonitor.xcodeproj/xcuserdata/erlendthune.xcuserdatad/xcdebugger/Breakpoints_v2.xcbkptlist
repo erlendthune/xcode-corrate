@@ -1566,34 +1566,6 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3 - 8058ac94ab17a441"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
-                  moduleName = "Corrate"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/erlendthune/gitoclp/xcode-corrate/HeartMonitor/HRMViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "439"
-                  endingLineNumber = "439">
-               </Location>
-               <Location
-                  uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3 - 8058ac94ab17a441"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[HRMViewController peripheral:didDiscoverCharacteristicsForService:error:]"
-                  moduleName = "Corrate"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/erlendthune/gitoclp/xcode-corrate/HeartMonitor/HRMViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "439"
-                  endingLineNumber = "439">
-               </Location>
-               <Location
                   uuid = "E8451DCD-817D-405D-A3BC-1DB1E739BFF3 - 8058ac94ab17a5ea"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
