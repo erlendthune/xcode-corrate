@@ -10,12 +10,9 @@
 #import "HRMViewController.h"
 
 @interface ETAlertView : UIView
-- (id)init:(int)imgWidth imgHeight:(int)imgHeight noOfTimesUsed:(int)noOfTimesUsed mvc:(HRMViewController*) mvc nag:(bool)nag;
+- (id)init:(int)imgWidth imgHeight:(int)imgHeight mvc:(HRMViewController*) mvc;
 
 @property (weak, nonatomic) NSTimer * timer;
-@property (nonatomic) int noOfTimesUsed;
-@property (nonatomic) bool nag;
-@property (nonatomic) int counter;
 @property (strong, nonatomic) UIButton *okButton;
 @property (strong, nonatomic) UILabel *label;
 @property (strong, nonatomic) UILabel *headLine;

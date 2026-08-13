@@ -58,7 +58,7 @@ CBPeripheralDelegate>
 - (void) save;
 - (void)connectToPeripheral:(CBPeripheral *)peripheral;
 - (void) talk:(NSString *)s voice:(AVSpeechSynthesisVoice*)voice passive:(bool)passive;
-- (void) DisplayAlertView:(int)noOfTimesUsed nag:(bool)nag;
+- (void) DisplayAlertView;
 
 @property (nonatomic, strong) NSMutableArray<CBPeripheral*> *discoveredPeripherals;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSDictionary *> *advertisedData;

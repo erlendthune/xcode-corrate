@@ -98,11 +98,6 @@
 
     _purchased = [[HRMAPHelper sharedInstance] productPurchased:@"com.erlendthune.Heart_Rate_Training"];
 
-    if(!_purchased)
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DisplayNagScreen) name:UIApplicationWillEnterForegroundNotification object:nil];
-        [self getPrice];
-    }
 #ifdef EMULATOR
     [self emulate];
 #endif
@@ -358,7 +353,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
 
     UIAlertAction* buyAction = [UIAlertAction actionWithTitle:@"Buy" style:UIAlertActionStyleDefault
        handler:^(UIAlertAction * action) {
-           [self DisplayAlertView:self.noOfTimesUsed nag:false];
+           [self DisplayAlertView];
        }];
     if(self.purchased || self.nagscreenOnDisplay)
     {
@@ -639,9 +634,6 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         {
             NSLog(@"getPrice failed to get products.");
         }
-        dispatch_async(dispatch_get_main_queue(),^ {
-            [self DisplayNagScreen];
-        } );
     }];
 }
 
@@ -1071,27 +1063,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     // Dispose of any resources that can be recreated.
 }
 
--(void)DisplayNagScreen
-{
-    if(_purchased)
-    {
-        return;
-    }
-    if(self.nagscreenOnDisplay)
-    {
-        return;
-    }
-
-    if(self.noOfTimesUsed > NAG_TIMES_USED)
-    {
-        dispatch_async(dispatch_get_main_queue(),^ {
-            bool nag = true;
-            [self DisplayAlertView:self.noOfTimesUsed nag:nag];
-        } );
-    }
-}
-
-- (void) DisplayAlertView:(int)noOfTimesUsed  nag:(bool)nag
+- (void) DisplayAlertView
 {
     CGRect screenBounds = [UIScreen mainScreen].bounds;
     CGFloat maxWidth = screenBounds.size.width;
@@ -1099,7 +1071,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     int imgWidth = maxWidth-20;
     int imgHeight = maxHeight-maxHeight/4;
     
-    self.alertView = [[ETAlertView alloc] init:imgWidth imgHeight:imgHeight noOfTimesUsed:noOfTimesUsed mvc:self nag:nag];
+    self.alertView = [[ETAlertView alloc] init:imgWidth imgHeight:imgHeight mvc:self];
     
     CGRect f = self.alertView.frame;
     f.origin.x = 10;
@@ -1283,7 +1255,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         [self updateNextNagTime:currentTime];
     }
     
-    if((!_purchased) && (currentTime > _nextNagTime) && (_noOfTimesUsed > NAG_TIMES_USED))
+    if((!_purchased) && (currentTime > _nextNagTime))
     {
         [self nag];
         [self updateNextNagTime:currentTime];
