@@ -353,7 +353,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
 
     UIAlertAction* buyAction = [UIAlertAction actionWithTitle:@"Buy" style:UIAlertActionStyleDefault
        handler:^(UIAlertAction * action) {
-           [self DisplayAlertView];
+           [self showBuyDialog];
        }];
     if(self.purchased || self.nagscreenOnDisplay)
     {
@@ -601,40 +601,6 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         
         [self presentViewController:alert animated:YES completion:nil];
     });
-}
-
-- (void)getPrice
-{
-    _price = nil;
-    [[HRMAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-        if (success)
-        {
-            if([products count])
-            {
-                SKProduct* p = [products objectAtIndex:0]; //We only have one product.
-                if(p)
-                {
-                    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-                    [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
-                    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-                    [numberFormatter setLocale:p.priceLocale];
-                    self.price = [numberFormatter stringFromNumber:p.price];
-                }
-                else
-                {
-                    NSLog(@"getPrice no product at position 0.");
-                }
-            }
-            else
-            {
-                NSLog(@"getPrice no products.");
-            }
-        }
-        else
-        {
-            NSLog(@"getPrice failed to get products.");
-        }
-    }];
 }
 
 - (void)purchase
@@ -1065,22 +1031,39 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     // Dispose of any resources that can be recreated.
 }
 
-- (void) DisplayAlertView
+- (void)showBuyDialog
 {
-    CGRect screenBounds = [UIScreen mainScreen].bounds;
-    CGFloat maxWidth = screenBounds.size.width;
-    CGFloat maxHeight = screenBounds.size.height;
-    int imgWidth = maxWidth-20;
-    int imgHeight = maxHeight-maxHeight/4;
-    
-    self.alertView = [[ETAlertView alloc] init:imgWidth imgHeight:imgHeight mvc:self];
-    
-    CGRect f = self.alertView.frame;
-    f.origin.x = 10;
-    f.origin.y = maxHeight/8;
-    self.alertView.frame = f;
-    
-    [self.view addSubview:self.alertView];
+    [_activityIndicator startAnimating];
+    _price = nil;
+    [[HRMAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+        if (success && [products count]) {
+            SKProduct *p = [products objectAtIndex:0];
+            if (p) {
+                NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+                [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+                [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+                [numberFormatter setLocale:p.priceLocale];
+                self.price = [numberFormatter stringFromNumber:p.price];
+            }
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self->_activityIndicator stopAnimating];
+            CGRect screenBounds = [UIScreen mainScreen].bounds;
+            CGFloat maxWidth = screenBounds.size.width;
+            CGFloat maxHeight = screenBounds.size.height;
+            int imgWidth = maxWidth - 20;
+            int imgHeight = maxHeight - maxHeight / 4;
+
+            self.alertView = [[ETAlertView alloc] init:imgWidth imgHeight:imgHeight mvc:self];
+
+            CGRect f = self.alertView.frame;
+            f.origin.x = 10;
+            f.origin.y = maxHeight / 8;
+            self.alertView.frame = f;
+
+            [self.view addSubview:self.alertView];
+        });
+    }];
 }
 
 #pragma mark - CBCharacteristic helpers
@@ -1333,11 +1316,15 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     [self updateColors];
     [self updateHeartRateTextField];
 
-    [self TimedSpeaking:currentTime];
-    
+    BOOL fartlekMessageSpoken = NO;
     if(self.fartlek == YES)
     {
-        [self processFartlek:currentTime];
+        fartlekMessageSpoken = [self processFartlek:currentTime];
+    }
+
+    if(!fartlekMessageSpoken)
+    {
+        [self TimedSpeaking:currentTime];
     }
 }
 
@@ -1368,7 +1355,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     self.sixthRow.backgroundColor = color;
 }
 
-- (void)processFartlek:(double)currentTime
+- (BOOL)processFartlek:(double)currentTime
 {
     NSString *message = @"";
     
@@ -1418,7 +1405,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     }
     else if(self.fartlekState == HRMFartlekStateSlowdown || self.fartlekState == HRMFartlekStateSlowdownToStart)
     {
-        if((_hrmDisplay == HRM_BPM ? self.heartRate : self.heartRatePercent) < self.fartlekLowHeartRate)
+        if((_hrmDisplay == HRM_BPM ? self.heartRate : self.heartRatePercent) <= self.fartlekLowHeartRate)
         {
             if(self.fartlekCurrentIteration > self.fartlekRepetitions)
             {
@@ -1437,7 +1424,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     }
     else if(self.fartlekState == HRMFartlekStateSpeedup)
     {
-        if((_hrmDisplay == HRM_BPM ? self.heartRate : self.heartRatePercent) > self.fartlekHighHeartRate)
+        if((_hrmDisplay == HRM_BPM ? self.heartRate : self.heartRatePercent) >= self.fartlekHighHeartRate)
         {
             self.newFartlekMessage = YES;
             message = [NSString stringWithFormat:@"Iteration %d of %d completed. Slow down to %d.", self.fartlekCurrentIteration, self.fartlekRepetitions, self.fartlekLowHeartRate];
@@ -1451,7 +1438,10 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         self.newFartlekMessage = NO;
         [self talk:message voice:[AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"] passive:false];
         self.hrmFartlekViewController.feedback.text = message;
+        return YES;
     }
+
+    return NO;
 }
 
 - (void)updateFartlekMessage
