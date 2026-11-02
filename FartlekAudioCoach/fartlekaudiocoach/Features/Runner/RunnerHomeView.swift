@@ -64,6 +64,7 @@ struct RunnerHomeView: View {
     @State private var showingSessions = false
     @State private var showingDevices = false
     @State private var showingSettings = false
+    @State private var menuDestination: AppMenuDestination?
 
     init(environment: AppEnvironment) {
         self.environment = environment
@@ -102,6 +103,36 @@ struct RunnerHomeView: View {
             .navigationTitle("Fartlek")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Menu {
+                        Button {
+                            menuDestination = .purchase
+                        } label: {
+                            Label("Buy app", systemImage: "cart")
+                        }
+                        Button {
+                            menuDestination = .help
+                        } label: {
+                            Label("Help", systemImage: "questionmark.circle")
+                        }
+                        Button {
+                            showingSettings = true
+                        } label: {
+                            Label("Settings", systemImage: "gearshape")
+                        }
+                        Button {
+                            menuDestination = .about
+                        } label: {
+                            Label("About", systemImage: "info.circle")
+                        }
+                    } label: {
+                        Image(systemName: "line.3.horizontal")
+                            .font(.system(size: 20))
+                            .frame(minWidth: 44, minHeight: 44)
+                    }
+                    .accessibilityLabel("App menu")
+                    .accessibilityIdentifier("appMenu")
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         model.toggleAudio()
@@ -135,6 +166,9 @@ struct RunnerHomeView: View {
         .sheet(isPresented: $showingDevices) {
             HeartRateMonitorView(model: model)
         }
+        .sheet(item: $menuDestination) { destination in
+            AppMenuView(destination: destination, purchaseManager: environment.purchaseManager)
+        }
         .sheet(isPresented: $showingSettings) {
             SettingsHomeView(settings: Binding(
                 get: { model.settings },
@@ -151,8 +185,9 @@ struct RunnerHomeView: View {
             HStack {
                 Image(systemName: connectionIcon)
                     .foregroundStyle(isConnected && !model.isHeartRateMissing ? .green : .orange)
-                Text(connectionStatus)
+                Text(model.monitorStatus)
                     .font(.subheadline)
+                    .accessibilityIdentifier("monitorConnectionStatus")
                 Spacer()
                 Button(action: { showingDevices = true }) {
                     Image(systemName: "ellipsis.circle")
@@ -186,7 +221,7 @@ struct RunnerHomeView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(model.currentSession.name)
                         .font(.body.weight(.medium))
-                    Text("Warmup: \(model.currentSession.warmupMinutes) min")
+                    Text("Warmup: \(model.currentSession.warmupSummary)")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     ForEach(model.currentSession.blocks) { block in
@@ -200,6 +235,8 @@ struct RunnerHomeView: View {
                     Image(systemName: "ellipsis.circle")
                         .foregroundStyle(.blue)
                 }
+                .accessibilityLabel("Select Session")
+                .accessibilityIdentifier("selectSession")
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 10)
@@ -302,15 +339,6 @@ struct RunnerHomeView: View {
         return false
     }
 
-    private var connectionStatus: String {
-        switch model.connectionState {
-        case .disconnected: return "No monitor connected"
-        case .scanning: return "Searching..."
-        case .connecting: return "Connecting..."
-        case .connected(let device): return "Connected to \(device.name)"
-        }
-    }
-
     private var connectionIcon: String {
         if model.isHeartRateMissing { return "exclamationmark.triangle.fill" }
         return isConnected ? "checkmark.circle.fill" : "xmark.circle"
@@ -331,64 +359,162 @@ private struct SessionPickerSheet: View {
     let environment: AppEnvironment
     let model: RunnerViewModel
     @State private var sessions: [SessionTemplate] = []
+    @State private var workoutToEdit: PyramidWorkout?
+    @State private var creationError: String?
     @ObservedObject var purchaseManager: PurchaseManager
+    @ObservedObject private var workoutStorageManager: WorkoutStorageManager
+
+    private var savedWorkouts: [PyramidWorkout] {
+        workoutStorageManager.workouts.filter { !$0.isBuiltIn }
+    }
 
     init(environment: AppEnvironment, model: RunnerViewModel) {
         self.environment = environment
         self.model = model
         self._purchaseManager = ObservedObject(wrappedValue: environment.purchaseManager)
+        self._workoutStorageManager = ObservedObject(wrappedValue: environment.workoutStorageManager)
     }
 
     var body: some View {
         NavigationStack {
             List {
-                ForEach(sessions) { session in
-                    NavigationLink {
-                        SessionDetailView(session: session, purchaseManager: purchaseManager) { editedSession in
-                            model.selectSession(editedSession)
-                            dismiss()
-                        }
-                        .environmentObject(environment)
-                    } label: {
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                Text(session.name)
-                                    .font(.headline)
-                                if session.isPremium && !purchaseManager.isPremium {
-                                    Image(systemName: "lock.fill")
+                if let error = workoutStorageManager.lastError {
+                    Section("Storage Error") {
+                        Label(error.localizedDescription, systemImage: "exclamationmark.triangle")
+                            .foregroundStyle(.red)
+                        Button("Try Again") { workoutStorageManager.loadWorkouts() }
+                    }
+                }
+                if !sessions.isEmpty {
+                    Section("Previously Saved Sessions") {
+                        ForEach(sessions) { session in
+                            NavigationLink {
+                                SessionDetailView(session: session, purchaseManager: purchaseManager) { editedSession in
+                                    model.selectSession(editedSession)
+                                    dismiss()
+                                }
+                                .environmentObject(environment)
+                            } label: {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    HStack {
+                                        Text(session.name)
+                                            .font(.headline)
+                                        if session.isPremium && !purchaseManager.isPremium {
+                                            Image(systemName: "lock.fill")
+                                                .font(.caption)
+                                        }
+                                    }
+                                    if !session.notes.isEmpty {
+                                        Text(session.notes)
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    Text("Warmup: \(session.warmupSummary)")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
+                                    ForEach(session.blocks) { block in
+                                        Text("\(block.repetitions) iterations · \(block.lowerTargetPercent)–\(block.upperTargetPercent)% of max")
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
                                 }
                             }
-                            if !session.notes.isEmpty {
-                                Text(session.notes)
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                            Text("Warmup: \(session.warmupMinutes) min")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                            ForEach(session.blocks) { block in
-                                Text("\(block.repetitions) iterations · \(block.lowerTargetPercent)–\(block.upperTargetPercent)% of max")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+                            .disabled(session.isPremium && !purchaseManager.isPremium)
+                            .foregroundStyle(.primary)
+                        }
+                    }
+                }
+                Section("Templates") {
+                    ForEach(PyramidWorkout.standardTemplates) { workout in
+                        workoutRow(workout)
+                    }
+                }
+                Section("My Saved Workouts") {
+                    if savedWorkouts.isEmpty {
+                        Text("No saved workouts yet.")
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ForEach(savedWorkouts) { workout in
+                            workoutRow(workout)
+                        }
+                        .onDelete { offsets in
+                            let workouts = savedWorkouts
+                            for index in offsets {
+                                guard workoutStorageManager.deleteWorkout(id: workouts[index].id) else { break }
                             }
                         }
                     }
-                    .disabled(session.isPremium && !purchaseManager.isPremium)
-                    .foregroundStyle(.primary)
+                }
+                Section {
+                    Button {
+                        do {
+                            workoutToEdit = try PyramidWorkout.newCustomPyramid()
+                        } catch {
+                            creationError = error.localizedDescription
+                        }
+                    } label: {
+                        Label("Create New Custom Workout", systemImage: "plus.circle.fill")
+                    }
+                    .accessibilityIdentifier("createCustomPyramid")
                 }
             }
             .navigationTitle("Select Session")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(item: $workoutToEdit) { workout in
+                PyramidWorkoutEditorView(
+                    workout: workout,
+                    storageManager: workoutStorageManager,
+                    onUse: { workout in
+                        model.selectSession(workout.asSessionTemplate())
+                        dismiss()
+                    }
+                )
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") { dismiss() }
                 }
             }
         }
-        .task {
-            sessions = (try? await environment.sessionStore.loadSessions()) ?? []
+        .alert("Could Not Create Workout", isPresented: Binding(
+            get: { creationError != nil },
+            set: { if !$0 { creationError = nil } }
+        )) {
+            Button("OK", role: .cancel) { creationError = nil }
+        } message: {
+            Text(creationError ?? "Please try again.")
         }
+        .task {
+            workoutStorageManager.loadWorkouts()
+            sessions = ((try? await environment.sessionStore.loadSessions()) ?? []).filter { !$0.isBuiltin }
+        }
+    }
+
+    private func workoutRow(_ workout: PyramidWorkout) -> some View {
+        Button {
+            workoutToEdit = workout
+        } label: {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(workout.name)
+                        .font(.headline)
+                    Text("\(workout.blocks.count) blocks · Warmup: \(workout.asSessionTemplate().warmupSummary)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(workout.blocks.map {
+                        "\($0.iterations)× \($0.lowerHR)–\($0.upperHR)%"
+                    }.joined(separator: " → "))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("workout-\(workout.id.uuidString)")
     }
 }

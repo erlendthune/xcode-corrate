@@ -13,6 +13,15 @@ struct SessionTemplate: Identifiable, Codable, Equatable {
     var isPremium: Bool
     /// Minutes to warm up before the first interval starts (0 means no warmup).
     var warmupMinutes: Int
+    /// Optional exact duration for workouts authored in seconds; absent in legacy files.
+    var warmupSeconds: Int?
+
+    var warmupDurationSeconds: Int { warmupSeconds ?? warmupMinutes * 60 }
+
+    var warmupSummary: String {
+        let seconds = warmupDurationSeconds
+        return seconds % 60 == 0 ? "\(seconds / 60) min" : "\(seconds / 60) min \(seconds % 60) sec"
+    }
 
     init(
         id: UUID = UUID(),
@@ -21,7 +30,8 @@ struct SessionTemplate: Identifiable, Codable, Equatable {
         blocks: [SessionBlock],
         isBuiltin: Bool = false,
         isPremium: Bool = false,
-        warmupMinutes: Int = 0
+        warmupMinutes: Int = 0,
+        warmupSeconds: Int? = nil
     ) {
         self.id = id
         self.name = name
@@ -30,6 +40,7 @@ struct SessionTemplate: Identifiable, Codable, Equatable {
         self.isBuiltin = isBuiltin
         self.isPremium = isPremium
         self.warmupMinutes = warmupMinutes
+        self.warmupSeconds = warmupSeconds
     }
 }
 

@@ -184,6 +184,71 @@ struct fartlekaudiocoachTests {
         #expect(audio.messages.count == 5)
     }
 
+    @MainActor
+    @Test(arguments: [true, false])
+    func heartRateLossWarningSurvivesReconnectUntilFreshData(audioEnabled: Bool) {
+        let heartRate = BackgroundTestHeartRateService()
+        let audio = BackgroundTestAudioCoach()
+        let model = RunnerViewModel(heartRateService: heartRate,
+                                    settingsStore: BackgroundTestSettingsStore(),
+                                    sessionStore: BackgroundTestSessionStore(),
+                                    sessionEngine: DefaultSessionEngine(), audioCoach: audio)
+        defer {
+            model.stopSession()
+            model.disconnect()
+        }
+        var settings = model.settings
+        settings.audioEnabled = audioEnabled
+        model.updateSettings(settings)
+        let device = HeartRateDevice(id: UUID(), name: "Test watch")
+        heartRate.onConnectionStateChanged?(.connected(device))
+        model.startSession()
+        heartRate.onSample?(HeartRateSample(bpm: 100, percent: 54, timestamp: Date()))
+        model.updateHeartRateAvailability(now: Date().addingTimeInterval(11))
+        #expect(model.isHeartRateMissing)
+        #expect(model.latestSample == nil)
+        #expect(model.monitorStatus.contains("no heart rate received"))
+        #expect(audio.messages.contains(where: { $0.contains("No heart rate received") }) == audioEnabled)
+
+        heartRate.onConnectionStateChanged?(.disconnected)
+        #expect(model.monitorStatus == "No monitor connected")
+        #expect(model.isHeartRateMissing)
+        heartRate.onConnectionStateChanged?(.scanning)
+        #expect(model.isHeartRateMissing)
+        heartRate.onConnectionStateChanged?(.connecting(device))
+        #expect(model.isHeartRateMissing)
+        heartRate.onConnectionStateChanged?(.connected(device))
+        #expect(model.isHeartRateMissing)
+
+        heartRate.onSample?(HeartRateSample(bpm: 110, percent: 60, timestamp: Date()))
+        #expect(!model.isHeartRateMissing)
+        #expect(model.latestSample?.bpm == 110)
+        #expect(model.monitorStatus == "Connected to Test watch")
+        model.disconnect()
+        #expect(!model.isHeartRateMissing)
+    }
+
+    @MainActor
+    @Test func missingDataIsVisibleWithoutRunningSession() {
+        let heartRate = BackgroundTestHeartRateService()
+        let audio = BackgroundTestAudioCoach()
+        let model = RunnerViewModel(heartRateService: heartRate,
+                                    settingsStore: BackgroundTestSettingsStore(),
+                                    sessionStore: BackgroundTestSessionStore(),
+                                    sessionEngine: DefaultSessionEngine(), audioCoach: audio)
+        defer { model.disconnect() }
+        let device = HeartRateDevice(id: UUID(), name: "Test watch")
+        heartRate.onConnectionStateChanged?(.connected(device))
+        heartRate.onSample?(HeartRateSample(bpm: 100, percent: 54, timestamp: Date()))
+        model.updateHeartRateAvailability(now: Date().addingTimeInterval(11))
+        #expect(model.isHeartRateMissing)
+        #expect(model.latestSample == nil)
+        #expect(model.monitorStatus.contains("no heart rate received"))
+        #expect(!audio.messages.contains(where: { $0.contains("No heart rate received") }))
+        heartRate.onSample?(HeartRateSample(bpm: 100, percent: 54, timestamp: Date()))
+        #expect(!model.isHeartRateMissing)
+        #expect(model.monitorStatus == "Connected to Test watch")
+    }
 }
 
 @MainActor

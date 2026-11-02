@@ -4,6 +4,7 @@ import Combine
 final class AppEnvironment: ObservableObject {
     let heartRateService: HeartRateService
     let sessionStore: SessionStore
+    let workoutStorageManager: WorkoutStorageManager
     let settingsStore: SettingsStore
     let sessionEngine: SessionEngine
     let audioCoach: AudioCoach
@@ -14,6 +15,7 @@ final class AppEnvironment: ObservableObject {
     private init(
         heartRateService: HeartRateService,
         sessionStore: SessionStore,
+        workoutStorageManager: WorkoutStorageManager,
         settingsStore: SettingsStore,
         sessionEngine: SessionEngine,
         audioCoach: AudioCoach,
@@ -21,6 +23,7 @@ final class AppEnvironment: ObservableObject {
     ) {
         self.heartRateService = heartRateService
         self.sessionStore = sessionStore
+        self.workoutStorageManager = workoutStorageManager
         self.settingsStore = settingsStore
         self.sessionEngine = sessionEngine
         self.audioCoach = audioCoach
@@ -38,6 +41,7 @@ final class AppEnvironment: ObservableObject {
         return AppEnvironment(
             heartRateService: heartRateService,
             sessionStore: FileSessionStore(),
+            workoutStorageManager: WorkoutStorageManager(),
             settingsStore: settingsStore,
             sessionEngine: DefaultSessionEngine(),
             audioCoach: AVSpeechAudioCoach(),

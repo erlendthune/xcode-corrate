@@ -42,27 +42,28 @@ final class DefaultSessionEngine: SessionEngine {
         let displayedUpper = displayedValue(forPercent: upperPercent, settings: settings)
 
         var cues: [SessionCue] = []
+        let warmupMinutes = Int(ceil(Double(session.warmupDurationSeconds) / 60))
 
         switch phase {
         case .started:
             if warmupStartedAt == nil {
                 warmupStartedAt = now
             }
-            if session.warmupMinutes > 0 {
-                lastSpokenWarmupMinute = session.warmupMinutes
+            if session.warmupDurationSeconds > 0 {
+                lastSpokenWarmupMinute = warmupMinutes
                 phase = .warmup
-                cues.append(.warmupStarted(minutes: session.warmupMinutes))
+                cues.append(.warmupStarted(minutes: warmupMinutes))
             } else {
                 phase = .warmupFinished
             }
 
         case .warmup:
             let elapsed = now.timeIntervalSince(warmupStartedAt ?? now)
-            let totalWarmupSeconds = Double(session.warmupMinutes * 60)
+            let totalWarmupSeconds = Double(session.warmupDurationSeconds)
             let remainingMinutes = Int(ceil((totalWarmupSeconds - elapsed) / 60))
             if elapsed >= totalWarmupSeconds {
                 phase = .warmupFinished
-            } else if remainingMinutes < (lastSpokenWarmupMinute ?? session.warmupMinutes) {
+            } else if remainingMinutes < (lastSpokenWarmupMinute ?? warmupMinutes) {
                 lastSpokenWarmupMinute = remainingMinutes
                 cues.append(.warmupMinutesRemaining(remainingMinutes))
             }

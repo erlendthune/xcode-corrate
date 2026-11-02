@@ -115,8 +115,8 @@ final class AVSpeechAudioCoach: NSObject, AudioCoach, AVSpeechSynthesizerDelegat
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer,
                                       didPause utterance: AVSpeechUtterance) {
         Task { @MainActor [weak self] in
-            guard let self, !self.isInterrupted else { return }
-            synthesizer.continueSpeaking()
+            guard let self, !self.isInterrupted, self.synthesizer.isPaused else { return }
+            self.synthesizer.continueSpeaking()
         }
     }
 

@@ -31,6 +31,18 @@ final class RunnerViewModel: ObservableObject {
     private var lastBeatTime: Date?
     private var lastWarningTime: Double = 0
 
+    var monitorStatus: String {
+        switch connectionState {
+        case .disconnected: return "No monitor connected"
+        case .scanning: return "Searching..."
+        case .connecting(let device): return "Connecting to \(device.name)..."
+        case .connected(let device):
+            return isHeartRateMissing
+                ? "Connected to \(device.name) — no heart rate received"
+                : "Connected to \(device.name)"
+        }
+    }
+
     convenience init(environment: AppEnvironment) {
         self.init(heartRateService: environment.heartRateService,
                   settingsStore: environment.settingsStore,
@@ -69,10 +81,12 @@ final class RunnerViewModel: ObservableObject {
             stopHeartBeatTimer()
         case .connecting:
             latestSample = nil
-            isHeartRateMissing = false
             hasAnnouncedFirstSample = false
-            lastBeatTime = Date()
-            lastWarningTime = 0
+            // Reconnecting is not recovery: only a fresh sample clears the warning.
+            if lastBeatTime == nil {
+                lastBeatTime = Date()
+                lastWarningTime = 0
+            }
             stopHeartBeatTimer()
             startHeartRateLossWarningTimer()
         case .connected:

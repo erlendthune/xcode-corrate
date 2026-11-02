@@ -19,7 +19,12 @@ final class CoreBluetoothHeartRateService: NSObject, HeartRateService {
         }
     }
 
-    var onConnectionStateChanged: ((HeartRateConnectionState) -> Void)?
+    var onConnectionStateChanged: ((HeartRateConnectionState) -> Void)? {
+        didSet {
+            // A view may subscribe after Bluetooth has already connected.
+            onConnectionStateChanged?(connectionState)
+        }
+    }
     var onSample: ((HeartRateSample) -> Void)?
     var onDevicesChanged: (([HeartRateDevice]) -> Void)?
 
@@ -259,7 +264,7 @@ extension CoreBluetoothHeartRateService: CBPeripheralDelegate {
               error == nil,
               characteristic.uuid == Self.heartRateMeasurementUUID,
               let data = characteristic.value,
-              let bpm = parseHeartRate(from: data) else { 
+              let bpm = parseHeartRate(from: data) else {
             if error != nil {
                 NSLog("❌ HeartRateService: didUpdateValue error: \(error?.localizedDescription ?? "unknown")")
             }
