@@ -6,6 +6,9 @@ protocol AudioCoach: AnyObject {
     func activate()
     /// Deactivates the shared audio session once coaching is no longer needed.
     func deactivate()
+    /// Explicit announcements and workout instructions may queue behind current speech.
     func speak(_ message: String, settings: AppSettings)
+    /// Automatic pulse announcements are discarded when speech is busy.
+    func speakAutomaticPulse(_ message: String, settings: AppSettings)
     func stop()
 }

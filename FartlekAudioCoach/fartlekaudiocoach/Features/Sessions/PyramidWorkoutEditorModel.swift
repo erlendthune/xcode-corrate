@@ -9,19 +9,45 @@ final class PyramidWorkoutEditorModel: ObservableObject {
     @Published private(set) var saveCount = 0
 
     private let storageManager: WorkoutStorageManager
-    private let customID: UUID
-    private let customCreatedAt: Date
+    private var savedSnapshot: PyramidWorkout
 
     init(workout: PyramidWorkout, storageManager: WorkoutStorageManager) {
         self.workout = workout
         self.storageManager = storageManager
         self.saveName = workout.name
-        self.customID = workout.isBuiltIn ? UUID() : workout.id
-        self.customCreatedAt = workout.isBuiltIn ? Date() : workout.createdAt
+        self.savedSnapshot = workout
     }
 
     var trimmedName: String {
         saveName.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    var hasUnsavedChanges: Bool {
+        workout != savedSnapshot || trimmedName != savedSnapshot.name
+    }
+
+    func discardChanges() {
+        workout = savedSnapshot
+        saveName = savedSnapshot.name
+        errorMessage = nil
+    }
+
+    var canDeleteWorkout: Bool {
+        !workout.isBuiltIn && storageManager.workouts.contains { $0.id == workout.id && !$0.isBuiltIn }
+    }
+
+    @discardableResult
+    func deleteWorkout() -> Bool {
+        guard canDeleteWorkout else {
+            errorMessage = "Only saved custom workouts can be deleted."
+            return false
+        }
+        guard storageManager.deleteWorkout(id: workout.id) else {
+            errorMessage = storageManager.lastError?.localizedDescription ?? "Unable to delete workout. Please try again."
+            return false
+        }
+        errorMessage = nil
+        return true
     }
 
     var validationMessage: String? {
@@ -31,7 +57,7 @@ final class PyramidWorkoutEditorModel: ObservableObject {
             $0.iterations > 0 && (1...99).contains($0.lowerHR)
                 && (2...100).contains($0.upperHR) && $0.lowerHR < $0.upperHR
         }) else {
-            return "Each block needs at least one iteration and heart-rate targets between 1% and 100%, with the lower target below the upper target."
+            return "Each block needs at least one repetition and heart-rate targets between 1% and 100%, with the lower target below the upper target."
         }
         return nil
     }
@@ -57,7 +83,7 @@ final class PyramidWorkoutEditorModel: ObservableObject {
     }
 
     @discardableResult
-    func saveWorkout() -> Bool {
+    func saveWorkout(asNew: Bool = false) -> Bool {
         guard !trimmedName.isEmpty else {
             errorMessage = "Enter a workout name."
             return false
@@ -67,18 +93,20 @@ final class PyramidWorkoutEditorModel: ObservableObject {
             return false
         }
         do {
+            let createsCopy = asNew || workout.isBuiltIn
             let saved = try PyramidWorkout(
-                id: customID,
+                id: createsCopy ? UUID() : workout.id,
                 name: trimmedName,
                 warmupSeconds: workout.warmupSeconds,
                 blocks: workout.blocks,
                 isFavorite: workout.isFavorite,
-                createdAt: customCreatedAt
+                createdAt: createsCopy ? Date() : workout.createdAt
             )
             guard storageManager.saveWorkout(saved) else {
                 errorMessage = storageManager.lastError?.localizedDescription ?? "Unable to save workout. Please try again."
                 return false
             }
+            savedSnapshot = saved
             workout = saved
             saveName = saved.name
             errorMessage = nil

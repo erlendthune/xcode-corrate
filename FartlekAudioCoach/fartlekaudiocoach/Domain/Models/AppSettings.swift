@@ -16,7 +16,7 @@ struct AppSettings: Codable, Equatable {
     var autoUpdateMaxHeartRate: Bool
 
     static let `default` = AppSettings(
-        audioEnabled: true,
+        audioEnabled: false,
         voiceRate: 0.35,
         heartRateSpeakIntervalSeconds: 20,
         displayMode: .percent,

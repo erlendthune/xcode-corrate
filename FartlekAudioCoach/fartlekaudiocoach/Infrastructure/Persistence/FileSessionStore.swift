@@ -31,7 +31,7 @@ final class FileSessionStore: SessionStore, @unchecked Sendable {
 }
 
 enum BuiltinSessions {
-    // Free: basic flat fartlek (warmup + N iterations, one lower/upper zone).
+    // Basic flat fartlek (warmup + N iterations, one lower/upper zone).
     static let flatFartlek = SessionTemplate(
         name: "Flat Fartlek",
         notes: "A straightforward session: warm up, then repeat intervals between your lower and upper heart rate targets.",
@@ -43,7 +43,7 @@ enum BuiltinSessions {
         warmupMinutes: 10
     )
 
-    // Premium: multi-block pyramid session.
+    // Multi-block pyramid session, available without purchase.
     static let pyramid = SessionTemplate(
         name: "Pyramid 6-3-1-3-6",
         notes: "Escalate and descend through three intensity zones. Six easy intervals, then three medium, one hard peak, then back down.",
@@ -55,7 +55,7 @@ enum BuiltinSessions {
             SessionBlock(repetitions: 6, lowerTargetPercent: 70, upperTargetPercent: 80)
         ],
         isBuiltin: true,
-        isPremium: true,
+        isPremium: false,
         warmupMinutes: 10
     )
 

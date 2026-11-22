@@ -5,9 +5,14 @@ import Foundation
 final class CoreBluetoothHeartRateService: NSObject, HeartRateService {
     private static let heartRateServiceUUID = CBUUID(string: "180D")
     private static let heartRateMeasurementUUID = CBUUID(string: "2A37")
+    private static let informationServiceUUID = CBUUID(string: "180A")
+    private static let batteryServiceUUID = CBUUID(string: "180F")
+    private var specifications: [UUID: HeartRateDeviceSpecifications] = [:]
 
     private var centralManager: CBCentralManager!
     private var connectedPeripheral: CBPeripheral?
+    private var reconnectPeripheral: CBPeripheral?
+    private var manuallyDisconnected = false
     private var discoveredDevices: [HeartRateDevice] = []
     private var peripheralsByID: [UUID: CBPeripheral] = [:]
     private var settingsStore: SettingsStore?
@@ -27,6 +32,11 @@ final class CoreBluetoothHeartRateService: NSObject, HeartRateService {
     }
     var onSample: ((HeartRateSample) -> Void)?
     var onDevicesChanged: (([HeartRateDevice]) -> Void)?
+    var onSpecificationsChanged: ((UUID, HeartRateDeviceSpecifications) -> Void)? {
+        didSet {
+            for (id, value) in specifications { onSpecificationsChanged?(id, value) }
+        }
+    }
 
     override init() {
         super.init()
@@ -43,7 +53,11 @@ final class CoreBluetoothHeartRateService: NSObject, HeartRateService {
     
     private func checkForConnectedPeripherals() {
         NSLog("🔵 HeartRateService: checkForConnectedPeripherals() called")
-        guard centralManager.state == .poweredOn else { return }
+        guard centralManager.state == .poweredOn, !manuallyDisconnected else { return }
+        if reconnectPeripheral != nil {
+            reconnectIfNeeded()
+            return
+        }
         let connectedPeripherals = centralManager.retrieveConnectedPeripherals(withServices: [Self.heartRateServiceUUID])
         NSLog("🔵 HeartRateService: Found \(connectedPeripherals.count) already connected peripherals with Heart Rate service")
         
@@ -57,6 +71,7 @@ final class CoreBluetoothHeartRateService: NSObject, HeartRateService {
         // Store the peripheral for potential connection
         let device = device(from: peripheral)
         peripheralsByID[device.id] = peripheral
+        reconnectPeripheral = peripheral
         
         // If peripheral is already connected, set it up directly
         if peripheral.state == .connected {
@@ -105,6 +120,11 @@ final class CoreBluetoothHeartRateService: NSObject, HeartRateService {
         }
         NSLog("🔵 HeartRateService: Found peripheral in cache, initiating connection")
         centralManager.stopScan()
+        manuallyDisconnected = false
+        reconnectPeripheral = peripheral
+        if let previous = connectedPeripheral, previous.identifier != peripheral.identifier {
+            centralManager.cancelPeripheralConnection(previous)
+        }
         connectedPeripheral = peripheral
         peripheral.delegate = self
         connectionState = .connecting(device)
@@ -112,11 +132,14 @@ final class CoreBluetoothHeartRateService: NSObject, HeartRateService {
     }
 
     func disconnect() {
-        if let connectedPeripheral {
-            centralManager.cancelPeripheralConnection(connectedPeripheral)
-        } else {
-            centralManager.stopScan()
-            connectionState = .disconnected
+        manuallyDisconnected = true
+        reconnectPeripheral = nil
+        let peripheral = connectedPeripheral
+        connectedPeripheral = nil
+        centralManager.stopScan()
+        connectionState = .disconnected
+        if let peripheral {
+            centralManager.cancelPeripheralConnection(peripheral)
         }
         
         // Clear the saved device
@@ -128,10 +151,24 @@ final class CoreBluetoothHeartRateService: NSObject, HeartRateService {
     func checkForExistingConnection() {
         checkForConnectedPeripherals()
     }
+
+    private func reconnectIfNeeded() {
+        guard !manuallyDisconnected, centralManager.state == .poweredOn,
+              let peripheral = reconnectPeripheral else { return }
+        guard peripheral.state != .connected, peripheral.state != .connecting else { return }
+        connectedPeripheral = peripheral
+        peripheral.delegate = self
+        connectionState = .connecting(device(from: peripheral))
+        // CoreBluetooth keeps this request pending while the monitor is out of range.
+        // Unlike a UI timer, it does not require unlocking the phone to retry.
+        NSLog("🔵 HeartRateService: Requesting automatic reconnect to \(peripheral.name ?? "monitor")")
+        centralManager.connect(peripheral)
+    }
     
     private func setupPeripheral(_ peripheral: CBPeripheral, device: HeartRateDevice) {
         NSLog("🔵 HeartRateService: setupPeripheral() called for \(device.name) - \(device.id)")
         connectedPeripheral = peripheral
+        reconnectPeripheral = peripheral
         peripheral.delegate = self
         connectionState = .connected(device)
         NSLog("🔵 HeartRateService: Connection state changed to .connected")
@@ -142,28 +179,9 @@ final class CoreBluetoothHeartRateService: NSObject, HeartRateService {
             NSLog("🔵 HeartRateService: Saved device to settings")
         }
         
-        // If services are already discovered, set up notifications directly
-        if let services = peripheral.services, !services.isEmpty {
-            NSLog("🔵 HeartRateService: Services already discovered: \(services.count) service(s)")
-            peripheral.services?.forEach { service in
-                guard service.uuid == Self.heartRateServiceUUID else { return }
-                NSLog("🔵 HeartRateService: Found Heart Rate service")
-                if let characteristics = service.characteristics, !characteristics.isEmpty {
-                    NSLog("🔵 HeartRateService: Characteristics already discovered: \(characteristics.count) characteristic(s)")
-                    characteristics.forEach { characteristic in
-                        guard characteristic.uuid == Self.heartRateMeasurementUUID else { return }
-                        NSLog("🔵 HeartRateService: Found Heart Rate Measurement characteristic, enabling notifications")
-                        peripheral.setNotifyValue(true, for: characteristic)
-                    }
-                } else {
-                    NSLog("🔵 HeartRateService: No characteristics discovered yet, discovering...")
-                    peripheral.discoverCharacteristics([Self.heartRateMeasurementUUID], for: service)
-                }
-            }
-        } else {
-            NSLog("🔵 HeartRateService: Services not discovered yet, discovering...")
-            peripheral.discoverServices([Self.heartRateServiceUUID])
-        }
+        specifications[device.id] = HeartRateDeviceSpecifications()
+        onSpecificationsChanged?(device.id, HeartRateDeviceSpecifications())
+        peripheral.discoverServices([Self.heartRateServiceUUID, Self.informationServiceUUID, Self.batteryServiceUUID])
     }
 
     private func parseHeartRate(from data: Data) -> Int? {
@@ -220,6 +238,11 @@ extension CoreBluetoothHeartRateService: CBCentralManagerDelegate {
         guard peripheral.identifier == connectedPeripheral?.identifier else { return }
         connectedPeripheral = nil
         connectionState = .disconnected
+        // Failed requests can be retried while the app is executing. A pending
+        // CoreBluetooth connection normally waits for an out-of-range monitor.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.reconnectIfNeeded()
+        }
     }
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral,
@@ -228,32 +251,48 @@ extension CoreBluetoothHeartRateService: CBCentralManagerDelegate {
         guard peripheral.identifier == connectedPeripheral?.identifier else { return }
         connectedPeripheral = nil
         connectionState = .disconnected
+        reconnectIfNeeded()
     }
 }
 
 extension CoreBluetoothHeartRateService: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         NSLog("🔵 HeartRateService: didDiscoverServices for \(peripheral.name ?? "Unknown"), error: \(error?.localizedDescription ?? "none")")
-        guard error == nil else { return }
+        guard peripheral === connectedPeripheral, error == nil else { return }
         NSLog("🔵 HeartRateService: Services discovered: \(peripheral.services?.count ?? 0)")
         peripheral.services?.forEach { service in
             NSLog("🔵 HeartRateService: Service: \(service.uuid)")
-            guard service.uuid == Self.heartRateServiceUUID else { return }
-            NSLog("🔵 HeartRateService: Found Heart Rate service, discovering characteristics...")
-            peripheral.discoverCharacteristics([Self.heartRateMeasurementUUID], for: service)
+            let uuids: [CBUUID]
+            switch service.uuid {
+            case Self.heartRateServiceUUID:
+                uuids = [Self.heartRateMeasurementUUID, CBUUID(string: "2A38")]
+            case Self.informationServiceUUID:
+                uuids = HeartRateDeviceSpecifications.textFields.keys.map { CBUUID(string: $0) }
+            case Self.batteryServiceUUID:
+                uuids = [CBUUID(string: "2A19")]
+            default: return
+            }
+            peripheral.discoverCharacteristics(uuids, for: service)
         }
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService,
                     error: Error?) {
         NSLog("🔵 HeartRateService: didDiscoverCharacteristics for service \(service.uuid), error: \(error?.localizedDescription ?? "none")")
-        guard error == nil else { return }
+        guard peripheral === connectedPeripheral, error == nil else { return }
         NSLog("🔵 HeartRateService: Characteristics discovered: \(service.characteristics?.count ?? 0)")
         service.characteristics?.forEach { characteristic in
             NSLog("🔵 HeartRateService: Characteristic: \(characteristic.uuid)")
-            guard characteristic.uuid == Self.heartRateMeasurementUUID else { return }
-            NSLog("🔵 HeartRateService: Found Heart Rate Measurement characteristic, enabling notifications...")
-            peripheral.setNotifyValue(true, for: characteristic)
+            if characteristic.uuid == Self.heartRateMeasurementUUID {
+                peripheral.setNotifyValue(true, for: characteristic)
+            } else {
+                if characteristic.properties.contains(.read) {
+                    peripheral.readValue(for: characteristic)
+                }
+                if characteristic.uuid == CBUUID(string: "2A19"), characteristic.properties.contains(.notify) {
+                    peripheral.setNotifyValue(true, for: characteristic)
+                }
+            }
         }
     }
 
@@ -262,14 +301,21 @@ extension CoreBluetoothHeartRateService: CBPeripheralDelegate {
         guard peripheral.identifier == connectedPeripheral?.identifier,
               peripheral.state == .connected,
               error == nil,
-              characteristic.uuid == Self.heartRateMeasurementUUID,
-              let data = characteristic.value,
-              let bpm = parseHeartRate(from: data) else {
+              let data = characteristic.value else {
             if error != nil {
                 NSLog("❌ HeartRateService: didUpdateValue error: \(error?.localizedDescription ?? "unknown")")
             }
             return
         }
+
+        if characteristic.uuid != Self.heartRateMeasurementUUID {
+            var info = specifications[peripheral.identifier] ?? HeartRateDeviceSpecifications()
+            info.update(uuid: characteristic.uuid.uuidString, data: data)
+            specifications[peripheral.identifier] = info
+            onSpecificationsChanged?(peripheral.identifier, info)
+            return
+        }
+        guard let bpm = parseHeartRate(from: data) else { return }
 
         NSLog("🔵 HeartRateService: ❤️ Heart rate received: \(bpm) BPM")
         connectionState = .connected(device(from: peripheral))

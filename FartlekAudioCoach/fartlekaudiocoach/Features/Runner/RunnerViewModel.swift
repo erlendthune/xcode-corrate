@@ -1,17 +1,27 @@
 import Combine
 import Foundation
+import UIKit
 
 @MainActor
 final class RunnerViewModel: ObservableObject {
+    private static let heartRateDisplayTimeout: TimeInterval = 3
+    private static let heartRateWarningInterval: TimeInterval = 9.5
+    private static let supportReminderInterval: TimeInterval = 10 * 60
+    private static let supportReminder = "If you enjoy using the app; please buy it so my wife can buy herself new shoes."
+
     @Published private(set) var connectionState: HeartRateConnectionState = .disconnected
     @Published private(set) var devices: [HeartRateDevice] = []
+    @Published private(set) var deviceSpecifications: [UUID: HeartRateDeviceSpecifications] = [:]
     @Published private(set) var latestSample: HeartRateSample?
     @Published private(set) var isHeartRateMissing = false
     @Published private(set) var cues: [SessionCue] = []
     @Published private(set) var lastMessage: String = ""
     @Published private(set) var isRunning = false
+    @Published private(set) var runningSession: SessionTemplate?
     @Published private(set) var settings = AppSettings.default
-    @Published var currentSession: SessionTemplate
+    @Published var currentSession: SessionTemplate {
+        didSet { updateWorkoutDeletionProtection() }
+    }
     @Published private(set) var heartBeatTrigger = 0  // Incremented to trigger animation
     @Published private(set) var secondsUntilNextAnnouncement: Int = 0
 
@@ -20,8 +30,12 @@ final class RunnerViewModel: ObservableObject {
     private let settingsStore: SettingsStore
     private let sessionStore: SessionStore
     private let audioCoach: AudioCoach
-    private var heartRateAnnounceTimer: Timer?
-    private var lastHeartRateAnnounceTime: Date?
+    private let workoutStorageManager: WorkoutStorageManager?
+    private var lastDisplayedCue: SessionCue?
+    private let announcementClock: () -> TimeInterval
+    private let hasPurchased: () -> Bool
+    private var lastSupportReminderTime: TimeInterval?
+    private var lastHeartRateAnnounceTime: TimeInterval?
     private var settingsSaveTask: Task<Void, Never>?
     private var heartBeatTimer: Timer?
     private var heartRateLossWarningTimer: Timer?
@@ -30,6 +44,15 @@ final class RunnerViewModel: ObservableObject {
     private var hasAnnouncedFirstSample = false
     private var lastBeatTime: Date?
     private var lastWarningTime: Double = 0
+    private var lifecycleObservers = Set<AnyCancellable>()
+    private var heartRateWatchdogTask: UIBackgroundTaskIdentifier = .invalid
+    private var heartRateWatchdogRequestID: UUID?
+
+    var availableDevices: [HeartRateDevice] {
+        guard case .connected(let connectedDevice) = connectionState else { return devices }
+        // A connected monitor need not advertise or appear in the latest scan.
+        return [connectedDevice] + devices.filter { $0.id != connectedDevice.id }
+    }
 
     var monitorStatus: String {
         switch connectionState {
@@ -48,17 +71,26 @@ final class RunnerViewModel: ObservableObject {
                   settingsStore: environment.settingsStore,
                   sessionStore: environment.sessionStore,
                   sessionEngine: environment.sessionEngine,
-                  audioCoach: environment.audioCoach)
+                  audioCoach: environment.audioCoach,
+                  workoutStorageManager: environment.workoutStorageManager,
+                  hasPurchased: { environment.purchaseManager.isPremium })
     }
 
     init(heartRateService: HeartRateService, settingsStore: SettingsStore,
-         sessionStore: SessionStore, sessionEngine: SessionEngine, audioCoach: AudioCoach) {
+         sessionStore: SessionStore, sessionEngine: SessionEngine, audioCoach: AudioCoach,
+         announcementClock: @escaping () -> TimeInterval = { ProcessInfo.processInfo.systemUptime },
+         workoutStorageManager: WorkoutStorageManager? = nil,
+         hasPurchased: @escaping () -> Bool = { false }) {
         self.sessionEngine = sessionEngine
         self.heartRateService = heartRateService
         self.settingsStore = settingsStore
         self.sessionStore = sessionStore
         self.audioCoach = audioCoach
-        currentSession = BuiltinSessions.flatFartlek
+        self.workoutStorageManager = workoutStorageManager
+        self.announcementClock = announcementClock
+        self.hasPurchased = hasPurchased
+        currentSession = PyramidWorkout.flatFartlek.asSessionTemplate()
+        updateWorkoutDeletionProtection()
 
         heartRateService.onConnectionStateChanged = { [weak self] state in
             self?.receive(connectionState: state)
@@ -69,6 +101,24 @@ final class RunnerViewModel: ObservableObject {
         heartRateService.onDevicesChanged = { [weak self] devices in
             self?.devices = devices
         }
+        heartRateService.onSpecificationsChanged = { [weak self] id, specifications in
+            self?.deviceSpecifications[id] = specifications
+        }
+        NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
+            .sink { [weak self] _ in
+                DispatchQueue.main.async { [weak self] in
+                    self?.beginHeartRateWatchdogTask()
+                }
+            }
+            .store(in: &lifecycleObservers)
+        NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+            .sink { [weak self] _ in
+                DispatchQueue.main.async { [weak self] in
+                    self?.endHeartRateWatchdogTask()
+                    self?.updateHeartRateAvailability()
+                }
+            }
+            .store(in: &lifecycleObservers)
     }
 
     private func receive(connectionState state: HeartRateConnectionState) {
@@ -79,6 +129,7 @@ final class RunnerViewModel: ObservableObject {
             isHeartRateMissing = lastBeatTime != nil
             hasAnnouncedFirstSample = false
             stopHeartBeatTimer()
+            beginHeartRateWatchdogTask()
         case .connecting:
             latestSample = nil
             hasAnnouncedFirstSample = false
@@ -100,13 +151,19 @@ final class RunnerViewModel: ObservableObject {
     func loadSettings() async {
         NSLog("🟢 RunnerViewModel: loadSettings() called")
         settings = await settingsStore.loadSettings()
-        if !isRunning, let sessions = try? await sessionStore.loadSessions(),
+        // Early Bluetooth samples use the muted default. After loading preferences,
+        // only a fresh sample may announce, using the user's actual audio setting.
+        hasAnnouncedFirstSample = false
+        // Built-in starting points come from the modern workout templates, not
+        // legacy sessions with obsolete editor-only fields.
+        if !isRunning, !currentSession.isBuiltin,
+           let sessions = try? await sessionStore.loadSessions(),
            let savedSession = sessions.first(where: {
-               $0.id == currentSession.id || ($0.isBuiltin && currentSession.isBuiltin && $0.name == currentSession.name)
+               !$0.isBuiltin && $0.id == currentSession.id
            }) {
             currentSession = savedSession
         }
-        startHeartRateAnnounceTimer()
+        resetAnnouncementSchedule()
         
         // First, check for existing connections (OS-level connected peripherals)
         heartRateService.checkForExistingConnection()
@@ -144,6 +201,7 @@ final class RunnerViewModel: ObservableObject {
 
     func disconnect() {
         lastBeatTime = nil
+        endHeartRateWatchdogTask()
         heartRateService.disconnect()
         latestSample = nil
         isHeartRateMissing = false
@@ -151,16 +209,25 @@ final class RunnerViewModel: ObservableObject {
         hasAnnouncedFirstSample = false
         lastWarningTime = 0
         stopHeartRateLossWarningTimer()
+        stopCountdownTimer()
     }
 
     func connect(to device: HeartRateDevice) {
+        if case .connected(let connected) = connectionState, connected.id == device.id {
+            return
+        }
         heartRateService.connect(to: device)
     }
 
     func startSession() {
-        sessionEngine.reset(session: currentSession)
+        guard !isRunning else { return }
+        let snapshot = currentSession
+        runningSession = snapshot
+        sessionEngine.reset(session: snapshot)
+        updateWorkoutDeletionProtection()
         cues = []
         lastMessage = ""
+        lastDisplayedCue = nil
         isRunning = true
         lastWarningTime = 0
         startHeartRateLossWarningTimer()
@@ -170,7 +237,11 @@ final class RunnerViewModel: ObservableObject {
 
     func stopSession() {
         isRunning = false
+        runningSession = nil
+        updateWorkoutDeletionProtection()
         cues = []
+        lastMessage = ""
+        lastDisplayedCue = nil
         audioCoach.speak("Fartlek stopped.", settings: settings)
         audioCoach.deactivate()
         stopHeartBeatTimer()
@@ -180,10 +251,28 @@ final class RunnerViewModel: ObservableObject {
         currentSession = session
     }
 
+    private func updateWorkoutDeletionProtection() {
+        var ids: Set<UUID> = [currentSession.id]
+        if let runningSession { ids.insert(runningSession.id) }
+        workoutStorageManager?.setProtectedWorkoutIDs(ids)
+    }
+
     func updateSettings(_ updated: AppSettings) {
         let intervalChanged = settings.heartRateSpeakIntervalSeconds != updated.heartRateSpeakIntervalSeconds
+        let cueFormatChanged = settings.displayMode != updated.displayMode || settings.maxHeartRate != updated.maxHeartRate
+        let audioWasEnabled = settings.audioEnabled
         settings = updated
-        if intervalChanged { startHeartRateAnnounceTimer() }
+        if cueFormatChanged, let lastDisplayedCue {
+            lastMessage = message(for: lastDisplayedCue)
+        }
+        if audioWasEnabled && !updated.audioEnabled {
+            lastSupportReminderTime = nil
+            audioCoach.stop()
+            endHeartRateWatchdogTask()
+        } else if !audioWasEnabled && updated.audioEnabled {
+            beginHeartRateWatchdogTask()
+        }
+        if intervalChanged { resetAnnouncementSchedule() }
         // Keep rapid edits in order so an older save cannot overwrite the latest one.
         let previousSave = settingsSaveTask
         settingsSaveTask = Task { [settingsStore] in
@@ -200,7 +289,7 @@ final class RunnerViewModel: ObservableObject {
         
         // Announce heart rate immediately if audio was just enabled
         if wasAudioDisabled && newSettings.audioEnabled {
-            announceHeartRate()
+            announceHeartRateOnly()
         }
     }
     
@@ -240,36 +329,22 @@ final class RunnerViewModel: ObservableObject {
         audioCoach.speak("\(display)", settings: settings)
     }
 
-    private func startHeartRateAnnounceTimer() {
-        stopHeartRateAnnounceTimer()
-        lastHeartRateAnnounceTime = Date()
+    private func resetAnnouncementSchedule() {
+        stopCountdownTimer()
+        lastHeartRateAnnounceTime = announcementClock()
         let interval = max(0, settings.heartRateSpeakIntervalSeconds)
         secondsUntilNextAnnouncement = interval
-        // Zero means sample-driven speech, never a zero-duration repeating timer.
+        // This timer is display-only. Speech is always driven by a fresh sample.
         guard interval > 0 else { return }
-        
-        heartRateAnnounceTimer = Timer.scheduledTimer(withTimeInterval: Double(interval), repeats: true) { [weak self] _ in
-            guard let self else { return }
-            Task { @MainActor in
-                self.updateAnnouncementSchedule()
-            }
-        }
-        
         startCountdownTimer()
     }
 
-    private func stopHeartRateAnnounceTimer() {
-        heartRateAnnounceTimer?.invalidate()
-        heartRateAnnounceTimer = nil
-        stopCountdownTimer()
-    }
-    
     private func startCountdownTimer() {
         stopCountdownTimer()
         countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self else { return }
             Task { @MainActor in
-                self.updateAnnouncementSchedule()
+                self.updateAnnouncementCountdown()
             }
         }
     }
@@ -279,37 +354,28 @@ final class RunnerViewModel: ObservableObject {
         countdownTimer = nil
     }
 
-    /// Bluetooth notifications wake the app in the background; timers alone do not.
-    /// Share one deadline between sample delivery and foreground timer updates.
-    private func updateAnnouncementSchedule(now: Date = Date()) {
+    /// Display-only: an expired countdown waits for a fresh Bluetooth reading.
+    func updateAnnouncementCountdown() {
         let interval = max(0, settings.heartRateSpeakIntervalSeconds)
         guard interval > 0 else {
             secondsUntilNextAnnouncement = 0
             return
         }
         guard let lastAnnouncement = lastHeartRateAnnounceTime else {
-            lastHeartRateAnnounceTime = now
             secondsUntilNextAnnouncement = interval
             return
         }
-        let remaining = Double(interval) - now.timeIntervalSince(lastAnnouncement)
+        let remaining = Double(interval) - (announcementClock() - lastAnnouncement)
         secondsUntilNextAnnouncement = max(0, Int(ceil(remaining)))
-        guard remaining <= 0 else { return }
-        // Never queue a burst of missed announcements after suspension.
-        lastHeartRateAnnounceTime = now
-        secondsUntilNextAnnouncement = interval
-        announceHeartRate()
-    }
-
-    private func announceHeartRate() {
-        updateHeartRateAvailability()
-        guard !isHeartRateMissing, let sample = latestSample else { return }
-        let display = settings.displayMode == .bpm ? sample.bpm : sample.percent
-        audioCoach.speak("\(display)", settings: settings)
     }
 
     private func receive(sample: HeartRateSample) {
         guard case .connected = connectionState else { return }
+        // A zero reading is not a heartbeat and must not refresh stale data.
+        guard sample.bpm > 0 else {
+            updateHeartRateAvailability()
+            return
+        }
         NSLog("🟢 RunnerViewModel: receive(sample:) - \(sample.bpm) BPM")
         let adjustedSample = HeartRateSample(
             bpm: sample.bpm,
@@ -321,28 +387,61 @@ final class RunnerViewModel: ObservableObject {
         lastWarningTime = 0
         NSLog("🟢 RunnerViewModel: Latest sample updated to \(adjustedSample.bpm) BPM")
         doHeartBeat(bpm: adjustedSample.bpm)
-        
-        // At zero interval, announce every notification, even if BPM is unchanged.
-        if !hasAnnouncedFirstSample || settings.heartRateSpeakIntervalSeconds == 0 {
-            hasAnnouncedFirstSample = true
-            announceHeartRate()
-            lastHeartRateAnnounceTime = adjustedSample.timestamp
-            secondsUntilNextAnnouncement = max(0, settings.heartRateSpeakIntervalSeconds)
-        } else {
-            // Like HeartMonitor's TimedSpeaking: run when Bluetooth wakes us,
-            // even if iOS suspended the UI timers between notifications.
-            updateAnnouncementSchedule(now: adjustedSample.timestamp)
+
+        let now = announcementClock()
+        if settings.audioEnabled && lastSupportReminderTime == nil {
+            lastSupportReminderTime = now
         }
-        
-        guard isRunning else { return }
-        let newCues = sessionEngine.consume(sample: adjustedSample, settings: settings, now: adjustedSample.timestamp)
-        cues = newCues
-        newCues.forEach { cue in
-            let text = message(for: cue)
-            guard !text.isEmpty else { return }
-            lastMessage = text
-            audioCoach.speak(text, settings: settings)
+        let isFirstSample = !hasAnnouncedFirstSample
+        hasAnnouncedFirstSample = true
+        let interval = max(0, settings.heartRateSpeakIntervalSeconds)
+        if interval > 0 && countdownTimer == nil { startCountdownTimer() }
+
+        // Match HeartMonitor: instructions take precedence over pulse speech.
+        if isRunning {
+            let newCues = sessionEngine.consume(sample: adjustedSample, settings: settings, now: adjustedSample.timestamp)
+            cues = newCues
+            if newCues.contains(.sessionCompleted) {
+                // Completion ends execution, not monitoring or the final instruction.
+                isRunning = false
+                runningSession = nil
+                updateWorkoutDeletionProtection()
+            }
+            let speechCues = newCues.filter { !message(for: $0).isEmpty }
+            if !speechCues.isEmpty {
+                for cue in speechCues {
+                    let text = message(for: cue)
+                    lastDisplayedCue = cue
+                    lastMessage = text
+                    audioCoach.speak(text, settings: settings)
+                }
+                if isFirstSample { lastHeartRateAnnounceTime = now }
+                updateAnnouncementCountdown()
+                return
+            }
         }
+
+        // Never announce an old pulse behind the support message. Workout
+        // instructions above always take precedence; a due reminder can wait.
+        if settings.audioEnabled, !hasPurchased(),
+           let lastReminder = lastSupportReminderTime,
+           now - lastReminder >= Self.supportReminderInterval {
+            lastSupportReminderTime = now
+            lastHeartRateAnnounceTime = now
+            audioCoach.speak(Self.supportReminder, settings: settings)
+            updateAnnouncementCountdown()
+            return
+        }
+
+        let elapsed = lastHeartRateAnnounceTime.map { now - $0 } ?? .infinity
+        if isFirstSample || interval == 0 || elapsed >= Double(interval) {
+            // Consume one interval even when busy speech discards this pulse.
+            // No catch-up queue, and no repeated attempts during the cooldown.
+            lastHeartRateAnnounceTime = now
+            let display = settings.displayMode == .bpm ? adjustedSample.bpm : adjustedSample.percent
+            audioCoach.speakAutomaticPulse("\(display)", settings: settings)
+        }
+        updateAnnouncementCountdown()
     }
 
     private func doHeartBeat(bpm: Int) {
@@ -377,27 +476,64 @@ final class RunnerViewModel: ObservableObject {
     }
     
     private func startHeartRateLossWarningTimer() {
+        beginHeartRateWatchdogTask()
         guard heartRateLossWarningTimer == nil else { return }
-        heartRateLossWarningTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            guard let self else { return }
-            Task { @MainActor in
-                self.updateHeartRateAvailability()
+        let timer = Timer(fire: Date().addingTimeInterval(0.5), interval: 0.5, repeats: true) { [weak self] _ in
+            DispatchQueue.main.async { [weak self] in
+                self?.updateHeartRateAvailability()
             }
         }
+        heartRateLossWarningTimer = timer
+        RunLoop.main.add(timer, forMode: .common)
+    }
+
+    private func beginHeartRateWatchdogTask() {
+        guard heartRateWatchdogTask == .invalid, lastBeatTime != nil,
+              settings.audioEnabled, UIApplication.shared.applicationState != .active else { return }
+        let requestID = UUID()
+        heartRateWatchdogRequestID = requestID
+        // Pulse callbacks stop waking us when transmission stops. Request a finite
+        // window for detecting that gap; this is not an indefinite background timer.
+        heartRateWatchdogTask = UIApplication.shared.beginBackgroundTask(withName: "Runner.heartRateWatchdog") { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                guard let self, self.heartRateWatchdogRequestID == requestID else { return }
+                self.endHeartRateWatchdogTask()
+                self.updateHeartRateAvailability()
+                NSLog("🟢 Heart rate watchdog background time expired")
+            }
+        }
+        if heartRateWatchdogTask == .invalid { heartRateWatchdogRequestID = nil }
+    }
+
+    private func endHeartRateWatchdogTask() {
+        guard heartRateWatchdogTask != .invalid else { return }
+        let task = heartRateWatchdogTask
+        heartRateWatchdogTask = .invalid
+        heartRateWatchdogRequestID = nil
+        UIApplication.shared.endBackgroundTask(task)
     }
 
     func updateHeartRateAvailability(now: Date = Date()) {
         guard let lastBeatTime else { return }
         let elapsed = now.timeIntervalSince(lastBeatTime)
-        guard elapsed > 9.5 else { return }
+        guard elapsed >= Self.heartRateDisplayTimeout else { return }
+        if !isHeartRateMissing {
+            NSLog("🟢 Heart rate display marked stale after %.1f seconds", elapsed)
+        }
         isHeartRateMissing = true
         latestSample = nil
         hasAnnouncedFirstSample = false
         stopHeartBeatTimer()
-        if isRunning && elapsed - lastWarningTime > 9.5 {
-            audioCoach.speak("Warning: No heart rate received for \(Int(elapsed)) seconds!", settings: settings)
+        // GUI freshness is independent of both speech throttling and warnings.
+        guard elapsed > Self.heartRateWarningInterval else { return }
+        // Like HeartMonitor, warn during pulse monitoring, not only during workouts.
+        if settings.audioEnabled && elapsed - lastWarningTime > Self.heartRateWarningInterval {
+            NSLog("🟢 Heart rate missing for %.0f seconds; requesting warning", elapsed)
+            audioCoach.speak("Warning: No heart rate received for \(Int(elapsed.rounded())) seconds!", settings: settings)
             lastWarningTime = elapsed
         }
+        // AudioCoach owns the background assertion while the warning speaks.
+        endHeartRateWatchdogTask()
     }
     
     private func stopHeartRateLossWarningTimer() {
@@ -408,7 +544,7 @@ final class RunnerViewModel: ObservableObject {
     private func message(for cue: SessionCue) -> String {
         switch cue {
         case .warmupStarted(let minutes):
-            return "Warm up \(minutes) minutes to start fartlek."
+            return "Warm up \(minutes) minutes."
         case .warmupMinutesRemaining(let minutes):
             return "\(minutes) minutes left of warm up."
         case .blockStarted:
@@ -418,11 +554,17 @@ final class RunnerViewModel: ObservableObject {
         case .sessionCompleted:
             return "Good job. Fartlek completed."
         case .slowDownToStart(let target):
-            return "Heart rate too high. Slow down to \(target) to start the first iteration of fartlek."
+            return "Heart rate too high. Slow down to \(cueTargetText(percent: target)) before starting the first interval."
         case .slowDown(let target, let repetition, let total):
-            return "Iteration \(repetition) of \(total) completed. Slow down to \(target)."
+            return "Rep \(repetition) of \(total). Slow down to \(cueTargetText(percent: target)) to recover."
         case .speedUp(let target, let repetition, let total):
-            return "Iteration \(repetition) of \(total). Speed up to \(target)."
+            return "Rep \(repetition) of \(total). Speed up to \(cueTargetText(percent: target))."
         }
+    }
+
+    private func cueTargetText(percent: Int) -> String {
+        settings.displayMode == .bpm
+            ? "\(HeartRateConverter.bpm(from: percent, maxHeartRate: settings.maxHeartRate)) BPM"
+            : "\(percent)%"
     }
 }

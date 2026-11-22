@@ -30,9 +30,11 @@ final class PurchaseManager: ObservableObject {
         isLoading = true
         defer { isLoading = false }
 
+        // Existing purchases must silence reminders even when the product
+        // catalog cannot be reached (for example, while training offline).
+        await updateEntitlement()
         do {
             product = try await Product.products(for: [Self.productID]).first
-            await updateEntitlement()
         } catch {
             errorMessage = "Unable to load the purchase details."
         }
@@ -51,7 +53,7 @@ final class PurchaseManager: ObservableObject {
             let result = try await product.purchase()
             switch result {
             case .success(.verified(let transaction)):
-                isPremium = true
+                isPremium = transaction.revocationDate == nil && !transaction.isUpgraded
                 await transaction.finish()
             case .success(.unverified):
                 errorMessage = "The purchase could not be verified."
@@ -82,7 +84,8 @@ final class PurchaseManager: ObservableObject {
     private func updateEntitlement() async {
         for await result in Transaction.currentEntitlements {
             guard case .verified(let transaction) = result else { continue }
-            if transaction.productID == Self.productID {
+            if transaction.productID == Self.productID,
+               transaction.revocationDate == nil, !transaction.isUpgraded {
                 isPremium = true
                 return
             }
@@ -93,10 +96,10 @@ final class PurchaseManager: ObservableObject {
     private func observeTransactionUpdates() async {
         for await result in Transaction.updates {
             guard case .verified(let transaction) = result else { continue }
-            if transaction.productID == Self.productID {
-                isPremium = true
-            }
             await transaction.finish()
+            if transaction.productID == Self.productID {
+                await updateEntitlement()
+            }
         }
     }
 }

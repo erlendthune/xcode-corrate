@@ -6,9 +6,10 @@ enum SessionCue: Equatable {
     case blockStarted(blockIndex: Int, repetition: Int)
     case blockCompleted(blockIndex: Int)
     case sessionCompleted
-    case slowDownToStart(target: Int)                        // target expressed in current display mode
-    case slowDown(target: Int, repetition: Int, total: Int)  // target expressed in current display mode
-    case speedUp(target: Int, repetition: Int, total: Int)   // target expressed in current display mode
+    // Targets remain percentages of maximum HR; views and speech format them.
+    case slowDownToStart(target: Int)
+    case slowDown(target: Int, repetition: Int, total: Int)
+    case speedUp(target: Int, repetition: Int, total: Int)
 }
 
 protocol SessionEngine {

@@ -19,7 +19,7 @@ struct SessionsHomeView: View {
                 } header: {
                     Text("Ready to run")
                 } footer: {
-                    Text("Create and save custom sessions after unlocking the full coach.")
+                    Text("All workouts are available. Choose a session to edit and save it.")
                 }
                 .task {
                     sessions = (try? await sessionStore.loadSessions()) ?? []
@@ -39,11 +39,6 @@ private struct SessionRow: View {
                 Text(session.name)
                     .font(.headline)
                 Spacer()
-                if session.isPremium {
-                    Label("Premium", systemImage: "lock.fill")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
             }
 
             if !session.notes.isEmpty {

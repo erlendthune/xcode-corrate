@@ -4,6 +4,7 @@ struct HeartRateMonitorView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var model: RunnerViewModel
     @State private var isScanning = false
+    @State private var deviceToInspect: HeartRateDevice?
 
     var body: some View {
         NavigationStack {
@@ -36,7 +37,7 @@ struct HeartRateMonitorView: View {
                 
                 ScrollView {
                     VStack(spacing: 12) {
-                        if model.devices.isEmpty && !isScanning {
+                        if model.availableDevices.isEmpty && !isScanning {
                             VStack(spacing: 12) {
                                 Image(systemName: "heart.slash")
                                     .font(.system(size: 48))
@@ -50,12 +51,16 @@ struct HeartRateMonitorView: View {
                             .frame(maxWidth: .infinity)
                             .padding(40)
                         } else {
-                            ForEach(model.devices, id: \.id) { device in
+                            ForEach(model.availableDevices, id: \.id) { device in
                                 DeviceCard(
                                     device: device,
                                     isSelected: isDeviceConnected(device.id),
                                     onSelect: {
-                                        model.connect(to: device)
+                                        if isDeviceConnected(device.id) {
+                                            deviceToInspect = device
+                                        } else {
+                                            model.connect(to: device)
+                                        }
                                     }
                                 )
                             }
@@ -73,6 +78,9 @@ struct HeartRateMonitorView: View {
                     Button("Done") { dismiss() }
                 }
             }
+        }
+        .sheet(item: $deviceToInspect) { device in
+            HeartRateMonitorDetailView(device: device, model: model)
         }
         .onAppear {
             // Auto-start scanning only if not already connected to a device
@@ -142,6 +150,7 @@ private struct DeviceCard: View {
             .cornerRadius(8)
         }
         .foregroundStyle(.primary)
+        .accessibilityHint(isSelected ? "View monitor details" : "Connect to this monitor")
     }
 }
 

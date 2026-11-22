@@ -39,6 +39,61 @@ struct PyramidWorkoutEditorTests {
         #expect(consume(after: 96) == [.speedUp(target: 85, repetition: 1, total: 3)])
     }
 
+    @Test func onlySavedCustomWorkoutsCanBeDeleted() throws {
+        try withStorage { storage, url in
+            let template = PyramidWorkoutEditorModel(workout: .flatFartlek, storageManager: storage)
+            #expect(!template.canDeleteWorkout)
+            #expect(!template.deleteWorkout())
+            let draft = PyramidWorkoutEditorModel(workout: try .newCustomPyramid(), storageManager: storage)
+            #expect(!draft.canDeleteWorkout)
+            #expect(!draft.deleteWorkout())
+            #expect(draft.saveWorkout())
+            #expect(draft.canDeleteWorkout)
+            let id = draft.workout.id
+            #expect(draft.deleteWorkout())
+            #expect(!draft.canDeleteWorkout)
+            #expect(!WorkoutStorageManager(fileURL: url).workouts.contains { $0.id == id })
+            #expect(storage.workouts == PyramidWorkout.standardTemplates)
+        }
+    }
+
+    @Test func deletingFavoriteCopyLeavesOriginalUntouched() throws {
+        try withStorage { storage, url in
+            let original = try PyramidWorkout.newCustomPyramid()
+            #expect(storage.saveWorkout(original))
+            let model = PyramidWorkoutEditorModel(workout: original, storageManager: storage)
+            model.saveName = "Favorite copy"
+            model.workout.isFavorite = true
+            #expect(model.saveWorkout(asNew: true))
+            let copyID = model.workout.id
+            #expect(model.deleteWorkout())
+            let saved = WorkoutStorageManager(fileURL: url).workouts
+            #expect(saved.first { $0.id == original.id } == original)
+            #expect(!saved.contains { $0.id == copyID })
+            #expect(!saved.contains { $0.isFavorite })
+        }
+    }
+
+    @Test func failedDeletionRetainsWorkoutAndCanBeRetried() throws {
+        try withStorage { storage, url in
+            let workout = try PyramidWorkout.newCustomPyramid()
+            #expect(storage.saveWorkout(workout))
+            let model = PyramidWorkoutEditorModel(workout: workout, storageManager: storage)
+            let saved = try Data(contentsOf: url)
+            let corrupt = Data("corrupt JSON".utf8)
+            try corrupt.write(to: url)
+            #expect(!model.deleteWorkout())
+            #expect(model.errorMessage != nil)
+            #expect(model.workout == workout)
+            #expect(model.canDeleteWorkout)
+            #expect(try Data(contentsOf: url) == corrupt)
+            try saved.write(to: url)
+            #expect(model.deleteWorkout())
+            #expect(model.errorMessage == nil)
+            #expect(!WorkoutStorageManager(fileURL: url).workouts.contains { $0.id == workout.id })
+        }
+    }
+
     private func withStorage(_ body: (WorkoutStorageManager, URL) throws -> Void) throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
@@ -86,6 +141,53 @@ struct PyramidWorkoutEditorTests {
             #expect(customs[0].name == "Renamed Workout")
             #expect(customs[0].blocks[0].iterations == 7)
             #expect(model.saveCount == 2)
+        }
+    }
+
+    @Test func saveAsNewPreservesOriginalAndSubsequentSavesUpdateCopy() throws {
+        try withStorage { storage, url in
+            var original = try PyramidWorkout.newCustomPyramid()
+            original.createdAt = Date(timeIntervalSince1970: 1_700_000_000)
+            #expect(storage.saveWorkout(original))
+            let model = PyramidWorkoutEditorModel(workout: original, storageManager: storage)
+            model.saveName = "New variation"
+            model.workout.warmupSeconds = 120
+            model.workout.isFavorite = true
+            #expect(model.saveWorkout(asNew: true))
+            let copy = model.workout
+            #expect(copy.id != original.id)
+            #expect(copy.createdAt > original.createdAt)
+            #expect(copy.blocks == original.blocks)
+            #expect(copy.isFavorite)
+            #expect(!copy.isBuiltIn)
+            model.saveName = "Updated variation"
+            #expect(model.saveWorkout())
+            let customs = WorkoutStorageManager(fileURL: url).workouts.filter { !$0.isBuiltIn }
+            #expect(customs.count == 2)
+            #expect(customs.first { $0.id == original.id } == original)
+            let updated = try #require(customs.first { $0.id == copy.id })
+            #expect(updated.name == "Updated variation")
+            #expect(updated.warmupSeconds == 120)
+            #expect(updated.createdAt == copy.createdAt)
+        }
+    }
+
+    @Test func failedSaveAsNewKeepsOriginalIdentityAndDraft() throws {
+        try withStorage { storage, url in
+            let original = try PyramidWorkout.newCustomPyramid()
+            #expect(storage.saveWorkout(original))
+            let data = try Data(contentsOf: url)
+            let model = PyramidWorkoutEditorModel(workout: original, storageManager: storage)
+            model.saveName = "Unsaved copy"
+            try Data("corrupt JSON".utf8).write(to: url)
+            #expect(!model.saveWorkout(asNew: true))
+            #expect(model.workout == original)
+            #expect(model.saveName == "Unsaved copy")
+            #expect(model.saveCount == 0)
+            try data.write(to: url)
+            #expect(model.saveWorkout(asNew: true))
+            #expect(model.workout.id != original.id)
+            #expect(WorkoutStorageManager(fileURL: url).workouts.first { $0.id == original.id } == original)
         }
     }
 

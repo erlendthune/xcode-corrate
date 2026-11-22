@@ -32,9 +32,12 @@ private struct SplashScreenView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 24) {
-                Image(systemName: "heart.fill")
-                    .font(.system(size: 60))
-                    .foregroundStyle(.green)
+                Image("SplashCoachIcon")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 144, height: 144)
+                    .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
+                    .accessibilityHidden(true)
                 
                 Text("Fartlek")
                     .font(.system(size: 32, weight: .bold, design: .rounded))

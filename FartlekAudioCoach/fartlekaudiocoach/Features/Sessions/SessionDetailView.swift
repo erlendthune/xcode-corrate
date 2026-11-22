@@ -1,4 +1,3 @@
-import StoreKit
 import SwiftUI
 
 struct SessionDetailView: View {
@@ -7,8 +6,6 @@ struct SessionDetailView: View {
     @ObservedObject var purchaseManager: PurchaseManager
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var environment: AppEnvironment
-    @State private var isShowingPremium = false
-    @State private var isShowingPurchaseError = false
 
     @State private var maxHeartRate = AppSettings.default.maxHeartRate
     @State private var saveError: String?
@@ -34,18 +31,13 @@ struct SessionDetailView: View {
                         }
                     }
                     Spacer()
-                    if session.isPremium {
-                        Label("Premium", systemImage: "lock.fill")
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(.secondary)
-                    }
                 }
 
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Session structure")
                         .font(.headline)
 
-                    Text("Warm up, then speed up to the upper target and slow down to the lower target for each iteration. Targets are percentages of your maximum heart rate.")
+                    Text("Warm up, then speed up to the upper target and recover by slowing down to the lower target to complete each repetition. Targets are percentages of your maximum heart rate.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                     Stepper("Warmup: \(session.warmupMinutes) minutes", value: $session.warmupMinutes, in: 0...60)
@@ -54,7 +46,7 @@ struct SessionDetailView: View {
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Block \(index + 1)")
                                 .font(.subheadline.weight(.semibold))
-                            Stepper("Iterations: \(session.blocks[index].repetitions)", value: $session.blocks[index].repetitions, in: 1...100)
+                            Stepper("Repetitions: \(session.blocks[index].repetitions)", value: $session.blocks[index].repetitions, in: 1...100)
                             Stepper("Lower target: \(session.blocks[index].lowerTargetPercent)%", value: $session.blocks[index].lowerTargetPercent, in: 1...(session.blocks[index].upperTargetPercent - 1))
                             Stepper("Upper target: \(session.blocks[index].upperTargetPercent)%", value: $session.blocks[index].upperTargetPercent, in: (session.blocks[index].lowerTargetPercent + 1)...100)
                             Text("\(HeartRateConverter.bpm(from: session.blocks[index].lowerTargetPercent, maxHeartRate: maxHeartRate))-\(HeartRateConverter.bpm(from: session.blocks[index].upperTargetPercent, maxHeartRate: maxHeartRate)) BPM at max HR \(maxHeartRate)")
@@ -67,20 +59,11 @@ struct SessionDetailView: View {
                         }
                     }
                 }
-                .disabled(session.isPremium && !purchaseManager.isPremium)
 
                 Button {
-                    if session.isPremium {
-                        if purchaseManager.isPremium {
-                            startSession()
-                        } else {
-                            isShowingPremium = true
-                        }
-                    } else {
-                        startSession()
-                    }
+                    startSession()
                 } label: {
-                    Label(buttonTitle, systemImage: buttonIcon)
+                    Label("Save and Select Session", systemImage: "checkmark")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
@@ -93,7 +76,7 @@ struct SessionDetailView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Done") { startSession() }
-                    .disabled(isSaving || (session.isPremium && !purchaseManager.isPremium))
+                    .disabled(isSaving)
             }
         }
         .task {
@@ -106,28 +89,6 @@ struct SessionDetailView: View {
             Button("OK", role: .cancel) { saveError = nil }
         } message: {
             Text(saveError ?? "Please try again.")
-        }
-        .alert("Premium session", isPresented: $isShowingPremium) {
-            Button("Not now", role: .cancel) {}
-            Button(purchaseTitle) {
-                Task {
-                    await purchaseManager.purchase()
-                    isShowingPurchaseError = purchaseManager.errorMessage != nil
-                }
-            }
-            Button("Restore purchase") {
-                Task {
-                    await purchaseManager.restore()
-                    isShowingPurchaseError = purchaseManager.errorMessage != nil
-                }
-            }
-        } message: {
-            Text("Unlock custom sessions and advanced multi-block workouts with a one-time purchase.\(priceText)")
-        }
-        .alert("Purchase", isPresented: $isShowingPurchaseError) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(purchaseManager.errorMessage ?? "The purchase could not be completed.")
         }
     }
 
@@ -155,21 +116,4 @@ struct SessionDetailView: View {
         }
     }
 
-    private var purchaseTitle: String {
-        guard let product = purchaseManager.product else { return "Unlock" }
-        return "Unlock for \(product.displayPrice)"
-    }
-
-    private var priceText: String {
-        guard let product = purchaseManager.product else { return "" }
-        return " Price: \(product.displayPrice)."
-    }
-
-    private var buttonTitle: String {
-        session.isPremium && !purchaseManager.isPremium ? purchaseTitle : "Save and Select Session"
-    }
-
-    private var buttonIcon: String {
-        session.isPremium && !purchaseManager.isPremium ? "lock.fill" : "checkmark"
-    }
 }

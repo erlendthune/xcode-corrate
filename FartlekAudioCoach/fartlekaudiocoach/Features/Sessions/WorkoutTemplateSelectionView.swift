@@ -9,10 +9,15 @@ struct WorkoutTemplateSelectionView: View {
 
     @State private var selectedWorkoutID: UUID?
     @State private var creationError: String?
+    @State private var deletionError: String?
     @State private var workoutToEdit: PyramidWorkout?
 
     private var savedWorkouts: [PyramidWorkout] {
-        storageManager.workouts.filter { !$0.isBuiltIn }
+        storageManager.workouts.filter { !$0.isBuiltIn && !$0.isFavorite }
+    }
+
+    private var favoriteWorkouts: [PyramidWorkout] {
+        storageManager.workouts.filter { !$0.isBuiltIn && $0.isFavorite }
     }
 
     var body: some View {
@@ -28,28 +33,39 @@ struct WorkoutTemplateSelectionView: View {
                 }
             }
 
-            Section("Templates") {
-                // Templates remain available even when the saved collection is empty or unreadable.
-                ForEach(PyramidWorkout.standardTemplates) { workout in
-                    selectionRow(workout)
+            if !favoriteWorkouts.isEmpty {
+                Section("Favorites") {
+                    ForEach(favoriteWorkouts) { workout in
+                        selectionRow(workout)
+                    }
+                    .onDelete { deleteWorkouts(at: $0, from: favoriteWorkouts) }
                 }
             }
 
             Section {
                 if savedWorkouts.isEmpty {
-                    Text("No saved workouts yet. Create a custom workout to get started.")
+                    Text(favoriteWorkouts.isEmpty
+                         ? "No saved workouts yet. Create a custom workout to get started."
+                         : "Your saved workouts are in Favorites above.")
                         .foregroundStyle(.secondary)
                         .accessibilityIdentifier("emptySavedWorkouts")
                 } else {
                     ForEach(savedWorkouts) { workout in
                         selectionRow(workout)
                     }
-                    .onDelete(perform: deleteWorkouts)
+                    .onDelete { deleteWorkouts(at: $0, from: savedWorkouts) }
                 }
             } header: {
-                Text("My Saved Workouts")
+                Text("Other Workouts")
             } footer: {
                 Text("Swipe left on a saved workout to delete it.")
+            }
+
+            Section("Templates") {
+                // Templates remain available even when the saved collection is empty or unreadable.
+                ForEach(PyramidWorkout.standardTemplates) { workout in
+                    selectionRow(workout)
+                }
             }
 
             Section {
@@ -73,8 +89,10 @@ struct WorkoutTemplateSelectionView: View {
         .listStyle(.insetGrouped)
         .navigationTitle("Workouts")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(item: $workoutToEdit) { workout in
-            PyramidWorkoutEditorView(workout: workout, storageManager: storageManager, onUse: onUse)
+        .sheet(item: $workoutToEdit) { workout in
+            NavigationStack {
+                PyramidWorkoutEditorView(workout: workout, storageManager: storageManager, onUse: editorOnUse)
+            }
         }
         .task {
             storageManager.loadWorkouts()
@@ -86,6 +104,23 @@ struct WorkoutTemplateSelectionView: View {
             Button("OK", role: .cancel) { creationError = nil }
         } message: {
             Text(creationError ?? "Please try again.")
+        }
+        .alert("Cannot Delete Workout", isPresented: Binding(
+            get: { deletionError != nil },
+            set: { if !$0 { deletionError = nil } }
+        )) {
+            Button("OK", role: .cancel) { deletionError = nil }
+        } message: {
+            Text(deletionError ?? "Please try again.")
+        }
+    }
+
+    private var editorOnUse: ((PyramidWorkout) -> Void)? {
+        guard let onUse else { return nil }
+        return { workout in
+            selectedWorkoutID = workout.id
+            onUse(workout)
+            workoutToEdit = nil
         }
     }
 
@@ -115,6 +150,11 @@ struct WorkoutTemplateSelectionView: View {
                         .foregroundStyle(.secondary)
                 }
                 Spacer()
+                if workout.isFavorite {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
+                        .accessibilityLabel("Favorite")
+                }
                 if selectedWorkoutID == workout.id {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.tint)
@@ -128,12 +168,14 @@ struct WorkoutTemplateSelectionView: View {
         .accessibilityIdentifier("workout-\(workout.id.uuidString)")
     }
 
-    private func deleteWorkouts(at offsets: IndexSet) {
+    private func deleteWorkouts(at offsets: IndexSet, from workouts: [PyramidWorkout]) {
         // Resolve IDs before mutating storage; offsets refer to the filtered custom section.
-        let current = savedWorkouts
-        let ids = offsets.compactMap { current.indices.contains($0) ? current[$0].id : nil }
+        let ids = offsets.compactMap { workouts.indices.contains($0) ? workouts[$0].id : nil }
         for id in ids {
-            guard storageManager.deleteWorkout(id: id) else { break }
+            guard storageManager.deleteWorkout(id: id) else {
+                deletionError = storageManager.lastError?.localizedDescription ?? "Unable to delete workout."
+                break
+            }
             if selectedWorkoutID == id { selectedWorkoutID = nil }
         }
     }

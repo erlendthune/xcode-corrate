@@ -7,6 +7,7 @@ final class WorkoutStorageManager: ObservableObject {
         case loadFailed(Error)
         case saveFailed(Error)
         case deleteFailed(Error)
+        case activeWorkout
 
         var errorDescription: String? {
             switch self {
@@ -16,12 +17,15 @@ final class WorkoutStorageManager: ObservableObject {
                 return "Unable to save workout: \(error.localizedDescription)"
             case .deleteFailed(let error):
                 return "Unable to delete workout: \(error.localizedDescription)"
+            case .activeWorkout:
+                return "This workout cannot be deleted because it is selected on the main screen or currently running. Select another workout, and stop this session if it is running, before deleting it."
             }
         }
     }
 
     @Published private(set) var workouts: [PyramidWorkout] = []
     @Published private(set) var lastError: StorageError?
+    @Published private(set) var protectedWorkoutIDs = Set<UUID>()
 
     private let fileURL: URL?
 
@@ -65,8 +69,22 @@ final class WorkoutStorageManager: ObservableObject {
         }
     }
 
+    func setProtectedWorkoutIDs(_ ids: Set<UUID>) {
+        guard protectedWorkoutIDs != ids else { return }
+        protectedWorkoutIDs = ids
+        if case .activeWorkout? = lastError { lastError = nil }
+    }
+
+    func deletionRestriction(for id: UUID) -> String? {
+        protectedWorkoutIDs.contains(id) ? StorageError.activeWorkout.errorDescription : nil
+    }
+
     @discardableResult
     func deleteWorkout(id: UUID) -> Bool {
+        guard !protectedWorkoutIDs.contains(id) else {
+            lastError = .activeWorkout
+            return false
+        }
         do {
             var updated = try readWorkouts()
             updated.removeAll { $0.id == id }

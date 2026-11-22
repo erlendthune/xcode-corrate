@@ -70,17 +70,19 @@ final class PyramidWorkoutEditorUITests: XCTestCase {
 
     @MainActor
     private func saveWorkout(named name: String, in app: XCUIApplication) {
-        let save = app.buttons["savePyramidWorkout"]
-        scrollTo(save, in: app)
-        save.tap()
-        let alert = app.alerts["Save Workout"]
-        XCTAssertTrue(alert.waitForExistence(timeout: 5))
-        let field = alert.textFields.firstMatch
+        let field = app.textFields["pyramidWorkoutName"]
+        XCTAssertTrue(field.waitForExistence(timeout: 5))
+        for _ in 0..<12 {
+            if field.isHittable { break }
+            app.swipeDown()
+        }
         field.tap()
         let currentValue = field.value as? String ?? ""
         field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: currentValue.count))
-        field.typeText(name)
-        alert.buttons["Save"].tap()
+        field.typeText(name + "\n")
+        let save = app.buttons["savePyramidWorkout"]
+        scrollTo(save, in: app)
+        save.tap()
         let confirmation = app.descendants(matching: .any)["workoutSavedConfirmation"].firstMatch
         XCTAssertTrue(confirmation.waitForExistence(timeout: 5))
     }

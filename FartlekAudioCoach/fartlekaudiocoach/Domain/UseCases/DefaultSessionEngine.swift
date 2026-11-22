@@ -28,18 +28,16 @@ final class DefaultSessionEngine: SessionEngine {
         lastSpokenWarmupMinute = nil
     }
 
-    /// Targets are stored as percent. When display mode is BPM, both the sample
-    /// and displayed target are converted using the user's max heart rate.
+    /// Comparisons and emitted cue targets use percentages of maximum HR.
+    /// Formatting into BPM or percent belongs to the presentation layer.
     func consume(sample: HeartRateSample, settings: AppSettings, now: Date) -> [SessionCue] {
         guard let session, blockIndex < session.blocks.count else { return [] }
         let block = session.blocks[blockIndex]
 
-        // Always compare using percent internally; convert target to BPM for cue display if needed.
+        // Changing display mode must not change workout targets or progression.
         let samplePercent = sample.percent
         let lowerPercent = block.lowerTargetPercent
         let upperPercent = block.upperTargetPercent
-        let displayedLower = displayedValue(forPercent: lowerPercent, settings: settings)
-        let displayedUpper = displayedValue(forPercent: upperPercent, settings: settings)
 
         var cues: [SessionCue] = []
         let warmupMinutes = Int(ceil(Double(session.warmupDurationSeconds) / 60))
@@ -71,16 +69,16 @@ final class DefaultSessionEngine: SessionEngine {
         case .warmupFinished:
             if samplePercent > lowerPercent {
                 phase = .slowdownToStart
-                cues.append(.slowDownToStart(target: displayedLower))
+                cues.append(.slowDownToStart(target: lowerPercent))
             } else {
                 phase = .speedup
-                cues.append(.speedUp(target: displayedUpper, repetition: repetition, total: block.repetitions))
+                cues.append(.speedUp(target: upperPercent, repetition: repetition, total: block.repetitions))
             }
 
         case .slowdownToStart:
             if samplePercent <= lowerPercent {
                 phase = .speedup
-                cues.append(.speedUp(target: displayedUpper, repetition: repetition, total: block.repetitions))
+                cues.append(.speedUp(target: upperPercent, repetition: repetition, total: block.repetitions))
             }
 
         case .slowdown:
@@ -94,21 +92,20 @@ final class DefaultSessionEngine: SessionEngine {
                         cues.append(.sessionCompleted)
                     } else {
                         let nextBlock = session.blocks[blockIndex]
-                        let nextUpper = displayedValue(forPercent: nextBlock.upperTargetPercent, settings: settings)
                         phase = .speedup
                         cues.append(.blockStarted(blockIndex: blockIndex, repetition: repetition))
-                        cues.append(.speedUp(target: nextUpper, repetition: repetition, total: nextBlock.repetitions))
+                        cues.append(.speedUp(target: nextBlock.upperTargetPercent, repetition: repetition, total: nextBlock.repetitions))
                     }
                 } else {
                     repetition += 1
                     phase = .speedup
-                    cues.append(.speedUp(target: displayedUpper, repetition: repetition, total: block.repetitions))
+                    cues.append(.speedUp(target: upperPercent, repetition: repetition, total: block.repetitions))
                 }
             }
 
         case .speedup:
             if samplePercent >= upperPercent {
-                cues.append(.slowDown(target: displayedLower, repetition: repetition, total: block.repetitions))
+                cues.append(.slowDown(target: lowerPercent, repetition: repetition, total: block.repetitions))
                 phase = .slowdown
             }
 
@@ -119,9 +116,4 @@ final class DefaultSessionEngine: SessionEngine {
         return cues
     }
 
-    private func displayedValue(forPercent percent: Int, settings: AppSettings) -> Int {
-        settings.displayMode == .bpm
-            ? HeartRateConverter.bpm(from: percent, maxHeartRate: settings.maxHeartRate)
-            : percent
-    }
 }

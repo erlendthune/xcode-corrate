@@ -2,7 +2,7 @@ import StoreKit
 import SwiftUI
 
 enum AppMenuDestination: String, Identifiable {
-    case purchase, help, about
+    case purchase, help, heartRateZones, about
 
     var id: String { rawValue }
 
@@ -10,6 +10,7 @@ enum AppMenuDestination: String, Identifiable {
         switch self {
         case .purchase: return "Buy app"
         case .help: return "Help"
+        case .heartRateZones: return "Heart Rate Zones"
         case .about: return "About"
         }
     }
@@ -18,6 +19,7 @@ enum AppMenuDestination: String, Identifiable {
 struct AppMenuView: View {
     let destination: AppMenuDestination
     @ObservedObject var purchaseManager: PurchaseManager
+    @ObservedObject var runnerModel: RunnerViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var restoreMessage: String?
 
@@ -29,6 +31,11 @@ struct AppMenuView: View {
                     purchaseContent
                 case .help:
                     helpContent
+                case .heartRateZones:
+                    HeartRateZonesContent(
+                        maxHeartRate: runnerModel.settings.maxHeartRate,
+                        currentBPM: runnerModel.isHeartRateMissing ? nil : runnerModel.latestSample?.bpm
+                    )
                 case .about:
                     Section {
                         Text("Fartlek Audio Coach")
@@ -55,10 +62,10 @@ struct AppMenuView: View {
 
     @ViewBuilder
     private var purchaseContent: some View {
-        Section("Full coach") {
-            Text("Unlock custom sessions and advanced multi-block workouts with a one-time purchase.")
+        Section("Support the app") {
+            Text("All features and workouts are available without purchasing. A support announcement plays every 10 minutes while monitoring with audio enabled. A one-time purchase removes that announcement.")
             if purchaseManager.isPremium {
-                Label("The full app is unlocked", systemImage: "checkmark.seal.fill")
+                Label("Thank you! Support announcements are turned off.", systemImage: "checkmark.seal.fill")
                     .foregroundStyle(.green)
             } else if let product = purchaseManager.product {
                 Button("Buy for \(product.displayPrice)") {
@@ -92,7 +99,7 @@ struct AppMenuView: View {
                     await purchaseManager.restore()
                     if purchaseManager.errorMessage == nil {
                         restoreMessage = purchaseManager.isPremium
-                            ? "Purchase restored. The full app is unlocked."
+                            ? "Purchase restored. Support announcements are turned off."
                             : "No previous purchase was found for this Apple Account."
                     }
                 }
@@ -116,11 +123,11 @@ struct AppMenuView: View {
                 Text("Enable Bluetooth and put your monitor into heart-rate broadcasting mode. Open the Monitor selection button and select your device. Start Session becomes available once connected and receiving heart-rate data.")
             }
             Section("Set up a workout") {
-                Text("Open the Session selection button to choose a workout and edit warmup minutes, lower and upper heart-rate targets, and iteration count. Targets are percentages of your maximum heart rate.")
-                Text("After warmup, slow down to the lower target if needed. Speed up to the upper target, then slow down to the lower target to complete each iteration.")
+                Text("Open the Session selection button to choose a workout and edit warmup minutes, lower and upper heart-rate targets, and repetition count. Targets are percentages of your maximum heart rate.")
+                Text("After warmup, slow down to the lower target if needed. Each repetition consists of a faster effort followed by recovery: speed up to the upper target, then slow down to the lower target to complete the repetition. A block is a group of repetitions.")
             }
             Section("Heart rate and audio") {
-                Text("Tap the heart-rate number to switch between BPM and percent of maximum. Tap the heart icon to hear the current number when audio is enabled.")
+                Text("Tap the heart-rate number to switch between BPM and percent of maximum. Tap the heart icon or zone name to view heart rate zones and their training guidance.")
                 Text("Use the speaker button at the top right to enable or disable audio. Tap the cue countdown to hear the current number and time until the next heart-rate announcement.")
                 Text("In Settings, adjust voice speed, speech interval, resting heart rate, and maximum heart rate. A speech interval of 0 announces every received heart-rate sample; other values specify seconds between announcements.")
             }
